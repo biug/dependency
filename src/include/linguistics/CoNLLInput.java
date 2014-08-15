@@ -2,10 +2,10 @@ package include.linguistics;
 
 import include.BiString;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 @SuppressWarnings("serial")
-public class CoNLLInput extends LinkedList<CoNLLInputNode> {
+public class CoNLLInput extends ArrayList<CoNLLInputNode> {
 	public CoNLLInput() {
 		super();
 		this.clear();

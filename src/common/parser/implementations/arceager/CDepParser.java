@@ -23,8 +23,8 @@ import include.linguistics.TagSet2;
 import include.linguistics.TagSet3;
 import include.linguistics.TwoStringVector;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 
 import chinese.dependency.label.CDependencyLabel;
 import chinese.pos.CTag;
@@ -37,8 +37,8 @@ public class CDepParser extends DepParserBase {
 	private LabeledAgendaBeam m_Agenda;
 	private AgendaSimple m_Beam;
 	
-	private LinkedList<CTaggedWord> m_lCache;
-	private LinkedList<CDependencyLabel> m_lCacheLabel;
+	private ArrayList<CTaggedWord> m_lCache;
+	private ArrayList<CDependencyLabel> m_lCacheLabel;
 	
 	private int m_nTrainingRound;
 	private int m_nTotalErrors;
@@ -94,8 +94,8 @@ public class CDepParser extends DepParserBase {
 		m_Agenda = new LabeledAgendaBeam(Macros.AGENDA_SIZE);
 		m_Beam = new AgendaSimple(Macros.AGENDA_SIZE);
 		
-		m_lCache = new LinkedList<CTaggedWord>();
-		m_lCacheLabel = new LinkedList<CDependencyLabel>();
+		m_lCache = new ArrayList<CTaggedWord>();
+		m_lCacheLabel = new ArrayList<CDependencyLabel>();
 		
 		m_weights = new CWeight(sFeatureDBPath, bTrain);
 		m_nTrainingRound = 0;
@@ -139,8 +139,8 @@ public class CDepParser extends DepParserBase {
 		m_Agenda = new LabeledAgendaBeam(Macros.AGENDA_SIZE);
 		m_Beam = new AgendaSimple(Macros.AGENDA_SIZE);
 		
-		m_lCache = new LinkedList<CTaggedWord>();
-		m_lCacheLabel = new LinkedList<CDependencyLabel>();
+		m_lCache = new ArrayList<CTaggedWord>();
+		m_lCacheLabel = new ArrayList<CDependencyLabel>();
 		
 		m_weights = new CWeight(sFeatureDBPath, bTrain);
 		m_nTrainingRound = 0;
@@ -161,8 +161,8 @@ public class CDepParser extends DepParserBase {
 		outParser = new LabeledDependencyParser[1];
 		outParser[0] = new LabeledDependencyParser();
 		
-		m_lCache = new LinkedList<CTaggedWord>();
-		m_lCacheLabel = new LinkedList<CDependencyLabel>();
+		m_lCache = new ArrayList<CTaggedWord>();
+		m_lCacheLabel = new ArrayList<CDependencyLabel>();
 		
 		st_word_tag_n0_word_tag = new CTwoTaggedWords();
 		st_word_n0_word = new CTwoWords();
@@ -567,8 +567,7 @@ public class CDepParser extends DepParserBase {
 			
 			pGenerator = m_Agenda.generatorStart();
 			
-			for (int j = 0; j < m_Agenda.generatorSize(); ++j) {
-				
+			for (int j = 0, agenda_size = m_Agenda.generatorSize(); j < agenda_size; ++j) {
 				m_Beam.clear();
 				packed_scores.reset();
 				getOrUpdateStackScore(pGenerator, packed_scores, Action.NO_ACTION);
@@ -598,7 +597,7 @@ public class CDepParser extends DepParserBase {
 					}
 				}
 				
-				for (int i = 0; i < m_Beam.size(); ++i) {
+				for (int i = 0, beam_size = m_Beam.size(); i < beam_size; ++i) {
 					pCandidate.copy(pGenerator);
 					pCandidate.score = m_Beam.item(i).score;
 					pCandidate.Move(m_Beam.item(i).action);
@@ -627,7 +626,7 @@ public class CDepParser extends DepParserBase {
 			}
 		}
 		m_Agenda.sortGenerators();
-		for (int i = 0; i < minVal(m_Agenda.generatorSize(), nBest); ++i) {
+		for (int i = 0, retval_size = minVal(m_Agenda.generatorSize(), nBest); i < retval_size; ++i) {
 			pGenerator = m_Agenda.generator(i);
 			if (pGenerator != null) {
 				pGenerator.GenerateTree(sentence, retval[i]);

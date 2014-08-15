@@ -1,9 +1,9 @@
 package include.linguistics;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 @SuppressWarnings("serial")
-public class CoNLLOutput extends LinkedList<CoNLLOutputNode> {
+public class CoNLLOutput extends ArrayList<CoNLLOutputNode> {
 	public CoNLLOutput() {
 		super();
 		this.clear();

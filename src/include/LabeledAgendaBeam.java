@@ -17,8 +17,9 @@ public class LabeledAgendaBeam {
 	}
 	
 	private void push_heap(final int which, int base) {
+		CLabeledStateItem[] items = m_lBeam[which];
 		while (base > 0) {
-			if (m_lBeam[which][(base - 1) >> 1].more(m_lBeam[which][base])) {
+			if (items[(base - 1) >> 1].more(items[base])) {
 				swap(which, base, (base - 1) >> 1);
 				base = (base - 1) >> 1;
 			} else {
@@ -29,14 +30,15 @@ public class LabeledAgendaBeam {
 	
 	private void pop_heap(final int which) {
 		if (m_nBeamSize[which] <= 0) return;
+		CLabeledStateItem[] items = m_lBeam[which];
 		swap(which, 0, --m_nBeamSize[which]);
-		CLabeledStateItem item = m_lBeam[which][0];
+		CLabeledStateItem item = items[0];
 		int index = 0, child = 1;
 		while (child < m_nBeamSize[which]) {
-			if (child + 1 < m_nBeamSize[which] && !m_lBeam[which][child + 1].more(m_lBeam[which][child])) {
+			if (child + 1 < m_nBeamSize[which] && !items[child + 1].more(items[child])) {
 				++child;
 			}
-			m_lBeam[which][index] = m_lBeam[which][child];
+			items[index] = items[child];
 			index = child;
 			child = (child << 1) + 1;
 		}
@@ -122,10 +124,11 @@ public class LabeledAgendaBeam {
 	}
 	
 	public CLabeledStateItem bestGenerator() {
-		CLabeledStateItem item = m_lBeam[m_nGenerator][0];
-		for (int i = 1; i < m_nBeamSize[m_nGenerator]; ++i) {
-			if (item.less(m_lBeam[m_nGenerator][i])) {
-				item = m_lBeam[m_nGenerator][i];
+		CLabeledStateItem[] items = m_lBeam[m_nGenerator];
+		CLabeledStateItem item = items[0];
+		for (int i = 1, max_size = m_nBeamSize[m_nGenerator]; i < max_size; ++i) {
+			if (item.less(items[i])) {
+				item = items[i];
 			}
 		}
 		return item;
@@ -147,7 +150,7 @@ public class LabeledAgendaBeam {
 	}
 	
 	public void print(int len) {
-		for (int i = 0; i < m_nBeamSize[m_nGenerator]; ++i) {
+		for (int i = 0, max_size = m_nBeamSize[m_nGenerator]; i < max_size; ++i) {
 			m_lBeam[m_nGenerator][i].printstate(len);
 		}
 	}

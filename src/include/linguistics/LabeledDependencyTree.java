@@ -1,8 +1,8 @@
 package include.linguistics;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
-public class LabeledDependencyTree extends LinkedList<LabeledDependencyTreeNode> {
+public class LabeledDependencyTree extends ArrayList<LabeledDependencyTreeNode> {
 
 	private static final long serialVersionUID = 1L;
 
