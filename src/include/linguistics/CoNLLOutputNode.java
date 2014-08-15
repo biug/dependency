@@ -14,8 +14,8 @@ public class CoNLLOutputNode extends CoNLLInputNode {
 	public CoNLLOutputNode(final int d, final String w, final String l, final String c, final String t, final String f, final int h, final String la, final int p, final String pl) {
 		super(d, w, l, c, t, f);
 		head = h;
-		label = new String(la);
+		label = la;
 		phead = p;
-		plabel = new String(pl);
+		plabel = pl;
 	}
 }

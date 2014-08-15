@@ -2,10 +2,7 @@ package include.linguistics;
 
 import chinese.pos.CTag;
 
-public class TagSet {
-	public static CTag ct = new CTag();
-	public final static String sSplit = ",";
-	
+public class TagSet {	
 	private int size;
 	
 	protected int m_nHash;
@@ -15,13 +12,18 @@ public class TagSet {
 		m_nHash = 0;
 	}
 	
+	public TagSet(final TagSet tagset) {
+		size = tagset.size;
+		m_nHash = tagset.m_nHash;
+	}
+	
 	public TagSet(final int s, final int hash) {
 		size = s;
 		m_nHash = hash;
 	}
 	
-	private void attach(final CTag i) {
-		m_nHash = ((m_nHash << CTag.SIZE) | i.hashCode());
+	private void attach(int c) {
+		m_nHash = ((m_nHash << CTag.SIZE) | c);
 	}
 	
 	@Override
@@ -36,15 +38,13 @@ public class TagSet {
 	
 	@Override
 	public String toString() {
-		String retval = new String("");
+		String retval = "";
 		int hs = m_nHash;
-		int tc;
 		for (int i = 0; i < size; ++i) {
 			if (!retval.isEmpty()) {
 				retval = " " + retval;
 			}
-			tc = hs & ((1 << CTag.SIZE) - 1);
-			retval = (new CTag(tc)).toString() + retval;
+			retval = CTag.str(hs & ((1 << CTag.SIZE) - 1)) + retval;
 			hs >>= CTag.SIZE;
 		}
 		return retval;
@@ -52,10 +52,9 @@ public class TagSet {
 	
 	public void load(final String s) {
 		clear();
-		String[] args = s.split(sSplit);
+		String[] args = s.substring(2, s.length() - 2).split(" ");
 		for (int i = 0; i < size; ++i) {
-			ct.load(args[i]);
-			this.attach(ct);
+			this.attach(CTag.code(args[i]));
 		}
 	}
 	

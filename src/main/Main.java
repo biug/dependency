@@ -18,6 +18,6 @@ public class Main {
 			}
 		}
 		System.out.println("Training has finished successfully.");
-		System.out.println("total use " + (System.currentTimeMillis() - start) + " ms");
+		System.out.println("total use " + (System.currentTimeMillis() - start) / 1000.0 + " ms");
 	}
 }

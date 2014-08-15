@@ -21,4 +21,9 @@ public class CTaggedWordMap extends PackedScoreMap<CTaggedWord> {
 		return key.word.toString() + CTaggedWord.sSeparator + key.tag.toString();
 	}
 
+	@Override
+	public CTaggedWord allocate_key(CTaggedWord key) {
+		return new CTaggedWord(key);
+	}
+
 }

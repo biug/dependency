@@ -8,14 +8,14 @@ public class DependencyTreeNode {
 	public int head;
 	
 	public DependencyTreeNode() {
-		word = new String("");
-		tag = new String("");
+		word = "";
+		tag = "";
 		head = DEPENDENCY_LINK_NO_HEAD;
 	}
 	
 	public DependencyTreeNode(final String w, final String t, final int h) {
-		word = new String(w);
-		tag = new String(t);
+		word = w;
+		tag = t;
 		head = h;
 	}
 	

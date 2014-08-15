@@ -8,8 +8,12 @@ public class CTwoTaggedWords extends Bigram<CTaggedWord> {
 		super();
 	}
 	
-	public CTwoTaggedWords(CTwoTaggedWords bi) {
-		super((Bigram<CTaggedWord>)bi);
+	public CTwoTaggedWords(CTwoTaggedWords twotaggedwords) {
+		super((Bigram<CTaggedWord>)twotaggedwords);
+	}
+	
+	public CTwoTaggedWords(CTaggedWord w1, CTaggedWord w2) {
+		super(w1, w2);
 	}
 
 	@Override

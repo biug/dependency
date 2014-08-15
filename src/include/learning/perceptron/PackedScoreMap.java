@@ -3,37 +3,35 @@ package include.learning.perceptron;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 
 @SuppressWarnings("serial")
-public abstract class PackedScoreMap<K> extends LinkedHashMap<K, PackedScore> {
+// remove "m_zero"
+public abstract class PackedScoreMap<K> extends HashMap<K, PackedScore> {
 	public static final String sSplit = ",";
-	protected PackedScore m_zero;
 	
 	public String name;
 	public int count;
 
 	public PackedScoreMap(String input_name, int table_size) {
 		super();
-		name = new String(input_name);
+		name = input_name;
 		count = 0;
-		m_zero = new PackedScore();
 	}
 	
 	public void getScore(PackedScoreType o, final K key, final int which) {
 		PackedScore ps = super.get(key);
-		if (ps == null) {
-			ps = m_zero;
+		if (ps != null) {
+			ps.add(o, which);
 		}
-		ps.add(o, which);
 	}
 	
 	public void updateScore(final K key, final int index, final int amount, final int round) {
 		PackedScore ps = super.get(key);
 		if (ps == null) {
 			ps = new PackedScore();
-			super.put(key, ps);
+			super.put(allocate_key(key), ps);
 		}
 		ps.updateCurrent(index, amount, round);
 	}
@@ -41,10 +39,9 @@ public abstract class PackedScoreMap<K> extends LinkedHashMap<K, PackedScore> {
 	public void getOrUpdateScore(PackedScoreType out, final K key, final int index, final int which, final int amount, final int round) {
 		if (amount == 0) {
 			PackedScore ps = super.get(key);
-			if (ps == null) {
-				ps = m_zero;
+			if (ps != null) {
+				ps.add(out, which);
 			}
-			ps.add(out, which);
 		} else {
 			this.updateScore(key, index, amount, round);
 		}
@@ -113,6 +110,7 @@ public abstract class PackedScoreMap<K> extends LinkedHashMap<K, PackedScore> {
 		bw.newLine();
 	}
 	
+	public abstract K allocate_key(K key);
 	public abstract K loadKeyFromString(String str);
 	public abstract String generateStringFromKey(K key);
 }

@@ -8,14 +8,17 @@ public class CTwoWords extends Bigram<CWord> {
 		super();
 	}
 	
-	public CTwoWords(CTwoWords bi) {
-		super((Bigram<CWord>)bi);
+	public CTwoWords(final CTwoWords twowords) {
+		super((Bigram<CWord>)twowords);
 	}
-
+	
+	public CTwoWords(CWord w1, CWord w2) {
+		super(w1, w2);
+	}
 
 	@Override
 	protected CWord create_unigram(CWord u) {
-		return new CWord(u);
+		return u;
 	}
 
 }

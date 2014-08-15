@@ -20,4 +20,9 @@ public class CTagMap extends PackedScoreMap<CTag> {
 		return key.toString();
 	}
 
+	@Override
+	public CTag allocate_key(CTag key) {
+		return key;
+	}
+
 }

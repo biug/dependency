@@ -20,4 +20,9 @@ public class LemmaMap extends PackedScoreMap<Lemma> {
 		return "[" + key.toString() + "]";
 	}
 
+	@Override
+	public Lemma allocate_key(Lemma key) {
+		return new Lemma(key);
+	}
+
 }

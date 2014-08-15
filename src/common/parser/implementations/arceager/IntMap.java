@@ -11,12 +11,17 @@ public class IntMap extends PackedScoreMap<Integer> {
 
 	@Override
 	public Integer loadKeyFromString(String str) {
-		return new Integer(str);
+		return Integer.valueOf(str);
 	}
 
 	@Override
 	public String generateStringFromKey(Integer key) {
 		return key.toString();
+	}
+
+	@Override
+	public Integer allocate_key(Integer key) {
+		return key;
 	}
 
 }

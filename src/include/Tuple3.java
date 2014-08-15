@@ -5,7 +5,6 @@ public abstract class Tuple3<A, B, C> {
 	protected A m_object1;
 	protected B m_object2;
 	protected C m_object3;
-	protected boolean m_bAllocated;
 	
 	public abstract A create_object1(A a);
 	public abstract B create_object2(B b);
@@ -16,31 +15,20 @@ public abstract class Tuple3<A, B, C> {
 		m_object1 = null;
 		m_object2 = null;
 		m_object3 = null;
-		m_bAllocated = false;
 	}
 	
-	public Tuple3(Tuple3<A, B, C> w) {
-		m_nHash = w.m_nHash;
-		if (w.m_bAllocated) {
-			m_object1 = create_object1(w.m_object1);
-			m_object2 = create_object2(w.m_object2);
-			m_object3 = create_object3(w.m_object3);
-			m_bAllocated = true;
-		} else {
-			m_object1 = w.m_object1;
-			m_object2 = w.m_object2;
-			m_object3 = w.m_object3;
-			m_bAllocated = false;
-		}
+	public Tuple3(final Tuple3<A, B, C> tuple) {
+		m_object1 = create_object1(tuple.m_object1);
+		m_object2 = create_object2(tuple.m_object2);
+		m_object3 = create_object3(tuple.m_object3);
+		computehash();
 	}
 	
-	public void allocate(final A w1, final B w2, final C w3) {
-		clear();
+	public Tuple3(final A w1, final B w2, final C w3) {
 		m_object1 = create_object1(w1);
 		m_object2 = create_object2(w2);
 		m_object3 = create_object3(w3);
 		computehash();
-		m_bAllocated = true;
 	}
 	
 	public void refer(final A w1, final B w2, final C w3) {
@@ -48,15 +36,6 @@ public abstract class Tuple3<A, B, C> {
 		m_object2 = w2;
 		m_object3 = w3;
 		computehash();
-		m_bAllocated = false;
-	}
-	
-	public void clear() {
-		m_bAllocated = false;
-		m_object1 = null;
-		m_object2 = null;
-		m_object3 = null;
-		m_nHash = 0;
 	}
 	
 	public A first() {

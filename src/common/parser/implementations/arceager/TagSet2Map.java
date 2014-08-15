@@ -21,4 +21,9 @@ public class TagSet2Map extends PackedScoreMap<TagSet2> {
 	public String generateStringFromKey(TagSet2 key) {
 		return "[ " + key.toString() + " ]";
 	}
+
+	@Override
+	public TagSet2 allocate_key(TagSet2 key) {
+		return new TagSet2(key);
+	}
 }

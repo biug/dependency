@@ -18,10 +18,6 @@ public class ScoredAction {
 		return score > sa.score;
 	}
 	
-	public boolean less(final ScoredAction sa) {
-		return score < sa.score;
-	}
-	
 	@Override
 	public boolean equals(Object o) {
 		return score == ((ScoredAction)o).score;
@@ -30,5 +26,10 @@ public class ScoredAction {
 	@Override
 	public int hashCode() {
 		return score;
+	}
+	
+	public void copy(final ScoredAction sa) {
+		action = sa.action;
+		score = sa.score;
 	}
 }

@@ -13,15 +13,18 @@ public class CWordWordIntMap extends PackedScoreMap<CWordWordInt> {
 
 	@Override
 	public CWordWordInt loadKeyFromString(String str) {
-		CWordWordInt cwwi = new CWordWordInt();
-		String[] args = str.split(sSplit);
-		cwwi.allocate(new CWord(args[0]), new CWord(args[1]), new Integer(args[2]));
-		return cwwi;
+		String[] args = str.split(" , ");
+		return new CWordWordInt(new CWord(args[0].substring(1, args[0].length() - 1)), new CWord(args[1].substring(1, args[1].length() - 1)), Integer.valueOf(args[2]));
 	}
 
 	@Override
 	public String generateStringFromKey(CWordWordInt key) {
 		return "[" + key.first().toString() + "] , [" + key.second().toString() + "] , " + key.third().toString();
+	}
+
+	@Override
+	public CWordWordInt allocate_key(CWordWordInt key) {
+		return new CWordWordInt(key);
 	}
 
 }

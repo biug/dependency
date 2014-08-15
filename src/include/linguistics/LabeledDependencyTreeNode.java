@@ -5,12 +5,12 @@ public class LabeledDependencyTreeNode extends DependencyTreeNode {
 	
 	public LabeledDependencyTreeNode() {
 		super();
-		label = new String("");
+		label = "";
 	}
 	
 	public LabeledDependencyTreeNode(final String w, final String t, final int h, final String l) {
 		super(w, t, h);
-		label = new String(l);
+		label = l;
 	}
 	
 	@Override

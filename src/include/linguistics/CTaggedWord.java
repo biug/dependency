@@ -19,13 +19,13 @@ public class CTaggedWord {
 	}
 	
 	public CTaggedWord(final CWord w, final CTag t) {
-		word = new CWord(w);
-		tag = new CTag(t);
+		word = w;
+		tag = t;
 	}
 	
 	public CTaggedWord(final CTaggedWord w) {
-		word = new CWord(w.word);
-		tag = new CTag(w.tag);
+		word = w.word;
+		tag = w.tag;
 	}
 	
 	@Override
@@ -39,12 +39,12 @@ public class CTaggedWord {
 	}
 	
 	public void load(final CWord w, final CTag t) {
-		word = new CWord(w);
-		tag = new CTag(t);
+		word = w;
+		tag = t;
 	}
 	
 	public void load(final CWord w) {
-		word = new CWord(w);
+		word = w;
 		tag = new CTag(CTag.NONE);
 	}
 }

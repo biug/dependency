@@ -22,4 +22,9 @@ public class CoNLLCPOSMap extends PackedScoreMap<CoNLLCPOS> {
 		return key.toString();
 	}
 
+	@Override
+	public CoNLLCPOS allocate_key(CoNLLCPOS key) {
+		return new CoNLLCPOS(key);
+	}
+
 }

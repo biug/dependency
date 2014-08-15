@@ -13,15 +13,18 @@ public class CTwoWordsMap extends PackedScoreMap<CTwoWords> {
 
 	@Override
 	public CTwoWords loadKeyFromString(String str) {
-		CTwoWords ctw = new CTwoWords();
-		String[] args = str.split(sSplit);
-		ctw.allocate(new CWord(args[0]), new CWord(args[1]));
-		return ctw;
+		String[] args = str.split(" , ");
+		return new CTwoWords(new CWord(args[0].substring(1, args[0].length() - 1)), new CWord(args[1].substring(1, args[1].length() - 1)));
 	}
 
 	@Override
 	public String generateStringFromKey(CTwoWords key) {
 		return "[" + key.first().toString() + "] , [" + key.second().toString() + "]";
+	}
+
+	@Override
+	public CTwoWords allocate_key(CTwoWords key) {
+		return new CTwoWords(key);
 	}
 
 }

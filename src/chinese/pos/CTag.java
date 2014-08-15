@@ -89,17 +89,13 @@ public class CTag {
 	
 	@Override
 	public final String toString() {
-		if (m_code >= PENN_TAG_COUNT) {
-			return "EXTRA(m_code)";
-		}
 		return PENN_TAG_STRINGS[m_code];
 	}
 	
-	public void load(final String s)
-	{
-		for (int __temp_i = 0; __temp_i < PENN_TAG_COUNT; ++__temp_i) {
-			if (PENN_TAG_STRINGS[__temp_i].equals(s)) {
-				m_code = __temp_i;
+	public void load(final String s) {
+		for (int i = 0; i < PENN_TAG_COUNT; ++i) {
+			if (PENN_TAG_STRINGS[i].equals(s)) {
+				m_code = i;
 				return;
 			}
 		}
@@ -108,6 +104,19 @@ public class CTag {
 	@Override
 	public boolean equals(Object t) {
 		return m_code == ((CTag)t).m_code;
+	}
+	
+	public final static String str(final int t) {
+		return PENN_TAG_STRINGS[t];
+	}
+	
+	public final static int code(final String s) {
+		for (int i = 0; i < PENN_TAG_COUNT; ++i) {
+			if (PENN_TAG_STRINGS[i].equals(s)) {
+				return i;
+			}
+		}
+		return NONE;
 	}
 	
 }

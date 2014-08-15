@@ -72,8 +72,7 @@ public class AgendaSimple {
 				return;
 			}
 		}
-		m_lBeam[m_nBeamSize].score = item.score;
-		m_lBeam[m_nBeamSize].action = item.action;
+		m_lBeam[m_nBeamSize].copy(item);
 		push_heap(m_nBeamSize++);
 	}
 	

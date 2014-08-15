@@ -8,13 +8,17 @@ public class CWordSetOfLabels extends Tuple2<CWord, CSetOfTags> {
 		super();
 	}
 	
-	public CWordSetOfLabels(CWordSetOfLabels word_tagset) {
+	public CWordSetOfLabels(final CWordSetOfLabels word_tagset) {
 		super((Tuple2<CWord, CSetOfTags>)word_tagset);
+	}
+	
+	public CWordSetOfLabels(CWord word, CSetOfTags tagset) {
+		super(word, tagset);
 	}
 
 	@Override
 	public CWord create_object1(CWord a) {
-		return new CWord(a);
+		return a;
 	}
 
 	@Override

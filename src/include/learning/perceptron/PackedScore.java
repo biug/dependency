@@ -2,19 +2,19 @@ package include.learning.perceptron;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
 public class PackedScore {
-	public LinkedHashMap<Integer, Score> scores;
+	public HashMap<Integer, Score> scores;
 	
 	public PackedScore() {
-		scores = new LinkedHashMap<Integer, Score>();
+		scores = new HashMap<Integer, Score>();
 	}
 	
 	public int score(final int index, final int n) {
-		Score s = scores.get(new Integer(index));
+		Score s = scores.get(Integer.valueOf(index));
 		if (s != null) {
 			return s.score(n);
 		} else {
@@ -23,7 +23,7 @@ public class PackedScore {
 	}
 	
 	public void updateCurrent(final int index, final int added, final int round) {
-		Integer i = new Integer(index);
+		Integer i = Integer.valueOf(index);
 		Score s = scores.get(i);
 		if (s == null) {
 			s = new Score();
@@ -68,18 +68,22 @@ public class PackedScore {
 	}
 	
 	public Score find(final int index) {
-		Score s = scores.get(new Integer(index));
+		Integer i = Integer.valueOf(index);
+		Score s = scores.get(i);
 		if (s == null) {
 			s = new Score();
-			scores.put(new Integer(index), s);
+			scores.put(i, s);
 		}
 		return s;
 	}
 	
 	public void loadPackedScoreFromString(String str) {
-		String[] args = str.split("#");
-		scores.put(new Integer(Integer.parseInt(args[0])),
-				new Score(Integer.parseInt(args[1]), Integer.parseInt(args[2])));
+		String[] args = str.substring(2, str.length() - 2).split(" , ");
+		for (String subarg : args) {
+			String[] subargs = subarg.split(" : ");
+			scores.put(Integer.valueOf(subargs[0]),
+					new Score(Integer.parseInt(subargs[1].split(" / ")[0]), Integer.parseInt(subargs[1].split(" / ")[1])));
+		}
 	}
 	
 	public void savePackedScoreToFile(BufferedWriter bw) throws IOException {

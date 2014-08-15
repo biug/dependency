@@ -5,7 +5,6 @@ import include.linguistics.CTaggedWord;
 import include.linguistics.LabeledDependencyTreeNode;
 import include.linguistics.TwoStringVector;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import chinese.dependency.label.CDependencyLabel;
@@ -220,7 +219,7 @@ public class CLabeledStateItem {
 		m_HeadStack.removeLast();
 		m_lHeads[left] = m_nNextWord;
 		m_lLabels[left] = lab;
-		m_lDepTagL[m_nNextWord].add(new CDependencyLabel(lab));
+		m_lDepTagL[m_nNextWord].add(lab);
 		m_lSibling[left] = m_lDepsL[m_nNextWord];
 		m_lDepsL[m_nNextWord] = left;
 		++m_lDepNumL[m_nNextWord];
@@ -229,10 +228,10 @@ public class CLabeledStateItem {
 	
 	public void ArcRight(int lab) {
 		int left = m_Stack.getLast().intValue();
-		m_Stack.add(new Integer(m_nNextWord));
+		m_Stack.add(Integer.valueOf(m_nNextWord));
 		m_lHeads[m_nNextWord] = left;
 		m_lLabels[m_nNextWord] = lab;
-		m_lDepTagR[left].add(new CDependencyLabel(lab));
+		m_lDepTagR[left].add(lab);
 		m_lSibling[m_nNextWord] = m_lDepsR[left];
 		m_lDepsR[left] = m_nNextWord;
 		++m_lDepNumR[left];
@@ -242,8 +241,8 @@ public class CLabeledStateItem {
 	}
 
 	public void Shift() {
-		m_Stack.add(new Integer(m_nNextWord));
-		m_HeadStack.add(new Integer(m_nNextWord));
+		m_Stack.add(Integer.valueOf(m_nNextWord));
+		m_HeadStack.add(Integer.valueOf(m_nNextWord));
 		++m_nNextWord;
 		ClearNext();
 		m_nLastAction = Action.encodeAction(Action.SHIFT);
@@ -381,22 +380,15 @@ public class CLabeledStateItem {
 	public void GenerateTree(final TwoStringVector input, LabeledDependencyParser output) {
 		output.clear();
 		for (int i = 0; i < size(); ++i) {
-			output.add(new LabeledDependencyTreeNode(input.get(i).first(), input.get(i).second(), m_lHeads[i], new CDependencyLabel(m_lLabels[i]).toString()));
+			output.add(new LabeledDependencyTreeNode(input.get(i).first(), input.get(i).second(), m_lHeads[i], CDependencyLabel.str(m_lLabels[i])));
 		}
 	}
 	
 	public void copy(final CLabeledStateItem item) {
-		Iterator<Integer> itr;
 		m_Stack.clear();
-		itr = item.m_Stack.iterator();
-		while (itr.hasNext()) {
-			m_Stack.add(new Integer(itr.next().intValue()));
-		}
+		m_Stack.addAll(item.m_Stack);
 		m_HeadStack.clear();
-		itr = item.m_HeadStack.iterator();
-		while (itr.hasNext()) {
-			m_HeadStack.add(new Integer(itr.next().intValue()));
-		}
+		m_HeadStack.addAll(item.m_HeadStack);
 		m_nNextWord = item.m_nNextWord;
 		m_nLastAction = item.m_nLastAction;
 		m_lCache = item.m_lCache;

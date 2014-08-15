@@ -96,4 +96,17 @@ public class CDependencyLabel {
 	public String toString() {
 		return PENN_DEP_STRINGS[m_code];
 	}
+	
+	public final static String str(final int code) {
+		return PENN_DEP_STRINGS[code];
+	}
+	
+	public final static int code(final String label) {
+		for (int i = FIRST; i < COUNT; ++i) {
+			if (PENN_DEP_STRINGS[i].equals(label)) {
+				return i;
+			}
+		}
+		return PENN_DEP_NONE;
+	}
 }

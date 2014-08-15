@@ -8,7 +8,7 @@ public abstract class WeightBase {
 	
 	public WeightBase(final String sFile, boolean bTrain) {
 		m_bTrain = bTrain;
-		m_sRecordPath = new String(sFile);
+		m_sRecordPath = sFile;
 		m_bRules = false;
 		m_bModified = false;
 	}

@@ -8,7 +8,6 @@ import chinese.pos.CTag;
 
 @SuppressWarnings("serial")
 public class CTagSetOfLabelsMap extends PackedScoreMap<CTagSetOfLabels> {
-	public static CDependencyLabel sCDL = new CDependencyLabel();
 
 	public CTagSetOfLabelsMap(String input_name, int table_size) {
 		super(input_name, table_size);
@@ -16,29 +15,32 @@ public class CTagSetOfLabelsMap extends PackedScoreMap<CTagSetOfLabels> {
 
 	@Override
 	public CTagSetOfLabels loadKeyFromString(String str) {
-		CTagSetOfLabels ctsol = new CTagSetOfLabels();
-		String[] args = str.split(sSplit);
-		CSetOfTags sot = new CSetOfTags();
-		sot.clear();
-		for (int i = 1; i < args.length; ++i) {
-			sCDL.load(args[i]);
-			sot.add(sCDL);
+		String[] args = str.split(" , ");
+		CSetOfTags tagset = new CSetOfTags();
+		String[] subargs = args[1].substring(2, args[1].length() - 1).split(" ");
+		if (!subargs[0].isEmpty()) {
+			for (int i = 0; i < subargs.length; ++i) {
+				tagset.add(CDependencyLabel.code(subargs[i]));
+			}
 		}
-		ctsol.allocate(new CTag(args[0]), sot);
-		return ctsol;
+		return new CTagSetOfLabels(new CTag(args[0]), tagset);
 	}
 
 	@Override
 	public String generateStringFromKey(CTagSetOfLabels key) {
 		String retval = key.first().toString() + " , [ ";
 		CSetOfTags sot = key.second();
-		for (int i = 0; i < CDependencyLabel.COUNT; ++i) {
-			sCDL.load(i);
-			if (sot.contains(sCDL)) {
-				retval += (sCDL.toString() + " ");
+		for (int label = 0; label < CDependencyLabel.COUNT; ++label) {
+			if (sot.contains(label)) {
+				retval += (CDependencyLabel.str(label) + " ");
 			}
 		}
 		return retval + "]";
+	}
+
+	@Override
+	public CTagSetOfLabels allocate_key(CTagSetOfLabels key) {
+		return new CTagSetOfLabels(key);
 	}
 
 }

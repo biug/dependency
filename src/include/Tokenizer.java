@@ -1,18 +1,18 @@
 package include;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Vector;
 
 public class Tokenizer {
 	
-	protected LinkedHashMap<String, Integer> m_mapTokens;
+	protected HashMap<String, Integer> m_mapTokens;
 	protected Vector<String> m_vecKeys;
 	protected int m_nWaterMark;
 	protected int m_nStartingToken;
 	
 	public Tokenizer(int nTokenStartsFrom) {
 		m_vecKeys = new Vector<String>();
-		m_mapTokens = new LinkedHashMap<String, Integer>();
+		m_mapTokens = new HashMap<String, Integer>();
 		m_nWaterMark = m_nStartingToken = nTokenStartsFrom;
 	}
 	

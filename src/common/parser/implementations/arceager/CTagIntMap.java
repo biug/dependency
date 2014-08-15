@@ -13,15 +13,18 @@ public class CTagIntMap extends PackedScoreMap<CTagInt> {
 
 	@Override
 	public CTagInt loadKeyFromString(String str) {
-		CTagInt cti = new CTagInt();
-		String[] args = str.split(sSplit);
-		cti.allocate(new CTag(args[0]), new Integer(args[1]));
-		return cti;
+		String[] args = str.split(" , ");
+		return new CTagInt(new CTag(args[0]), Integer.valueOf(args[1]));
 	}
 
 	@Override
 	public String generateStringFromKey(CTagInt key) {
 		return key.first().toString() + " , " + key.second().toString();
+	}
+
+	@Override
+	public CTagInt allocate_key(CTagInt key) {
+		return new CTagInt(key);
 	}
 
 }

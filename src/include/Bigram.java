@@ -5,7 +5,6 @@ public abstract class Bigram<Unigram> {
 	protected int m_nHash;
 	protected Unigram m_unigram1;
 	protected Unigram m_unigram2;
-	protected boolean m_bAllocated;
 	
 	protected abstract Unigram create_unigram(Unigram u);
 	
@@ -13,43 +12,24 @@ public abstract class Bigram<Unigram> {
 		m_nHash = 0;
 		m_unigram1 = null;
 		m_unigram2 = null;
-		m_bAllocated = false;
 	}
 	
-	public Bigram(final Bigram<Unigram> w) {
-		if (w.m_bAllocated) {
-			m_unigram1 = create_unigram(w.m_unigram1);
-			m_unigram2 = create_unigram(w.m_unigram2);
-			m_nHash = w.m_nHash;
-			m_bAllocated = true;
-		} else {
-			m_unigram1 = w.m_unigram1;
-			m_unigram2 = w.m_unigram2;
-			m_nHash = w.m_nHash;
-			m_bAllocated = false;
-		}
-	}
-	
-	public void allocate(final Unigram w1, final Unigram w2) {
-		clear();
-		m_unigram1 = create_unigram(w1);
-		m_unigram2 = create_unigram(w2);
+	public Bigram(Bigram<Unigram> bi) {
+		m_unigram1 = create_unigram(bi.m_unigram1);
+		m_unigram2 = create_unigram(bi.m_unigram2);
 		computehash();
-		m_bAllocated = true;
+	}
+	
+	public Bigram(final Unigram u1, final Unigram u2) {
+		m_unigram1 = create_unigram(u1);
+		m_unigram2 = create_unigram(u2);
+		computehash();
 	}
 	
 	public void refer(final Unigram s1, final Unigram s2) {
 		m_unigram1 = s1;
 		m_unigram2 = s2;
 		computehash();
-		m_bAllocated = false;
-	}
-	
-	public void clear() {
-		m_nHash = 0;
-		m_unigram1 = null;
-		m_unigram2 = null;
-		m_bAllocated = false;
 	}
 	
 	public final Unigram first() {

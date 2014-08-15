@@ -22,4 +22,9 @@ public class CoNLLFeatsMap extends PackedScoreMap<CoNLLFeats> {
 		return key.toString();
 	}
 
+	@Override
+	public CoNLLFeats allocate_key(CoNLLFeats key) {
+		return new CoNLLFeats(key);
+	}
+
 }

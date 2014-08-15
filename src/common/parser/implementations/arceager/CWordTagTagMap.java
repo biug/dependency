@@ -14,15 +14,18 @@ public class CWordTagTagMap extends PackedScoreMap<CWordTagTag> {
 
 	@Override
 	public CWordTagTag loadKeyFromString(String str) {
-		CWordTagTag cwtt = new CWordTagTag();
-		String[] args = str.split(sSplit);
-		cwtt.allocate(new CWord(args[0]), new CTag(args[1]), new CTag(args[2]));
-		return cwtt;
+		String[] args = str.split(" , ");
+		return new CWordTagTag(new CWord(args[0].substring(1, args[0].length() - 1)), new CTag(args[1]), new CTag(args[2]));
 	}
 
 	@Override
 	public String generateStringFromKey(CWordTagTag key) {
 		return "[" + key.first().toString() + "] , " + key.second().toString() + " , " + key.third().toString();
+	}
+
+	@Override
+	public CWordTagTag allocate_key(CWordTagTag key) {
+		return new CWordTagTag(key);
 	}
 
 
