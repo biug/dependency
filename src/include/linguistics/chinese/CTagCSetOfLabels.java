@@ -3,7 +3,7 @@ package include.linguistics.chinese;
 import include.Tuple2;
 import chinese.pos.CTag;
 
-public class CTagCSetOfLabels extends Tuple2<CTag, CSetOfTags> {
+public final class CTagCSetOfLabels extends Tuple2<CTag, CSetOfTags> {
 	
 	public CTagCSetOfLabels() {
 		super();
@@ -18,12 +18,12 @@ public class CTagCSetOfLabels extends Tuple2<CTag, CSetOfTags> {
 	}
 
 	@Override
-	public CTag create_object1(CTag a) {
+	public CTag create_object1(final CTag a) {
 		return a;
 	}
 
 	@Override
-	public CSetOfTags create_object2(CSetOfTags b) {
+	public CSetOfTags create_object2(final CSetOfTags b) {
 		return new CSetOfTags(b);
 	}
 	

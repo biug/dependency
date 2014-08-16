@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Iterator;
 
 @SuppressWarnings("serial")
-public class LabeledDependencyParser extends LabeledDependencyTree {
+public final class LabeledDependencyParser extends LabeledDependencyTree {
 	public boolean readSentenceFromInputStream(BufferedReader br) throws IOException {
 		this.clear();
 		String line;

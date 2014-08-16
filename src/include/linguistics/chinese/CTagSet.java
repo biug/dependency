@@ -22,17 +22,17 @@ public class CTagSet {
 		m_nHash = hash;
 	}
 	
-	private void attach(int c) {
+	private final void attach(final int c) {
 		m_nHash = ((m_nHash << CTag.SIZE) | c);
 	}
 	
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		return m_nHash;
 	}
 	
 	@Override
-	public boolean equals(Object o) {
+	public final boolean equals(final Object o) {
 		return m_nHash == ((CTagSet)o).m_nHash;
 	}
 	
@@ -50,7 +50,7 @@ public class CTagSet {
 		return retval;
 	}
 	
-	public void load(final String s) {
+	public final void load(final String s) {
 		clear();
 		String[] args = s.substring(2, s.length() - 2).split(" ");
 		for (int i = 0; i < size; ++i) {
@@ -58,11 +58,11 @@ public class CTagSet {
 		}
 	}
 	
-	public void load(final int i) {
+	public final void load(final int i) {
 		m_nHash = i;
 	}
 	
-	public void clear() {
+	public final void clear() {
 		m_nHash = 0;
 	}
 }

@@ -1,7 +1,7 @@
 package include.linguistics;
 
 
-public class CoNLLCPOS extends GenericTag {
+public final class CoNLLCPOS extends GenericTag {
 
 	public static GenericTagset tagset = new GenericTagset();
 	

@@ -4,24 +4,24 @@ import include.learning.perceptron.PackedScoreMap;
 import chinese.pos.CTag;
 
 @SuppressWarnings("serial")
-public class CTagMap extends PackedScoreMap<CTag> {
+public final class CTagMap extends PackedScoreMap<CTag> {
 
-	public CTagMap(String input_name, int table_size) {
+	public CTagMap(final String input_name, final int table_size) {
 		super(input_name, table_size);
 	}
 
 	@Override
-	public CTag loadKeyFromString(String str) {
+	public CTag loadKeyFromString(final String str) {
 		return new CTag(str);
 	}
 
 	@Override
-	public String generateStringFromKey(CTag key) {
+	public String generateStringFromKey(final CTag key) {
 		return key.toString();
 	}
 
 	@Override
-	public CTag allocate_key(CTag key) {
+	public CTag allocate_key(final CTag key) {
 		return key;
 	}
 

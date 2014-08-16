@@ -6,7 +6,7 @@ public abstract class Bigram<Unigram> {
 	protected Unigram m_unigram1;
 	protected Unigram m_unigram2;
 	
-	protected abstract Unigram create_unigram(Unigram u);
+	protected abstract Unigram create_unigram(final Unigram u);
 	
 	public Bigram() {
 		m_nHash = 0;
@@ -14,7 +14,7 @@ public abstract class Bigram<Unigram> {
 		m_unigram2 = null;
 	}
 	
-	public Bigram(Bigram<Unigram> bi) {
+	public Bigram(final Bigram<Unigram> bi) {
 		m_unigram1 = create_unigram(bi.m_unigram1);
 		m_unigram2 = create_unigram(bi.m_unigram2);
 		computehash();
@@ -26,7 +26,7 @@ public abstract class Bigram<Unigram> {
 		computehash();
 	}
 	
-	public void refer(final Unigram s1, final Unigram s2) {
+	public final void refer(final Unigram s1, final Unigram s2) {
 		m_unigram1 = s1;
 		m_unigram2 = s2;
 		computehash();
@@ -41,18 +41,18 @@ public abstract class Bigram<Unigram> {
 	}
 	
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		return m_nHash;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public boolean equals(Object o) {
+	public final boolean equals(Object o) {
 		return m_unigram1.equals(((Bigram<Unigram>)o).m_unigram1) &&
 				m_unigram2.equals(((Bigram<Unigram>)o).m_unigram2);
 	}
 	
-	protected void computehash() {
+	protected final void computehash() {
 		m_nHash = (m_unigram1.hashCode() << 5) - m_unigram1.hashCode() + m_unigram2.hashCode();
 	}
 }

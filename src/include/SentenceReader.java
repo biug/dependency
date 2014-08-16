@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
-public class SentenceReader {
+public final class SentenceReader {
 	protected BufferedReader m_iReader;
 	protected int m_nLine;
 	

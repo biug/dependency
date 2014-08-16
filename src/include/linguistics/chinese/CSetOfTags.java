@@ -2,10 +2,10 @@ package include.linguistics.chinese;
 
 import chinese.dependency.label.CDependencyLabel;
 
-public class CSetOfTags {
+public final class CSetOfTags {
 	private int h_code;
 	
-	public void print(String s) {
+	public void print(final String s) {
 		System.out.print(s + "[ ");
 		for (int label = 0; label < CDependencyLabel.COUNT; ++label) {
 			if (this.contains(label)) System.out.print(CDependencyLabel.str(label) + " ");
@@ -55,11 +55,11 @@ public class CSetOfTags {
 	}
 	
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		return h_code == ((CSetOfTags)o).h_code;
 	}
 	
-	public void set(CSetOfTags csot) {
-		h_code = csot.h_code;
+	public void set(final CSetOfTags tagset) {
+		h_code = tagset.h_code;
 	}
 }

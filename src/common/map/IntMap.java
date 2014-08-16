@@ -3,7 +3,7 @@ package common.map;
 import include.learning.perceptron.PackedScoreMap;
 
 @SuppressWarnings("serial")
-public class IntMap extends PackedScoreMap<Integer> {
+public final class IntMap extends PackedScoreMap<Integer> {
 
 	public IntMap(String input_name, int table_size) {
 		super(input_name, table_size);

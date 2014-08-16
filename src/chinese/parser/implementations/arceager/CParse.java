@@ -1,4 +1,4 @@
-package common.parser;
+package chinese.parser.implementations.arceager;
 
 import include.SentenceReader;
 import include.linguistics.TwoStringVector;
@@ -9,11 +9,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import common.parser.implementations.arceager.CDepParser;
+import common.parser.LabeledDependencyParser;
 import common.parser.implementations.arceager.Macros;
 
-public class Parse {
-	public void process(final String sInputFile, final String sOutputFile, final String sFeatureFile, int nBest, final boolean bScores) {
+public final class CParse {
+	public void process(final String sInputFile, final String sOutputFile, final String sFeatureFile, final int nBest, final boolean bScores) {
 		System.out.println("Parsing started");
 		
 		long time_start = System.currentTimeMillis();

@@ -31,39 +31,39 @@ public abstract class Tuple3<A, B, C> {
 		computehash();
 	}
 	
-	public void refer(final A w1, final B w2, final C w3) {
+	public final void refer(final A w1, final B w2, final C w3) {
 		m_object1 = w1;
 		m_object2 = w2;
 		m_object3 = w3;
 		computehash();
 	}
 	
-	public A first() {
+	public final A first() {
 		return m_object1;
 	}
 	
-	public B second() {
+	public final B second() {
 		return m_object2;
 	}
 	
-	public C third() {
+	public final C third() {
 		return m_object3;
 	}
 	
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		return m_nHash;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public boolean equals(Object o) {
+	public final boolean equals(final Object o) {
 		return m_object1.equals(((Tuple3<A, B, C>)o).m_object1) &&
 				m_object2.equals(((Tuple3<A, B, C>)o).m_object2) &&
 				m_object3.equals(((Tuple3<A, B, C>)o).m_object3);
 	}
 	
-	protected void computehash() {
+	protected final void computehash() {
 		m_nHash = (m_object1.hashCode() << 5) - m_object1.hashCode() +
 				(m_object2.hashCode() << 5) - (m_object2.hashCode() << 1) - m_object2.hashCode() +
 				m_object3.hashCode(); 

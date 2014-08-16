@@ -4,26 +4,26 @@ import include.learning.perceptron.PackedScoreMap;
 import include.linguistics.CoNLLFeats;
 
 @SuppressWarnings("serial")
-public class CoNLLFeatsMap extends PackedScoreMap<CoNLLFeats> {
+public final class CoNLLFeatsMap extends PackedScoreMap<CoNLLFeats> {
 
-	public CoNLLFeatsMap(String input_name, int table_size) {
+	public CoNLLFeatsMap(final String input_name, final int table_size) {
 		super(input_name, table_size);
 	}
 
 	@Override
-	public CoNLLFeats loadKeyFromString(String str) {
+	public CoNLLFeats loadKeyFromString(final String str) {
 		CoNLLFeats cf = new CoNLLFeats();
 		cf.load(str);
 		return cf;
 	}
 
 	@Override
-	public String generateStringFromKey(CoNLLFeats key) {
+	public String generateStringFromKey(final CoNLLFeats key) {
 		return key.toString();
 	}
 
 	@Override
-	public CoNLLFeats allocate_key(CoNLLFeats key) {
+	public CoNLLFeats allocate_key(final CoNLLFeats key) {
 		return new CoNLLFeats(key);
 	}
 

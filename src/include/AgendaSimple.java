@@ -2,7 +2,7 @@ package include;
 
 import common.parser.implementations.arceager.ScoredAction;
 
-public class AgendaSimple {
+public final class AgendaSimple {
 	private int m_nMaxSize;
 	private ScoredAction m_lBeam[];
 	private int m_nBeamSize;
@@ -42,7 +42,7 @@ public class AgendaSimple {
 		push_heap(index);
 	}
 	
-	public AgendaSimple(int nBeamSize) {
+	public AgendaSimple(final int nBeamSize) {
 		m_nMaxSize = nBeamSize;
 		m_lBeam = new ScoredAction[nBeamSize];
 		for (int i = 0; i < nBeamSize; ++i) {

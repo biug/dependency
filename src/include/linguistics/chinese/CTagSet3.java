@@ -1,6 +1,6 @@
 package include.linguistics.chinese;
 
-public class CTagSet3 extends CTagSet {
+public final class CTagSet3 extends CTagSet {
 	
 	public CTagSet3() {
 		super(3);

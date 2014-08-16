@@ -3,8 +3,7 @@ package include.linguistics.chinese;
 import include.linguistics.Word;
 import chinese.pos.CTag;
 
-public class CTaggedWord {
-	public final static String sSeparator = "_";
+public final class CTaggedWord {
 	
 	public Word word;
 	public CTag tag;
@@ -30,7 +29,7 @@ public class CTaggedWord {
 	}
 	
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		return word.equals(((CTaggedWord)o).word) && tag.equals(((CTaggedWord)o).tag);
 	}
 	

@@ -9,25 +9,24 @@ import java.util.Iterator;
 @SuppressWarnings("serial")
 // remove "m_zero"
 public abstract class PackedScoreMap<K> extends HashMap<K, PackedScore> {
-	public static final String sSplit = ",";
 	
 	public String name;
 	public int count;
 
-	public PackedScoreMap(String input_name, int table_size) {
+	public PackedScoreMap(final String input_name, final int table_size) {
 		super();
 		name = input_name;
 		count = 0;
 	}
 	
-	public void getScore(PackedScoreType o, final K key, final int which) {
+	public final void getScore(final PackedScoreType o, final K key, final int which) {
 		PackedScore ps = super.get(key);
 		if (ps != null) {
 			ps.add(o, which);
 		}
 	}
 	
-	public void updateScore(final K key, final int index, final int amount, final int round) {
+	public final void updateScore(final K key, final int index, final int amount, final int round) {
 		PackedScore ps = super.get(key);
 		if (ps == null) {
 			ps = new PackedScore();
@@ -36,7 +35,7 @@ public abstract class PackedScoreMap<K> extends HashMap<K, PackedScore> {
 		ps.updateCurrent(index, amount, round);
 	}
 	
-	public void getOrUpdateScore(PackedScoreType out, final K key, final int index, final int which, final int amount, final int round) {
+	public final void getOrUpdateScore(final PackedScoreType out, final K key, final int index, final int which, final int amount, final int round) {
 		if (amount == 0) {
 			PackedScore ps = super.get(key);
 			if (ps != null) {
@@ -47,15 +46,15 @@ public abstract class PackedScoreMap<K> extends HashMap<K, PackedScore> {
 		}
 	}
 	
-	public void getOrUpdateScore(PackedScoreType out, final K key, final int index, final int which, final int amount) {
+	public final void getOrUpdateScore(final PackedScoreType out, final K key, final int index, final int which, final int amount) {
 		this.getOrUpdateScore(out, key, index, which, amount, 0);
 	}
 	
-	public void getOrUpdateScore(PackedScoreType out, final K key, final int index, final int which) {
+	public final void getOrUpdateScore(final PackedScoreType out, final K key, final int index, final int which) {
 		this.getScore(out, key, which);
 	}
 	
-	public void computeAverage(int round) {
+	public final void computeAverage(final int round) {
 		count = 0;
 		Iterator<java.util.Map.Entry<K, PackedScore>> iter = this.entrySet().iterator();
 		while (iter.hasNext()) {
@@ -65,7 +64,7 @@ public abstract class PackedScoreMap<K> extends HashMap<K, PackedScore> {
 		}
 	}
 	
-	public void clearScore() {
+	public final void clearScore() {
 		Iterator<java.util.Map.Entry<K, PackedScore>> iter = this.entrySet().iterator();
 		while (iter.hasNext()) {
 			java.util.Map.Entry<K, PackedScore> entry = iter.next();
@@ -73,7 +72,7 @@ public abstract class PackedScoreMap<K> extends HashMap<K, PackedScore> {
 		}
 	}
 	
-	public void loadScoresFromFileStream(BufferedReader br) throws IOException {
+	public final void loadScoresFromFileStream(BufferedReader br) throws IOException {
 		String s = br.readLine();
 		if (!(s.substring(0, this.name.length()).equals(this.name))) {
 			System.out.println("score_map " + this.name + " not matched");
@@ -88,7 +87,7 @@ public abstract class PackedScoreMap<K> extends HashMap<K, PackedScore> {
 		}
 	}
 	
-	public void saveScoresToFileStream(BufferedWriter bw) throws IOException {
+	public final void saveScoresToFileStream(BufferedWriter bw) throws IOException {
 		if (this.count != 0) {
 			bw.write(this.name + " " + this.count);
 		} else {
@@ -108,7 +107,7 @@ public abstract class PackedScoreMap<K> extends HashMap<K, PackedScore> {
 		bw.newLine();
 	}
 	
-	public abstract K allocate_key(K key);
-	public abstract K loadKeyFromString(String str);
-	public abstract String generateStringFromKey(K key);
+	public abstract K allocate_key(final K key);
+	public abstract K loadKeyFromString(final String str);
+	public abstract String generateStringFromKey(final K key);
 }

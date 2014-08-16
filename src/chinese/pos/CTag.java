@@ -1,6 +1,6 @@
 package chinese.pos;
 
-public class CTag {
+public final class CTag {
 	public final static String PENN_TAG_STRINGS[] = {
 		   "-NONE-",
 		   "-BEGIN-",
@@ -85,7 +85,9 @@ public class CTag {
 	}
 	
 	@Override
-	public int hashCode() { return m_code; }
+	public int hashCode() {
+		return m_code;
+	}
 	
 	@Override
 	public final String toString() {
@@ -102,7 +104,7 @@ public class CTag {
 	}
 	
 	@Override
-	public boolean equals(Object t) {
+	public boolean equals(final Object t) {
 		return m_code == ((CTag)t).m_code;
 	}
 	

@@ -4,7 +4,7 @@ import include.Tuple3;
 import include.linguistics.Word;
 import chinese.pos.CTag;
 
-public class WordCTagCTag extends Tuple3<Word, CTag, CTag> {
+public final class WordCTagCTag extends Tuple3<Word, CTag, CTag> {
 	
 	public WordCTagCTag() {
 		super();
@@ -14,22 +14,22 @@ public class WordCTagCTag extends Tuple3<Word, CTag, CTag> {
 		super((Tuple3<Word, CTag, CTag>)word_tag_tag);
 	}
 	
-	public WordCTagCTag(Word word, CTag tag1, CTag tag2) {
+	public WordCTagCTag(final Word word, final CTag tag1, final CTag tag2) {
 		super(word, tag1, tag2);
 	}
 
 	@Override
-	public Word create_object1(Word a) {
+	public Word create_object1(final Word a) {
 		return a;
 	}
 
 	@Override
-	public CTag create_object2(CTag b) {
+	public CTag create_object2(final CTag b) {
 		return b;
 	}
 
 	@Override
-	public CTag create_object3(CTag c) {
+	public CTag create_object3(final CTag c) {
 		return c;
 	}
 

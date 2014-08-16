@@ -2,7 +2,7 @@ package include.learning.perceptron;
 
 // score type is int
 
-public class Score {
+public final class Score {
 	public final static int eNonAverage = 0;
 	public final static int eAverage = 1;
 	
@@ -49,7 +49,7 @@ public class Score {
 		}
 	}
 	
-	public int score() {
+	public final int score() {
 		return current;
 	}
 	

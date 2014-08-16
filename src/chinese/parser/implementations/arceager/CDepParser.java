@@ -1,4 +1,4 @@
-package common.parser.implementations.arceager;
+package chinese.parser.implementations.arceager;
 
 import include.AgendaSimple;
 import include.BiString;
@@ -30,8 +30,11 @@ import chinese.dependency.label.CDependencyLabel;
 import chinese.pos.CTag;
 import common.parser.DepParserBase;
 import common.parser.LabeledDependencyParser;
+import common.parser.implementations.arceager.LabeledAction;
+import common.parser.implementations.arceager.Macros;
+import common.parser.implementations.arceager.ScoredAction;
 
-public class CDepParser extends DepParserBase {
+public final class CDepParser extends DepParserBase {
 	
 	private LabeledAgendaBeam m_Agenda;
 	private AgendaSimple m_Beam;
@@ -75,19 +78,19 @@ public class CDepParser extends DepParserBase {
 	public static final CTaggedWord empty_taggedword = new CTaggedWord();
 	public static final CSetOfTags empty_setoftags = new CSetOfTags();
 	
-	private final int encodeTags(final CTag tag1, final CTag tag2) {
+	private int encodeTags(final CTag tag1, final CTag tag2) {
 		return ((tag1.hashCode() << (CTag.SIZE)) | (tag2.hashCode()));
 	}
 	
-	private final int encodeTags(final CTag tag1, final CTag tag2, final CTag tag3) {
+	private int encodeTags(final CTag tag1, final CTag tag2, final CTag tag3) {
 		return ((tag1.hashCode() << (CTag.SIZE << 1)) | (tag2.hashCode() << (CTag.SIZE)) | (tag3.hashCode()));
 	}
 	
-	private final int minVal(final int n1, final int n2) {
+	private int minVal(final int n1, final int n2) {
 		return n1 < n2 ? n1 : n2; 
 	}
 
-	public CDepParser(String sFeatureDBPath, boolean bTrain, boolean bCoNLL) {
+	public CDepParser(final String sFeatureDBPath, final boolean bTrain, final boolean bCoNLL) {
 		super(sFeatureDBPath, bTrain, bCoNLL);
 		
 		m_Agenda = new LabeledAgendaBeam(Macros.AGENDA_SIZE);
@@ -106,7 +109,7 @@ public class CDepParser extends DepParserBase {
 		pCandidate = new CLabeledStateItem(m_lCache);
 		correctState = new CLabeledStateItem(m_lCache);
 		
-		packed_scores = new PackedScoreType(Action.MAX);
+		packed_scores = new PackedScoreType(LabeledAction.MAX);
 		
 		trainSentence = new TwoStringVector();
 		
@@ -132,7 +135,7 @@ public class CDepParser extends DepParserBase {
 		scoredaction = new ScoredAction();
 	}
 	
-	public CDepParser(String sFeatureDBPath, boolean bTrain) {
+	public CDepParser(final String sFeatureDBPath, final boolean bTrain) {
 		super(sFeatureDBPath, bTrain, false);
 		
 		m_Agenda = new LabeledAgendaBeam(Macros.AGENDA_SIZE);
@@ -151,7 +154,7 @@ public class CDepParser extends DepParserBase {
 		pCandidate = new CLabeledStateItem(m_lCache);
 		correctState = new CLabeledStateItem(m_lCache);
 		
-		packed_scores = new PackedScoreType(Action.MAX);
+		packed_scores = new PackedScoreType(LabeledAction.MAX);
 		
 		trainSentence = new TwoStringVector();
 		
@@ -180,7 +183,7 @@ public class CDepParser extends DepParserBase {
 		scoredaction = new ScoredAction();
 	}
 	
-	public void getOrUpdateStackScore(CLabeledStateItem item, PackedScoreType retval, final int action, int amount, int round) {
+	public void getOrUpdateStackScore(final CLabeledStateItem item, PackedScoreType retval, final int action, final int amount, final int round) {
 		
 		final int st_index = item.stackempty() ? -1 : item.stacktop();
 		final int sth_index = st_index == -1 ? -1 : item.head(st_index);
@@ -403,7 +406,6 @@ public class CDepParser extends DepParserBase {
 			cweight.m_mapN0wla.getOrUpdateScore(retval, word_int, action, m_nScoreIndex, amount, round);
 			tag_int.refer(n0_tag, n0_larity);
 			cweight.m_mapN0tla.getOrUpdateScore(retval, tag_int, action, m_nScoreIndex, amount, round);
-			
 		}
 
 		if (st_index != -1){
@@ -425,11 +427,11 @@ public class CDepParser extends DepParserBase {
 		}
 	}
 
-	public void getOrUpdateStackScore(CLabeledStateItem item, PackedScoreType retval, final int action) {
+	public void getOrUpdateStackScore(final CLabeledStateItem item, PackedScoreType retval, final int action) {
 		getOrUpdateStackScore(item, retval, action, 0, 0);
 	}
 	
-	public void updateScoreForState(final CLabeledStateItem from, final CLabeledStateItem output, final int amount, int len) {
+	public void updateScoreForState(final CLabeledStateItem from, final CLabeledStateItem output, final int amount, final int len) {
 		itemForState.copy(from);
 		while (!itemForState.equals(output)) {
 			int action = itemForState.FollowMove(output);
@@ -438,7 +440,7 @@ public class CDepParser extends DepParserBase {
 		}
 	}
 	
-	public void updateScoreForStates(final CLabeledStateItem output, final CLabeledStateItem correct, int amount_add, int amount_subtract, int len) {
+	public void updateScoreForStates(final CLabeledStateItem output, final CLabeledStateItem correct, final int amount_add, final int amount_subtract, final int len) {
 		itemForStates.clear();
 		while (!itemForStates.equals(output)) {
 			int action = itemForStates.FollowMove(output);
@@ -454,8 +456,8 @@ public class CDepParser extends DepParserBase {
 		++m_nTotalErrors;
 	}
 	
-	public void reduce(final CLabeledStateItem item, final PackedScoreType scores, boolean isprint) {
-		scoredaction.action = Action.REDUCE;
+	public void reduce(final CLabeledStateItem item, final PackedScoreType scores, final boolean isprint) {
+		scoredaction.action = LabeledAction.REDUCE;
 		scoredaction.score = item.score + scores.at(scoredaction.action);
 		if (isprint) {
 			System.out.println("reduce " + scoredaction.action + " " + scoredaction.score);
@@ -463,9 +465,9 @@ public class CDepParser extends DepParserBase {
 		m_Beam.insertItem(scoredaction);
 	}
 	
-	public void arcleft(final CLabeledStateItem item, final PackedScoreType scores, boolean isprint) {
+	public void arcleft(final CLabeledStateItem item, final PackedScoreType scores, final boolean isprint) {
 		for (int i = CDependencyLabel.FIRST; i < CDependencyLabel.COUNT; ++i) {
-			scoredaction.action = Action.encodeAction(Action.ARC_LEFT, i);
+			scoredaction.action = LabeledAction.encodeAction(LabeledAction.ARC_LEFT, i);
 			scoredaction.score = item.score + scores.at(scoredaction.action);
 			if (isprint) {
 				System.out.println("arcleft " + i + " " + scoredaction.action + " " + scoredaction.score);
@@ -474,9 +476,9 @@ public class CDepParser extends DepParserBase {
 		}
 	}
 	
-	public void arcright(final CLabeledStateItem item, final PackedScoreType scores, boolean isprint) {
+	public void arcright(final CLabeledStateItem item, final PackedScoreType scores, final boolean isprint) {
 		for (int i = CDependencyLabel.FIRST; i < CDependencyLabel.COUNT; ++i) {
-			scoredaction.action = Action.encodeAction(Action.ARC_RIGHT, i);
+			scoredaction.action = LabeledAction.encodeAction(LabeledAction.ARC_RIGHT, i);
 			scoredaction.score = item.score + scores.at(scoredaction.action);
 			if (isprint) {
 				System.out.println("arcright " + i + " " + scoredaction.action + " " + scoredaction.score);
@@ -485,8 +487,8 @@ public class CDepParser extends DepParserBase {
 		}
 	}
 	
-	public void shift(final CLabeledStateItem item, final PackedScoreType scores, boolean isprint) {
-		scoredaction.action = Action.SHIFT;
+	public void shift(final CLabeledStateItem item, final PackedScoreType scores, final boolean isprint) {
+		scoredaction.action = LabeledAction.SHIFT;
 		scoredaction.score = item.score + scores.at(scoredaction.action);
 		if (isprint) {
 			System.out.println("shift " + scoredaction.action + " " + scoredaction.score);
@@ -494,8 +496,8 @@ public class CDepParser extends DepParserBase {
 		m_Beam.insertItem(scoredaction);
 	}
 	
-	public void poproot(final CLabeledStateItem item, final PackedScoreType scores, boolean isprint) {
-		scoredaction.action = Action.POP_ROOT;
+	public void poproot(final CLabeledStateItem item, final PackedScoreType scores, final boolean isprint) {
+		scoredaction.action = LabeledAction.POP_ROOT;
 		scoredaction.score = item.score + scores.at(scoredaction.action);
 		if (isprint) {
 			System.out.println("poproot " + scoredaction.action + " " + scoredaction.score);
@@ -504,14 +506,14 @@ public class CDepParser extends DepParserBase {
 	}
 	
 	public void reduce(final CLabeledStateItem item, final PackedScoreType scores) {
-		scoredaction.action = Action.REDUCE;
+		scoredaction.action = LabeledAction.REDUCE;
 		scoredaction.score = item.score + scores.at(scoredaction.action);
 		m_Beam.insertItem(scoredaction);
 	}
 	
 	public void arcleft(final CLabeledStateItem item, final PackedScoreType scores) {
 		for (int i = CDependencyLabel.FIRST; i < CDependencyLabel.COUNT; ++i) {
-			scoredaction.action = Action.encodeAction(Action.ARC_LEFT, i);
+			scoredaction.action = LabeledAction.encodeAction(LabeledAction.ARC_LEFT, i);
 			scoredaction.score = item.score + scores.at(scoredaction.action);
 			m_Beam.insertItem(scoredaction);
 		}
@@ -519,25 +521,25 @@ public class CDepParser extends DepParserBase {
 	
 	public void arcright(final CLabeledStateItem item, final PackedScoreType scores) {
 		for (int i = CDependencyLabel.FIRST; i < CDependencyLabel.COUNT; ++i) {
-			scoredaction.action = Action.encodeAction(Action.ARC_RIGHT, i);
+			scoredaction.action = LabeledAction.encodeAction(LabeledAction.ARC_RIGHT, i);
 			scoredaction.score = item.score + scores.at(scoredaction.action);
 			m_Beam.insertItem(scoredaction);
 		}
 	}
 	
 	public void shift(final CLabeledStateItem item, final PackedScoreType scores) {
-		scoredaction.action = Action.SHIFT;
+		scoredaction.action = LabeledAction.SHIFT;
 		scoredaction.score = item.score + scores.at(scoredaction.action);
 		m_Beam.insertItem(scoredaction);
 	}
 	
 	public void poproot(final CLabeledStateItem item, final PackedScoreType scores) {
-		scoredaction.action = Action.POP_ROOT;
+		scoredaction.action = LabeledAction.POP_ROOT;
 		scoredaction.score = item.score + scores.at(scoredaction.action);
 		m_Beam.insertItem(scoredaction);
 	}
 	
-	public void work(int round, final boolean bTrain, final TwoStringVector sentence, LabeledDependencyParser[] retval, LabeledDependencyParser correct, int nBest, int[] scores) {
+	public void work(final int round, final boolean bTrain, final TwoStringVector sentence, LabeledDependencyParser[] retval, final LabeledDependencyParser correct, final int nBest, int[] scores) {
 		final int length = sentence.size();
 		CLabeledStateItem pGenerator;
 		
@@ -569,7 +571,7 @@ public class CDepParser extends DepParserBase {
 			for (int j = 0, agenda_size = m_Agenda.generatorSize(); j < agenda_size; ++j) {
 				m_Beam.clear();
 				packed_scores.reset();
-				getOrUpdateStackScore(pGenerator, packed_scores, Action.NO_ACTION);
+				getOrUpdateStackScore(pGenerator, packed_scores, LabeledAction.NO_ACTION);
 				if (pGenerator.size() == length) {
 					if (pGenerator.stacksize() > 1) {
 						reduce(pGenerator, packed_scores);
@@ -635,8 +637,8 @@ public class CDepParser extends DepParserBase {
 	}
 
 	@Override
-	public void parse(TwoStringVector sentence, LabeledDependencyParser[] retval,
-			int nBest, int[] scores) {
+	public void parse(final TwoStringVector sentence, LabeledDependencyParser[] retval,
+			final int nBest, int[] scores) {
 		for (int i = 0; i < nBest; ++i) {
 			retval[i].clear();
 			if (scores != null) scores[i] = 0;
@@ -645,7 +647,7 @@ public class CDepParser extends DepParserBase {
 	}
 
 	@Override
-	public void train(LabeledDependencyParser correct, int round) {
+	public void train(final LabeledDependencyParser correct, final int round) {
 		trainSentence.clear();
 		if (correct != null) {
 			Iterator<LabeledDependencyTreeNode> itr = correct.iterator();

@@ -1,11 +1,11 @@
 package include.learning.perceptron;
 
-public class PackedScoreType {
+public final class PackedScoreType {
 	private int packed_size;
 	
 	protected int scores[];
 	
-	public PackedScoreType(int size) {
+	public PackedScoreType(final int size) {
 		packed_size = size;
 		scores = new int[size];
 	}
@@ -25,21 +25,21 @@ public class PackedScoreType {
 		return true;
 	}
 	
-	public int at(final int index) {
+	public final int at(final int index) {
 		return scores[index];
 	}
 	
-	public void set(final int index, final int score) {
+	public final void set(final int index, final int score) {
 		scores[index] = score;
 	}
 	
-	public void addOne(final int index, final int score) {
+	public final void addOne(final int index, final int score) {
 		scores[index] += score;
 	}
 	
-	public void add(final PackedScoreType i) {
+	public void add(final PackedScoreType score) {
 		for (int index = 0; index < packed_size; ++index) {
-			scores[index] += i.scores[index];
+			scores[index] += score.scores[index];
 		}
 	}
 }

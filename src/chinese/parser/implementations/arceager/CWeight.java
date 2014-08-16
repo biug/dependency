@@ -1,4 +1,4 @@
-package common.parser.implementations.arceager;
+package chinese.parser.implementations.arceager;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -31,7 +31,7 @@ import common.map.WordMap;
 import common.map.WordWordIntMap;
 import common.parser.WeightBase;
 
-public class CWeight extends WeightBase {
+public final class CWeight extends WeightBase {
 	public static final int DEP_TABLE_SIZE = 1 << 17;
 	
 	public WordMap m_mapSTw;
@@ -140,7 +140,7 @@ public class CWeight extends WeightBase {
 	public CoNLLCPOSMap m_mapN1c;
 	public CoNLLFeatsMap m_mapN1f;
 	
-	public CWeight(final String sPath, boolean bTrain) {
+	public CWeight(final String sPath, final boolean bTrain) {
 		super(sPath, bTrain);
 		m_mapSTw = new WordMap("StackWord", DEP_TABLE_SIZE);
 		m_mapSTt = new CTagMap("StackTag", DEP_TABLE_SIZE);
@@ -521,7 +521,7 @@ public class CWeight extends WeightBase {
 		System.out.println("done.");
 	}
 	
-	public void computeAverageFeatureWeights(int round) {
+	public void computeAverageFeatureWeights(final int round) {
 		System.out.println("Computing averaged (total) feature vector...");
 		System.out.flush();
 

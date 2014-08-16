@@ -5,8 +5,8 @@ public abstract class Tuple2<A, B> {
 	protected A m_object1;
 	protected B m_object2;
 	
-	public abstract A create_object1(A a);
-	public abstract B create_object2(B b);
+	public abstract A create_object1(final A a);
+	public abstract B create_object2(final B b);
 	
 	public Tuple2() {
 		m_nHash = 0;
@@ -26,33 +26,33 @@ public abstract class Tuple2<A, B> {
 		computehash();
 	}
 	
-	public void refer(final A w1, final B w2) {
+	public final void refer(final A w1, final B w2) {
 		m_object1 = w1;
 		m_object2 = w2;
 		computehash();
 	}
 	
-	public A first() {
+	public final A first() {
 		return m_object1;
 	}
 	
-	public B second() {
+	public final B second() {
 		return m_object2;
 	}
 	
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		return m_nHash;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public boolean equals(Object o) {
+	public final boolean equals(final Object o) {
 		return m_object1.equals(((Tuple2<A, B>)o).m_object1) &&
 				m_object2.equals(((Tuple2<A, B>)o).m_object2);
 	}
 	
-	protected void computehash() {
+	protected final void computehash() {
 		m_nHash = (m_object1.hashCode() << 5) - m_object1.hashCode() + m_object2.hashCode(); 
 	}
 }

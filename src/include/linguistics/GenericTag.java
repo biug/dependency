@@ -20,18 +20,18 @@ public abstract class GenericTag {
 	}
 	
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		return m_code;
 	}
 	
 	@Override
-	public boolean equals(final Object o) {
+	public final boolean equals(final Object o) {
 		return m_code == ((GenericTag)o).m_code;
 	}
 	
 	public abstract void load(final String s);
 	
-	public void clear() {
+	public final void clear() {
 		m_code = NONE;
 	}
 	

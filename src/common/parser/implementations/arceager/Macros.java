@@ -2,7 +2,7 @@ package common.parser.implementations.arceager;
 
 import chinese.dependency.label.CDependencyLabel;
 
-public class Macros {
+public final class Macros {
 	public final static int DEP_LABEL_COUNT = CDependencyLabel.MAX_COUNT;
 	public final static int AGENDA_SIZE = 64;
 	public final static int MAX_SENTENCE_SIZE = 256;
@@ -10,7 +10,7 @@ public class Macros {
 	public final static int ARITY_DIRECTION_LEFT = 0;
 	public final static int ARITY_DIRECTION_RIGHT = 1;
 	
-	public final static int encodeLinkDistance(final int head_index, final int dep_index) {
+	public static int encodeLinkDistance(final int head_index, final int dep_index) {
 		int diff;
 		diff = head_index - dep_index;
 		if (diff < 0) {

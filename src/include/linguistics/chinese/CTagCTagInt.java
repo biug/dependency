@@ -3,7 +3,7 @@ package include.linguistics.chinese;
 import include.Tuple3;
 import chinese.pos.CTag;
 
-public class CTagCTagInt extends Tuple3<CTag, CTag, Integer> {
+public final class CTagCTagInt extends Tuple3<CTag, CTag, Integer> {
 	
 	public CTagCTagInt() {
 		super();
@@ -13,22 +13,22 @@ public class CTagCTagInt extends Tuple3<CTag, CTag, Integer> {
 		super((Tuple3<CTag, CTag, Integer>)tag_tag_int);
 	}
 	
-	public CTagCTagInt(CTag tag1, CTag tag2, Integer i) {
+	public CTagCTagInt(final CTag tag1, final CTag tag2, final Integer i) {
 		super(tag1, tag2, i);
 	}
 
 	@Override
-	public CTag create_object1(CTag a) {
+	public CTag create_object1(final CTag a) {
 		return a;
 	}
 
 	@Override
-	public CTag create_object2(CTag b) {
+	public CTag create_object2(final CTag b) {
 		return b;
 	}
 
 	@Override
-	public Integer create_object3(Integer c) {
+	public Integer create_object3(final Integer c) {
 		return c;
 	}
 

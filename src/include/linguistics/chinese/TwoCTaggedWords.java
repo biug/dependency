@@ -2,22 +2,22 @@ package include.linguistics.chinese;
 
 import include.Bigram;
 
-public class TwoCTaggedWords extends Bigram<CTaggedWord> {
+public final class TwoCTaggedWords extends Bigram<CTaggedWord> {
 	
 	public TwoCTaggedWords() {
 		super();
 	}
 	
-	public TwoCTaggedWords(TwoCTaggedWords twotaggedwords) {
+	public TwoCTaggedWords(final TwoCTaggedWords twotaggedwords) {
 		super((Bigram<CTaggedWord>)twotaggedwords);
 	}
 	
-	public TwoCTaggedWords(CTaggedWord w1, CTaggedWord w2) {
+	public TwoCTaggedWords(final CTaggedWord w1, final CTaggedWord w2) {
 		super(w1, w2);
 	}
 
 	@Override
-	protected CTaggedWord create_unigram(CTaggedWord u) {
+	protected CTaggedWord create_unigram(final CTaggedWord u) {
 		return new CTaggedWord(u);
 	}
 

@@ -2,7 +2,7 @@ package include.linguistics;
 
 import include.Bigram;
 
-public class TwoWords extends Bigram<Word> {
+public final class TwoWords extends Bigram<Word> {
 	
 	public TwoWords() {
 		super();
@@ -12,12 +12,12 @@ public class TwoWords extends Bigram<Word> {
 		super((Bigram<Word>)twowords);
 	}
 	
-	public TwoWords(Word w1, Word w2) {
+	public TwoWords(final Word w1, final Word w2) {
 		super(w1, w2);
 	}
 
 	@Override
-	protected Word create_unigram(Word u) {
+	protected Word create_unigram(final Word u) {
 		return u;
 	}
 

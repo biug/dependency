@@ -1,6 +1,6 @@
 package include.linguistics;
 
-public class LabeledDependencyTreeNode extends DependencyTreeNode {
+public final class LabeledDependencyTreeNode extends DependencyTreeNode {
 	public String label;
 	
 	public LabeledDependencyTreeNode() {
@@ -14,12 +14,12 @@ public class LabeledDependencyTreeNode extends DependencyTreeNode {
 	}
 	
 	@Override
-	public boolean equals(Object o) {
+	public final boolean equals(final Object o) {
 		return super.equals(o) && label.equals(((LabeledDependencyTreeNode)o).label);
 	}
 	
 	@Override
-	public String toString() {
+	public final String toString() {
 		return word + "\t" + tag +  "\t" + Integer.toString(head) + "\t" + label;
 	}
 }

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-public class PackedScore {
+public final class PackedScore {
 	public HashMap<Integer, Score> scores;
 	
 	public PackedScore() {
@@ -77,7 +77,7 @@ public class PackedScore {
 		return s;
 	}
 	
-	public void loadPackedScoreFromString(String str) {
+	public void loadPackedScoreFromString(final String str) {
 		String[] args = str.substring(2, str.length() - 2).split(" , ");
 		for (String subarg : args) {
 			String[] subargs = subarg.split(" : ");

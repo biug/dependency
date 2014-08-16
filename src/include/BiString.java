@@ -9,7 +9,7 @@ public class BiString extends Bigram<String> {
 	}
 
 	@Override
-	protected String create_unigram(String u) {
+	protected final String create_unigram(String u) {
 		return u;
 	}
 

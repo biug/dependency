@@ -7,14 +7,14 @@ import chinese.dependency.label.CDependencyLabel;
 import chinese.pos.CTag;
 
 @SuppressWarnings("serial")
-public class CTagCSetOfLabelsMap extends PackedScoreMap<CTagCSetOfLabels> {
+public final class CTagCSetOfLabelsMap extends PackedScoreMap<CTagCSetOfLabels> {
 
-	public CTagCSetOfLabelsMap(String input_name, int table_size) {
+	public CTagCSetOfLabelsMap(final String input_name, final int table_size) {
 		super(input_name, table_size);
 	}
 
 	@Override
-	public CTagCSetOfLabels loadKeyFromString(String str) {
+	public CTagCSetOfLabels loadKeyFromString(final String str) {
 		String[] args = str.split(" , ");
 		CSetOfTags tagset = new CSetOfTags();
 		String[] subargs = args[1].substring(2, args[1].length() - 1).split(" ");
@@ -27,7 +27,7 @@ public class CTagCSetOfLabelsMap extends PackedScoreMap<CTagCSetOfLabels> {
 	}
 
 	@Override
-	public String generateStringFromKey(CTagCSetOfLabels key) {
+	public String generateStringFromKey(final CTagCSetOfLabels key) {
 		String retval = key.first().toString() + " , [ ";
 		CSetOfTags sot = key.second();
 		for (int label = 0; label < CDependencyLabel.COUNT; ++label) {
@@ -39,7 +39,7 @@ public class CTagCSetOfLabelsMap extends PackedScoreMap<CTagCSetOfLabels> {
 	}
 
 	@Override
-	public CTagCSetOfLabels allocate_key(CTagCSetOfLabels key) {
+	public CTagCSetOfLabels allocate_key(final CTagCSetOfLabels key) {
 		return new CTagCSetOfLabels(key);
 	}
 

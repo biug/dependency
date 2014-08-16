@@ -1,6 +1,6 @@
 package include.linguistics;
 
-public class Word {
+public final class Word {
 	protected String m_sString;
 	
 	public Word() {
@@ -21,7 +21,7 @@ public class Word {
 	}
 	
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		return m_sString.equals(((Word)o).m_sString);
 	}
 	

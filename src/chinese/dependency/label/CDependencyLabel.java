@@ -1,6 +1,6 @@
 package chinese.dependency.label;
 
-public class CDependencyLabel {
+public final class CDependencyLabel {
 	
 	public static final String[] PENN_DEP_STRINGS = new String[] {
 	   "-NONE-",
@@ -74,7 +74,7 @@ public class CDependencyLabel {
 	}
 	
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		return m_code == ((CDependencyLabel)o).m_code;
 	}
 	

@@ -2,7 +2,7 @@ package common.parser;
 
 import common.parser.implementations.arceager.Macros;
 
-public class SuperTag {
+public final class SuperTag {
 	public static final int HL = 0;
 	public static final int HR = 1;
 	public static final int DL = 2;

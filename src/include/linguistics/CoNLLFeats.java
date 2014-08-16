@@ -1,6 +1,6 @@
 package include.linguistics;
 
-public class CoNLLFeats extends GenericTag {
+public final class CoNLLFeats extends GenericTag {
 	public static GenericTagset tagset = new GenericTagset();
 	
 	public CoNLLFeats() {

@@ -2,13 +2,13 @@ package main;
 
 import java.io.IOException;
 
-import common.parser.Parse;
-import common.parser.Train;
+import chinese.parser.implementations.arceager.CParse;
+import chinese.parser.implementations.arceager.CTrain;
 
 public class Main {
-	public static void train(String sInputFile, String sFeatureFile, int nRound) {
+	public static void train(final String sInputFile, final String sFeatureFile, final int nRound) {
 		long start = System.currentTimeMillis();
-		Train train = new Train();
+		CTrain train = new CTrain();
 		final int training_rounds = nRound;
 		System.out.println("Training started");
 		for (int i = 0; i < training_rounds; ++i) {
@@ -21,8 +21,8 @@ public class Main {
 		System.out.print("Training has finished successfully. ");
 		System.out.println("Total time taken is: " + ((System.currentTimeMillis() - start) / 1000.0));
 	}
-	public static void parse(String sInputFile, String sOutputFile, String sFeatureFile) {
-		Parse parse = new Parse();
+	public static void parse(final String sInputFile, final String sOutputFile, final String sFeatureFile) {
+		CParse parse = new CParse();
 		parse.process(sInputFile, sOutputFile, sFeatureFile, 1, false);
 	}
 	public static void main(String[] args) {

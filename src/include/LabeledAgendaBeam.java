@@ -1,8 +1,8 @@
 package include;
 
-import common.parser.implementations.arceager.CLabeledStateItem;
+import chinese.parser.implementations.arceager.CLabeledStateItem;
 
-public class LabeledAgendaBeam {
+public final class LabeledAgendaBeam {
 	private int m_nMaxSize;
 	private CLabeledStateItem m_lBeam[][];
 	private int m_nBeamSize[];
@@ -46,7 +46,7 @@ public class LabeledAgendaBeam {
 		push_heap(which, index);
 	}
 	
-	public LabeledAgendaBeam(int nBeamSize) {
+	public LabeledAgendaBeam(final int nBeamSize) {
 		m_nMaxSize = nBeamSize;
 		m_lBeam = new CLabeledStateItem[2][];
 		m_lBeam[0] = new CLabeledStateItem[m_nMaxSize];
@@ -59,7 +59,7 @@ public class LabeledAgendaBeam {
 		clear();
 	}
 	
-	public void clear(int which) {
+	public void clear(final int which) {
 		m_nBeamSize[which] = 0;
 	}
 	
@@ -134,7 +134,7 @@ public class LabeledAgendaBeam {
 		return item;
 	}
 	
-	public CLabeledStateItem generator(int n) {
+	public CLabeledStateItem generator(final int n) {
 		if (n >= m_nBeamSize[m_nGenerator]) {
 			return null;
 		}
@@ -149,7 +149,7 @@ public class LabeledAgendaBeam {
 		m_nBeamSize[m_nGenerator] = size;
 	}
 	
-	public void print(int len) {
+	public void print(final int len) {
 		for (int i = 0, max_size = m_nBeamSize[m_nGenerator]; i < max_size; ++i) {
 			m_lBeam[m_nGenerator][i].printstate(len);
 		}

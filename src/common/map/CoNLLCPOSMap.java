@@ -4,26 +4,26 @@ import include.learning.perceptron.PackedScoreMap;
 import include.linguistics.CoNLLCPOS;
 
 @SuppressWarnings("serial")
-public class CoNLLCPOSMap extends PackedScoreMap<CoNLLCPOS> {
+public final class CoNLLCPOSMap extends PackedScoreMap<CoNLLCPOS> {
 
-	public CoNLLCPOSMap(String input_name, int table_size) {
+	public CoNLLCPOSMap(final String input_name, final int table_size) {
 		super(input_name, table_size);
 	}
 
 	@Override
-	public CoNLLCPOS loadKeyFromString(String str) {
+	public CoNLLCPOS loadKeyFromString(final String str) {
 		CoNLLCPOS ccpos = new CoNLLCPOS();
 		ccpos.load(str);
 		return ccpos;
 	}
 
 	@Override
-	public String generateStringFromKey(CoNLLCPOS key) {
+	public String generateStringFromKey(final CoNLLCPOS key) {
 		return key.toString();
 	}
 
 	@Override
-	public CoNLLCPOS allocate_key(CoNLLCPOS key) {
+	public CoNLLCPOS allocate_key(final CoNLLCPOS key) {
 		return new CoNLLCPOS(key);
 	}
 

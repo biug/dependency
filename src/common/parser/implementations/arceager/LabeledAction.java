@@ -1,6 +1,6 @@
 package common.parser.implementations.arceager;
 
-public class Action {
+public final class LabeledAction {
 	public final static int NO_ACTION = 0;
 	public final static int SHIFT = 1;
 	public final static int REDUCE = 2;
@@ -11,7 +11,7 @@ public class Action {
 	public final static int LABEL_AR_FIRST = LABEL_AL_FIRST + Macros.DEP_LABEL_COUNT - 1;
 	public final static int MAX = LABEL_AR_FIRST + Macros.DEP_LABEL_COUNT - 1;
 	
-	public final static int encodeAction(final int action, final int label) {
+	public static int encodeAction(final int action, final int label) {
 		if (action == ARC_LEFT) {
 			return label == 0 ? ARC_LEFT : LABEL_AL_FIRST + label - 1;
 		} else if (action == ARC_RIGHT) {
@@ -21,11 +21,11 @@ public class Action {
 		}
 	}
 	
-	public final static int encodeAction(final int action) {
+	public static int encodeAction(final int action) {
 		return action;
 	}
 	
-	public final static int getUnlabeledAction(final int action) {
+	public static int getUnlabeledAction(final int action) {
 		if (action < LABEL_AL_FIRST) {
 			return action;
 		} else if (action < LABEL_AR_FIRST) {
@@ -35,7 +35,7 @@ public class Action {
 		}
 	}
 	
-	public final static int getLabel(final int action) {
+	public static int getLabel(final int action) {
 		if (action < LABEL_AL_FIRST) {
 			return 0;
 		} else if (action < LABEL_AR_FIRST) {

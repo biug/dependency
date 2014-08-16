@@ -1,6 +1,6 @@
 package common.parser.implementations.arceager;
 
-public class ScoredAction {
+public final class ScoredAction {
 	public int action;
 	public int score;
 	
@@ -19,7 +19,7 @@ public class ScoredAction {
 	}
 	
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		return score == ((ScoredAction)o).score;
 	}
 	

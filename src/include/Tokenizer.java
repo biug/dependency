@@ -16,7 +16,7 @@ public class Tokenizer {
 		m_nWaterMark = m_nStartingToken = nTokenStartsFrom;
 	}
 	
-	public int lookup(final String key) {
+	public final int lookup(final String key) {
 		int retval;
 		boolean bNew = m_mapTokens.containsKey(key);
 		if (bNew) {
@@ -28,7 +28,7 @@ public class Tokenizer {
 		return retval;
 	}
 	
-	public int find(final String key, final int val) {
+	public final int find(final String key, final int val) {
 		if (m_mapTokens.containsKey(key)) {
 			return m_mapTokens.get(key);
 		} else {

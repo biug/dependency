@@ -7,14 +7,14 @@ import include.linguistics.chinese.WordCSetOfLabels;
 import chinese.dependency.label.CDependencyLabel;
 
 @SuppressWarnings("serial")
-public class WordCSetOfLabelsMap extends PackedScoreMap<WordCSetOfLabels> {
+public final class WordCSetOfLabelsMap extends PackedScoreMap<WordCSetOfLabels> {
 
-	public WordCSetOfLabelsMap(String input_name, int table_size) {
+	public WordCSetOfLabelsMap(final String input_name, final int table_size) {
 		super(input_name, table_size);
 	}
 
 	@Override
-	public WordCSetOfLabels loadKeyFromString(String str) {
+	public WordCSetOfLabels loadKeyFromString(final String str) {
 		String[] args = str.split(" , ");
 		CSetOfTags tagset = new CSetOfTags();
 		String[] subargs = args[1].substring(2, args[1].length() - 1).split(" ");
@@ -27,7 +27,7 @@ public class WordCSetOfLabelsMap extends PackedScoreMap<WordCSetOfLabels> {
 	}
 
 	@Override
-	public String generateStringFromKey(WordCSetOfLabels key) {
+	public String generateStringFromKey(final WordCSetOfLabels key) {
 		String retval = "[" + key.first().toString() + "] , [ ";
 		CSetOfTags sot = key.second();
 		for (int label = 0; label < CDependencyLabel.COUNT; ++label) {
@@ -39,7 +39,7 @@ public class WordCSetOfLabelsMap extends PackedScoreMap<WordCSetOfLabels> {
 	}
 
 	@Override
-	public WordCSetOfLabels allocate_key(WordCSetOfLabels key) {
+	public WordCSetOfLabels allocate_key(final WordCSetOfLabels key) {
 		return new WordCSetOfLabels(key);
 	}
 

@@ -1,7 +1,7 @@
 package include.linguistics;
 
 
-public class Lemma {
+public final class Lemma {
 	protected int m_nHash;
 	
 	protected static StringTokenizer tokenizer = new StringTokenizer();
@@ -35,7 +35,7 @@ public class Lemma {
 	}
 	
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		return m_nHash == ((Lemma)o).m_nHash;
 	}
 	

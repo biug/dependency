@@ -13,11 +13,11 @@ public abstract class WeightBase {
 		m_bModified = false;
 	}
 	
-	public void setRules(final boolean bRules) {
+	public final void setRules(final boolean bRules) {
 		m_bRules = bRules;
 	}
 	
-	public boolean rules() {
+	public final boolean rules() {
 		return m_bRules;
 	}
 	

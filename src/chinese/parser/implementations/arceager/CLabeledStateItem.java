@@ -1,4 +1,4 @@
-package common.parser.implementations.arceager;
+package chinese.parser.implementations.arceager;
 
 import include.linguistics.LabeledDependencyTreeNode;
 import include.linguistics.TwoStringVector;
@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import chinese.dependency.label.CDependencyLabel;
 import common.parser.LabeledDependencyParser;
+import common.parser.implementations.arceager.LabeledAction;
+import common.parser.implementations.arceager.Macros;
 
 public class CLabeledStateItem {
 	public final int OFF_STACK = 0;
@@ -169,7 +171,7 @@ public class CLabeledStateItem {
 	}
 	
 	public final boolean afterreduce() {
-		return Action.getUnlabeledAction(m_nLastAction) == Action.REDUCE;
+		return LabeledAction.getUnlabeledAction(m_nLastAction) == LabeledAction.REDUCE;
 	}
 	
 	public final int head(final int index) {
@@ -219,7 +221,7 @@ public class CLabeledStateItem {
 		m_Stack.clear();
 		m_HeadStack.clear();
 		score = 0;
-		m_nLastAction = Action.NO_ACTION;
+		m_nLastAction = LabeledAction.NO_ACTION;
 		ClearNext();
 	}
 	
@@ -233,7 +235,7 @@ public class CLabeledStateItem {
 		m_lSibling[left] = m_lDepsL[m_nNextWord];
 		m_lDepsL[m_nNextWord] = left;
 		++m_lDepNumL[m_nNextWord];
-		m_nLastAction = Action.encodeAction(Action.ARC_LEFT, lab);
+		m_nLastAction = LabeledAction.encodeAction(LabeledAction.ARC_LEFT, lab);
 	}
 	
 	public void ArcRight(int lab) {
@@ -246,7 +248,7 @@ public class CLabeledStateItem {
 		m_lDepsR[left] = m_nNextWord++;
 		++m_lDepNumR[left];
 		ClearNext();
-		m_nLastAction = Action.encodeAction(Action.ARC_RIGHT, lab);
+		m_nLastAction = LabeledAction.encodeAction(LabeledAction.ARC_RIGHT, lab);
 	}
 
 	public void Shift() {
@@ -255,17 +257,17 @@ public class CLabeledStateItem {
 		++headstack_back;
 		m_HeadStack.add(Integer.valueOf(m_nNextWord++));
 		ClearNext();
-		m_nLastAction = Action.encodeAction(Action.SHIFT);
+		m_nLastAction = LabeledAction.encodeAction(LabeledAction.SHIFT);
 	}
 	
 	public void Reduce() {
 		m_Stack.remove(stack_back--);
-		m_nLastAction = Action.encodeAction(Action.REDUCE);
+		m_nLastAction = LabeledAction.encodeAction(LabeledAction.REDUCE);
 	}
 	
 	public void PopRoot() {
 		m_lLabels[m_Stack.get(stack_back).intValue()] = CDependencyLabel.ROOT;
-		m_nLastAction = Action.encodeAction(Action.POP_ROOT);
+		m_nLastAction = LabeledAction.encodeAction(LabeledAction.POP_ROOT);
 		m_Stack.remove(stack_back--);
 	}
 	
@@ -282,22 +284,22 @@ public class CLabeledStateItem {
 	}
 	
 	public void Move(final int ac) {
-		switch (Action.getUnlabeledAction(ac)) {
-		case Action.NO_ACTION:
+		switch (LabeledAction.getUnlabeledAction(ac)) {
+		case LabeledAction.NO_ACTION:
 			return;
-		case Action.SHIFT:
+		case LabeledAction.SHIFT:
 			Shift();
 			return;
-		case Action.REDUCE:
+		case LabeledAction.REDUCE:
 			Reduce();
 			return;
-		case Action.ARC_LEFT:
-			ArcLeft(Action.getLabel(ac));
+		case LabeledAction.ARC_LEFT:
+			ArcLeft(LabeledAction.getLabel(ac));
 			return;
-		case Action.ARC_RIGHT:
-			ArcRight(Action.getLabel(ac));
+		case LabeledAction.ARC_RIGHT:
+			ArcRight(LabeledAction.getLabel(ac));
 			return;
-		case Action.POP_ROOT:
+		case LabeledAction.POP_ROOT:
 			PopRoot();
 			return;
 		}
@@ -354,11 +356,11 @@ public class CLabeledStateItem {
 		if (m_nNextWord == item.m_nNextWord) {
 			top = m_Stack.get(stack_back).intValue();
 			if (item.m_lHeads[top] == m_nNextWord) {
-				return Action.encodeAction(Action.ARC_LEFT, item.m_lLabels[top]);
+				return LabeledAction.encodeAction(LabeledAction.ARC_LEFT, item.m_lLabels[top]);
 			} else if (item.m_lHeads[top] != LabeledDependencyTreeNode.DEPENDENCY_LINK_NO_HEAD) {
-				return Action.encodeAction(Action.REDUCE);
+				return LabeledAction.encodeAction(LabeledAction.REDUCE);
 			} else {
-				return Action.encodeAction(Action.POP_ROOT);
+				return LabeledAction.encodeAction(LabeledAction.POP_ROOT);
 			}
 		}
 		if (stack_back >= 0) {
@@ -368,21 +370,21 @@ public class CLabeledStateItem {
 			}
 			if (item.head(top) == m_nNextWord) {
 				if (top == m_Stack.get(stack_back).intValue()) {
-					return Action.encodeAction(Action.ARC_LEFT, item.m_lLabels[top]);
+					return LabeledAction.encodeAction(LabeledAction.ARC_LEFT, item.m_lLabels[top]);
 				} else {
-					return Action.encodeAction(Action.REDUCE);
+					return LabeledAction.encodeAction(LabeledAction.REDUCE);
 				}
 			}
 		}
 		if (item.head(m_nNextWord) == LabeledDependencyTreeNode.DEPENDENCY_LINK_NO_HEAD ||
 				item.head(m_nNextWord) > m_nNextWord) {
-			return Action.encodeAction(Action.SHIFT);
+			return LabeledAction.encodeAction(LabeledAction.SHIFT);
 		} else {
 			top = m_Stack.get(stack_back).intValue();
 			if (item.head(m_nNextWord) == top) {
-				return Action.encodeAction(Action.ARC_RIGHT, item.m_lLabels[m_nNextWord]);
+				return LabeledAction.encodeAction(LabeledAction.ARC_RIGHT, item.m_lLabels[m_nNextWord]);
 			} else {
-				return Action.encodeAction(Action.REDUCE);
+				return LabeledAction.encodeAction(LabeledAction.REDUCE);
 			}
 		}
 	}
