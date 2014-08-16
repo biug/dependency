@@ -1,14 +1,13 @@
 package common.parser.implementations.arceager;
 
-import include.linguistics.CSetOfTags;
-import include.linguistics.CTaggedWord;
 import include.linguistics.LabeledDependencyTreeNode;
 import include.linguistics.TwoStringVector;
+import include.linguistics.chinese.CSetOfTags;
+import include.linguistics.chinese.CTaggedWord;
 
 import java.util.ArrayList;
 
 import chinese.dependency.label.CDependencyLabel;
-
 import common.parser.LabeledDependencyParser;
 
 public class CLabeledStateItem {

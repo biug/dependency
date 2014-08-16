@@ -5,30 +5,29 @@ import include.BiString;
 import include.LabeledAgendaBeam;
 import include.learning.perceptron.PackedScoreType;
 import include.learning.perceptron.Score;
-import include.linguistics.CSetOfTags;
-import include.linguistics.CTagInt;
-import include.linguistics.CTagSetOfLabels;
-import include.linguistics.CTagTagInt;
-import include.linguistics.CTaggedWord;
-import include.linguistics.CTwoTaggedWords;
-import include.linguistics.CTwoWords;
-import include.linguistics.CWord;
-import include.linguistics.CWordInt;
-import include.linguistics.CWordSetOfLabels;
-import include.linguistics.CWordTagTag;
-import include.linguistics.CWordWordInt;
-import include.linguistics.CWordWordTag;
 import include.linguistics.LabeledDependencyTreeNode;
-import include.linguistics.TagSet2;
-import include.linguistics.TagSet3;
 import include.linguistics.TwoStringVector;
+import include.linguistics.TwoWords;
+import include.linguistics.Word;
+import include.linguistics.WordInt;
+import include.linguistics.WordWordInt;
+import include.linguistics.chinese.CSetOfTags;
+import include.linguistics.chinese.CTagCSetOfLabels;
+import include.linguistics.chinese.CTagCTagInt;
+import include.linguistics.chinese.CTagInt;
+import include.linguistics.chinese.CTagSet2;
+import include.linguistics.chinese.CTagSet3;
+import include.linguistics.chinese.CTaggedWord;
+import include.linguistics.chinese.TwoCTaggedWords;
+import include.linguistics.chinese.WordCSetOfLabels;
+import include.linguistics.chinese.WordCTagCTag;
+import include.linguistics.chinese.WordWordCTag;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import chinese.dependency.label.CDependencyLabel;
 import chinese.pos.CTag;
-
 import common.parser.DepParserBase;
 import common.parser.LabeledDependencyParser;
 
@@ -57,19 +56,19 @@ public class CDepParser extends DepParserBase {
 	
 	private LabeledDependencyParser[] outParser;
 	
-	private CTwoTaggedWords st_word_tag_n0_word_tag;
-	private CTwoWords st_word_n0_word;
+	private TwoCTaggedWords st_word_tag_n0_word_tag;
+	private TwoWords st_word_n0_word;
 	
-	private CWordInt word_int;
+	private WordInt word_int;
 	private CTagInt tag_int;
-	private CWordTagTag word_tag_tag;
-	private CWordWordTag word_word_tag;
-	private CWordWordInt word_word_int;
-	private CTagTagInt tag_tag_int;
-	private CWordSetOfLabels word_tagset;
-	private CTagSetOfLabels tag_tagset;
-	private TagSet2 set_of_2_tags;
-	private TagSet3 set_of_3_tags;
+	private WordCTagCTag word_tag_tag;
+	private WordWordCTag word_word_tag;
+	private WordWordInt word_word_int;
+	private CTagCTagInt tag_tag_int;
+	private WordCSetOfLabels word_tagset;
+	private CTagCSetOfLabels tag_tagset;
+	private CTagSet2 set_of_2_tags;
+	private CTagSet3 set_of_3_tags;
 	
 	private ScoredAction scoredaction;
 	
@@ -116,19 +115,19 @@ public class CDepParser extends DepParserBase {
 		outParser = new LabeledDependencyParser[1];
 		outParser[0] = new LabeledDependencyParser();
 		
-		st_word_tag_n0_word_tag = new CTwoTaggedWords();
-		st_word_n0_word = new CTwoWords();
+		st_word_tag_n0_word_tag = new TwoCTaggedWords();
+		st_word_n0_word = new TwoWords();
 		
-		word_int = new CWordInt();
+		word_int = new WordInt();
 		tag_int = new CTagInt();
-		word_tag_tag = new CWordTagTag();
-		word_word_tag = new CWordWordTag();
-		word_word_int = new CWordWordInt();
-		tag_tag_int = new CTagTagInt();
-		word_tagset = new CWordSetOfLabels();
-		tag_tagset = new CTagSetOfLabels();
-		set_of_2_tags = new TagSet2();
-		set_of_3_tags = new TagSet3();
+		word_tag_tag = new WordCTagCTag();
+		word_word_tag = new WordWordCTag();
+		word_word_int = new WordWordInt();
+		tag_tag_int = new CTagCTagInt();
+		word_tagset = new WordCSetOfLabels();
+		tag_tagset = new CTagCSetOfLabels();
+		set_of_2_tags = new CTagSet2();
+		set_of_3_tags = new CTagSet3();
 		
 		scoredaction = new ScoredAction();
 	}
@@ -164,19 +163,19 @@ public class CDepParser extends DepParserBase {
 		m_lCache = new ArrayList<CTaggedWord>();
 		m_lCacheLabel = new ArrayList<CDependencyLabel>();
 		
-		st_word_tag_n0_word_tag = new CTwoTaggedWords();
-		st_word_n0_word = new CTwoWords();
+		st_word_tag_n0_word_tag = new TwoCTaggedWords();
+		st_word_n0_word = new TwoWords();
 		
-		word_int = new CWordInt();
+		word_int = new WordInt();
 		tag_int = new CTagInt();
-		word_tag_tag = new CWordTagTag();
-		word_word_tag = new CWordWordTag();
-		word_word_int = new CWordWordInt();
-		tag_tag_int = new CTagTagInt();
-		word_tagset = new CWordSetOfLabels();
-		tag_tagset = new CTagSetOfLabels();
-		set_of_2_tags = new TagSet2();
-		set_of_3_tags = new TagSet3();
+		word_tag_tag = new WordCTagCTag();
+		word_word_tag = new WordWordCTag();
+		word_word_int = new WordWordInt();
+		tag_tag_int = new CTagCTagInt();
+		word_tagset = new WordCSetOfLabels();
+		tag_tagset = new CTagCSetOfLabels();
+		set_of_2_tags = new CTagSet2();
+		set_of_3_tags = new CTagSet3();
 		
 		scoredaction = new ScoredAction();
 	}
@@ -209,18 +208,18 @@ public class CDepParser extends DepParserBase {
 		final CTaggedWord n1_word_tag = n1_index == -1 ? empty_taggedword : m_lCache.get(n1_index);
 		final CTaggedWord n2_word_tag = n2_index == -1 ? empty_taggedword : m_lCache.get(n2_index);
 		
-		final CWord st_word = st_word_tag.word;
-		final CWord sth_word = sth_word_tag.word;
-		final CWord sthh_word = sthh_word_tag.word;
-		final CWord stld_word = stld_word_tag.word;
-		final CWord strd_word = strd_word_tag.word;
-		final CWord stl2d_word = stl2d_word_tag.word;
-		final CWord str2d_word = str2d_word_tag.word;
-		final CWord n0_word = n0_word_tag.word;
-		final CWord n0ld_word = n0ld_word_tag.word;
-		final CWord n0l2d_word = n0l2d_word_tag.word;
-		final CWord n1_word = n1_word_tag.word;
-		final CWord n2_word = n2_word_tag.word;
+		final Word st_word = st_word_tag.word;
+		final Word sth_word = sth_word_tag.word;
+		final Word sthh_word = sthh_word_tag.word;
+		final Word stld_word = stld_word_tag.word;
+		final Word strd_word = strd_word_tag.word;
+		final Word stl2d_word = stl2d_word_tag.word;
+		final Word str2d_word = str2d_word_tag.word;
+		final Word n0_word = n0_word_tag.word;
+		final Word n0ld_word = n0ld_word_tag.word;
+		final Word n0l2d_word = n0l2d_word_tag.word;
+		final Word n1_word = n1_word_tag.word;
+		final Word n2_word = n2_word_tag.word;
 		
 		final CTag st_tag = st_word_tag.tag;
 		final CTag sth_tag = sth_word_tag.tag;

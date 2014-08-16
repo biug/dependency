@@ -1,0 +1,29 @@
+package chinese.map;
+
+import include.learning.perceptron.PackedScoreMap;
+import include.linguistics.chinese.CTaggedWord;
+
+@SuppressWarnings("serial")
+public class CTaggedWordMap extends PackedScoreMap<CTaggedWord> {
+
+	public CTaggedWordMap(String input_name, int table_size) {
+		super(input_name, table_size);
+	}
+
+	@Override
+	public CTaggedWord loadKeyFromString(String str) {
+		int middle = str.lastIndexOf(CTaggedWord.sSeparator);
+		return new CTaggedWord(str.substring(0, middle), str.substring(middle+1));
+	}
+
+	@Override
+	public String generateStringFromKey(CTaggedWord key) {
+		return key.word.toString() + CTaggedWord.sSeparator + key.tag.toString();
+	}
+
+	@Override
+	public CTaggedWord allocate_key(CTaggedWord key) {
+		return new CTaggedWord(key);
+	}
+
+}
