@@ -429,19 +429,19 @@ public class CDepParser extends DepParserBase {
 		getOrUpdateStackScore(item, retval, action, 0, 0);
 	}
 	
-	public void updateScoreForState(final CLabeledStateItem from, final CLabeledStateItem outout, final int amount, int len) {
+	public void updateScoreForState(final CLabeledStateItem from, final CLabeledStateItem output, final int amount, int len) {
 		itemForState.copy(from);
-		while (!itemForState.equals(outout)) {
-			int action = itemForState.FollowMove(outout);
+		while (!itemForState.equals(output)) {
+			int action = itemForState.FollowMove(output);
 			getOrUpdateStackScore(itemForState, null, action, amount, m_nTrainingRound);
 			itemForState.Move(action);
 		}
 	}
 	
-	public void updateScoreForStates(final CLabeledStateItem outout, final CLabeledStateItem correct, int amount_add, int amount_subtract, int len) {
+	public void updateScoreForStates(final CLabeledStateItem output, final CLabeledStateItem correct, int amount_add, int amount_subtract, int len) {
 		itemForStates.clear();
-		while (!itemForStates.equals(outout)) {
-			int action = itemForStates.FollowMove(outout);
+		while (!itemForStates.equals(output)) {
+			int action = itemForStates.FollowMove(output);
 			int correct_action = itemForStates.FollowMove(correct);
 			if (action == correct_action) {
 				itemForStates.Move(action);
@@ -450,7 +450,7 @@ public class CDepParser extends DepParserBase {
 			}
 		}
 		updateScoreForState(itemForStates, correct, amount_add, len);
-		updateScoreForState(itemForStates, outout, amount_subtract, len);
+		updateScoreForState(itemForStates, output, amount_subtract, len);
 		++m_nTotalErrors;
 	}
 	

@@ -17,4 +17,9 @@ public class LabeledDependencyTreeNode extends DependencyTreeNode {
 	public boolean equals(Object o) {
 		return super.equals(o) && label.equals(((LabeledDependencyTreeNode)o).label);
 	}
+	
+	@Override
+	public String toString() {
+		return word + "\t" + tag +  "\t" + Integer.toString(head) + "\t" + label;
+	}
 }

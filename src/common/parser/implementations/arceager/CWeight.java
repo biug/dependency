@@ -253,6 +253,7 @@ public class CWeight extends WeightBase {
 	
 	@Override
 	public void loadScores() {
+		long time_start = System.currentTimeMillis();
 		System.out.print("Loading scores...");
 		System.out.flush();
 		File file = new File(m_sRecordPath);
@@ -382,7 +383,7 @@ public class CWeight extends WeightBase {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("done.");
+		System.out.println("done. (" + ((System.currentTimeMillis() - time_start) / 1000.0) + "s)");
 	}
 	
 	@Override

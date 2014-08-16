@@ -80,10 +80,10 @@ public abstract class PackedScoreMap<K> extends HashMap<K, PackedScore> {
 			return;
 		}
 		while (!(s = br.readLine()).isEmpty()) {
-			int colon_index = s.indexOf(":");
-			K key = loadKeyFromString(s.substring(0, colon_index - 1));
+			int val_start = s.indexOf("{");
+			K key = loadKeyFromString(s.split("\\s?:\\s?\\{")[0]);
 			PackedScore ps = new PackedScore();
-			ps.loadPackedScoreFromString(s.substring(colon_index + 2));
+			ps.loadPackedScoreFromString(s.substring(val_start));
 			super.put(key, ps);
 		}
 	}
