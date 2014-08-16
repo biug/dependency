@@ -1,52 +1,40 @@
-package chinese.dependency.label;
+package english.dependency.label;
 
 
-public final class CDependencyLabel {
-	
+
+public final class EDependencyLabel {
 	public static final String[] PENN_DEP_STRINGS = new String[] {
 		"-NONE-",
 		"ROOT",
 		"AMOD",
+		"DEP",
 		"NMOD",
-		"PMOD",
-		"VMOD",
-		"SBJ",
 		"OBJ",
-		"POBJ",
-		"VRD",
-		"DEC",
-		"DEG",
-		"DEV",
-		"LC",
-		"M",
-		"PRN",
+		"P",
+		"PMOD",
+		"PRD",
+		"SBAR",
+		"SUB",
 		"VC",
-		"COOR",
-		"CS"
+		"VMOD"
 	};
 
 	public static final int PENN_DEP_NONE = 0;
 	public static final int PENN_DEP_ROOT = 1;
 	public static final int PENN_DEP_AMOD = 2;
-	public static final int PENN_DEP_NMOD = 3;
-	public static final int PENN_DEP_PMOD = 4;
-	public static final int PENN_DEP_VMOD = 5;
-	public static final int PENN_DEP_SBJ = 6;
-	public static final int PENN_DEP_OBJ = 7;
-	public static final int PENN_DEP_POBJ = 8;
-	public static final int PENN_DEP_VRD = 9;
-	public static final int PENN_DEP_DEC = 10;
-	public static final int PENN_DEP_DEG = 11;
-	public static final int PENN_DEP_DEV = 12;
-	public static final int PENN_DEP_LC = 13;
-	public static final int PENN_DEP_M = 14;
-	public static final int PENN_DEP_PRN = 15;
-	public static final int PENN_DEP_VC = 16;
-	public static final int PENN_DEP_COOR = 17;
-	public static final int PENN_DEP_CS = 18;
-	public static final int PENN_DEP_COUNT = 19;
+	public static final int PENN_DEP_DEP = 3;
+	public static final int PENN_DEP_NMOD = 4;
+	public static final int PENN_DEP_OBJ = 5;
+	public static final int PENN_DEP_P = 6;
+	public static final int PENN_DEP_PMOD = 7;
+	public static final int PENN_DEP_PRD = 8;
+	public static final int PENN_DEP_SBAR = 9;
+	public static final int PENN_DEP_SUB = 10;
+	public static final int PENN_DEP_VC = 11;
+	public static final int PENN_DEP_VMOD = 12;
+	public static final int PENN_DEP_COUNT = 13;
 	
-	public static final int PENN_DEP_COUNT_BITS = 5;
+	public static final int PENN_DEP_COUNT_BITS = 4;
 
 	public static final int NONE = 0;
 	public static final int ROOT = 1;
@@ -57,7 +45,7 @@ public final class CDependencyLabel {
 
 	protected int m_code;
 	
-	public CDependencyLabel(final String str) {
+	public EDependencyLabel(final String str) {
 		load(str);
 	}
 	
@@ -82,9 +70,8 @@ public final class CDependencyLabel {
 	
 	@Override
 	public boolean equals(final Object o) {
-		return m_code == ((CDependencyLabel)o).m_code;
+		return m_code == ((EDependencyLabel)o).m_code;
 	}
-	
 	
 	@Override
 	public String toString() {
@@ -103,4 +90,6 @@ public final class CDependencyLabel {
 		}
 		return PENN_DEP_NONE;
 	}
+	
+	
 }

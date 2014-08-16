@@ -1,18 +1,19 @@
-package chinese.parser.implementations.arceager;
+package english.parser.implementations.arceager;
 
 import include.linguistics.LabeledDependencyTreeNode;
 import include.linguistics.TwoStringVector;
-import include.linguistics.chinese.CSetOfLabels;
-import include.linguistics.chinese.CTaggedWord;
+import include.linguistics.english.ESetOfLabels;
+import include.linguistics.english.ETaggedWord;
 
 import java.util.ArrayList;
 
-import chinese.dependency.label.CDependencyLabel;
 import common.parser.LabeledDependencyParser;
 import common.parser.implementations.arceager.LabeledAction;
 import common.parser.implementations.arceager.Macros;
 
-public class CLabeledStateItem {
+import english.dependency.label.EDependencyLabel;
+
+public class ELabeledStateItem {
 	public final int OFF_STACK = 0;
 	public final int ON_STACK_SHIFT = 1;
 	public final int ON_STACK_ARCRIGHT = 2;
@@ -29,12 +30,12 @@ public class CLabeledStateItem {
 	protected int[] m_lDepNumL;
 	protected int[] m_lDepNumR;
 	
-	protected CSetOfLabels m_lDepTagL[];
-	protected CSetOfLabels m_lDepTagR[];
+	protected ESetOfLabels m_lDepTagL[];
+	protected ESetOfLabels m_lDepTagR[];
 	protected int m_lSibling[];
 	
 	protected int m_nLastAction;
-	protected ArrayList<CTaggedWord> m_lCache;
+	protected ArrayList<ETaggedWord> m_lCache;
 	
 	public int score;
 	
@@ -57,7 +58,7 @@ public class CLabeledStateItem {
 		System.out.println("score = " + score);
 	}
 	
-	public CLabeledStateItem() {
+	public ELabeledStateItem() {
 		stack_back = -1;
 		headstack_back = -1;
 		m_Stack = new ArrayList<Integer>();
@@ -67,11 +68,11 @@ public class CLabeledStateItem {
 		m_lDepsR = new int[Macros.MAX_SENTENCE_SIZE];
 		m_lDepNumL = new int[Macros.MAX_SENTENCE_SIZE];
 		m_lDepNumR = new int[Macros.MAX_SENTENCE_SIZE];
-		m_lDepTagL = new CSetOfLabels[Macros.MAX_SENTENCE_SIZE];
-		m_lDepTagR = new CSetOfLabels[Macros.MAX_SENTENCE_SIZE];
+		m_lDepTagL = new ESetOfLabels[Macros.MAX_SENTENCE_SIZE];
+		m_lDepTagR = new ESetOfLabels[Macros.MAX_SENTENCE_SIZE];
 		for (int i = 0; i < Macros.MAX_SENTENCE_SIZE; ++i) {
-			m_lDepTagL[i] = new CSetOfLabels();
-			m_lDepTagR[i] = new CSetOfLabels();
+			m_lDepTagL[i] = new ESetOfLabels();
+			m_lDepTagR[i] = new ESetOfLabels();
 		}
 		m_lSibling = new int[Macros.MAX_SENTENCE_SIZE];
 		m_lCache = null;
@@ -79,7 +80,7 @@ public class CLabeledStateItem {
 		clear();
 	}
 	
-	public CLabeledStateItem(ArrayList<CTaggedWord> cache) {
+	public ELabeledStateItem(ArrayList<ETaggedWord> cache) {
 		stack_back = -1;
 		headstack_back = -1;
 		m_Stack = new ArrayList<Integer>();
@@ -89,11 +90,11 @@ public class CLabeledStateItem {
 		m_lDepsR = new int[Macros.MAX_SENTENCE_SIZE];
 		m_lDepNumL = new int[Macros.MAX_SENTENCE_SIZE];
 		m_lDepNumR = new int[Macros.MAX_SENTENCE_SIZE];
-		m_lDepTagL = new CSetOfLabels[Macros.MAX_SENTENCE_SIZE];
-		m_lDepTagR = new CSetOfLabels[Macros.MAX_SENTENCE_SIZE];
+		m_lDepTagL = new ESetOfLabels[Macros.MAX_SENTENCE_SIZE];
+		m_lDepTagR = new ESetOfLabels[Macros.MAX_SENTENCE_SIZE];
 		for (int i = 0; i < Macros.MAX_SENTENCE_SIZE; ++i) {
-			m_lDepTagL[i] = new CSetOfLabels();
-			m_lDepTagR[i] = new CSetOfLabels();
+			m_lDepTagL[i] = new ESetOfLabels();
+			m_lDepTagR[i] = new ESetOfLabels();
 		}
 		m_lSibling = new int[Macros.MAX_SENTENCE_SIZE];
 		m_lCache = cache;
@@ -101,17 +102,17 @@ public class CLabeledStateItem {
 		clear();
 	}
 	
-	public final boolean more(final CLabeledStateItem item) {
+	public final boolean more(final ELabeledStateItem item) {
 		return score > item.score;
 	}
 	
-	public final boolean less(final CLabeledStateItem item) {
+	public final boolean less(final ELabeledStateItem item) {
 		return score < item.score;
 	}
 	
 	@Override
 	public boolean equals(Object o) {
-		CLabeledStateItem item = (CLabeledStateItem)o;
+		ELabeledStateItem item = (ELabeledStateItem)o;
 		if (m_nNextWord != item.m_nNextWord) {
 			return false;
 		}
@@ -202,11 +203,11 @@ public class CLabeledStateItem {
 		return m_lDepNumR[index];
 	}
 	
-	public final CSetOfLabels lefttagset(final int index) {
+	public final ESetOfLabels lefttagset(final int index) {
 		return m_lDepTagL[index];
 	}
 	
-	public final CSetOfLabels righttagset(final int index) {
+	public final ESetOfLabels righttagset(final int index) {
 		return m_lDepTagR[index];
 	}
 	
@@ -266,7 +267,7 @@ public class CLabeledStateItem {
 	}
 	
 	public void PopRoot() {
-		m_lLabels[m_Stack.get(stack_back).intValue()] = CDependencyLabel.ROOT;
+		m_lLabels[m_Stack.get(stack_back).intValue()] = EDependencyLabel.ROOT;
 		m_nLastAction = LabeledAction.encodeAction(LabeledAction.POP_ROOT);
 		m_Stack.remove(stack_back--);
 	}
@@ -280,7 +281,7 @@ public class CLabeledStateItem {
 		m_lDepTagL[m_nNextWord].clear();
 		m_lDepTagR[m_nNextWord].clear();
 		m_lSibling[m_nNextWord] = LabeledDependencyTreeNode.DEPENDENCY_LINK_NO_HEAD;
-		m_lLabels[m_nNextWord] = CDependencyLabel.NONE;
+		m_lLabels[m_nNextWord] = EDependencyLabel.NONE;
 	}
 	
 	public void Move(final int ac) {
@@ -305,7 +306,7 @@ public class CLabeledStateItem {
 		}
 	}
 	
-	public boolean StandardMoveStep(final LabeledDependencyParser tree, final ArrayList<CDependencyLabel> m_lCacheLabel) {
+	public boolean StandardMoveStep(final LabeledDependencyParser tree, final ArrayList<EDependencyLabel> m_lCacheLabel) {
 		int top;
 		if (m_nNextWord == (int)(tree.size())) {
 			if (stack_back > 0) {
@@ -351,7 +352,7 @@ public class CLabeledStateItem {
 		assert (stack_back == -1);
 	}
 	
-	public int FollowMove(final CLabeledStateItem item) {
+	public int FollowMove(final ELabeledStateItem item) {
 		int top;
 		if (m_nNextWord == item.m_nNextWord) {
 			top = m_Stack.get(stack_back).intValue();
@@ -392,11 +393,11 @@ public class CLabeledStateItem {
 	public void GenerateTree(final TwoStringVector input, LabeledDependencyParser output) {
 		output.clear();
 		for (int i = 0, input_size = this.size(); i < input_size; ++i) {
-			output.add(new LabeledDependencyTreeNode(input.get(i).first(), input.get(i).second(), m_lHeads[i], CDependencyLabel.str(m_lLabels[i])));
+			output.add(new LabeledDependencyTreeNode(input.get(i).first(), input.get(i).second(), m_lHeads[i], EDependencyLabel.str(m_lLabels[i])));
 		}
 	}
 	
-	public void copy(final CLabeledStateItem item) {
+	public void copy(final ELabeledStateItem item) {
 		stack_back = item.stack_back;
 		m_Stack.clear();
 		m_Stack.addAll(item.m_Stack);

@@ -2,7 +2,7 @@ package chinese.parser.implementations.arceager;
 
 import include.AgendaSimple;
 import include.BiString;
-import include.LabeledAgendaBeam;
+import include.chinese.CLabeledAgendaBeam;
 import include.learning.perceptron.PackedScoreType;
 import include.learning.perceptron.Score;
 import include.linguistics.LabeledDependencyTreeNode;
@@ -11,7 +11,7 @@ import include.linguistics.TwoWords;
 import include.linguistics.Word;
 import include.linguistics.WordInt;
 import include.linguistics.WordWordInt;
-import include.linguistics.chinese.CSetOfTags;
+import include.linguistics.chinese.CSetOfLabels;
 import include.linguistics.chinese.CTagCSetOfLabels;
 import include.linguistics.chinese.CTagCTagInt;
 import include.linguistics.chinese.CTagInt;
@@ -36,7 +36,7 @@ import common.parser.implementations.arceager.ScoredAction;
 
 public final class CDepParser extends DepParserBase {
 	
-	private LabeledAgendaBeam m_Agenda;
+	private CLabeledAgendaBeam m_Agenda;
 	private AgendaSimple m_Beam;
 	
 	private ArrayList<CTaggedWord> m_lCache;
@@ -76,7 +76,7 @@ public final class CDepParser extends DepParserBase {
 	private ScoredAction scoredaction;
 	
 	public static final CTaggedWord empty_taggedword = new CTaggedWord();
-	public static final CSetOfTags empty_setoftags = new CSetOfTags();
+	public static final CSetOfLabels empty_setoftags = new CSetOfLabels();
 	
 	private int encodeTags(final CTag tag1, final CTag tag2) {
 		return ((tag1.hashCode() << (CTag.SIZE)) | (tag2.hashCode()));
@@ -93,7 +93,7 @@ public final class CDepParser extends DepParserBase {
 	public CDepParser(final String sFeatureDBPath, final boolean bTrain, final boolean bCoNLL) {
 		super(sFeatureDBPath, bTrain, bCoNLL);
 		
-		m_Agenda = new LabeledAgendaBeam(Macros.AGENDA_SIZE);
+		m_Agenda = new CLabeledAgendaBeam(Macros.AGENDA_SIZE);
 		m_Beam = new AgendaSimple(Macros.AGENDA_SIZE);
 		
 		m_lCache = new ArrayList<CTaggedWord>();
@@ -138,7 +138,7 @@ public final class CDepParser extends DepParserBase {
 	public CDepParser(final String sFeatureDBPath, final boolean bTrain) {
 		super(sFeatureDBPath, bTrain, false);
 		
-		m_Agenda = new LabeledAgendaBeam(Macros.AGENDA_SIZE);
+		m_Agenda = new CLabeledAgendaBeam(Macros.AGENDA_SIZE);
 		m_Beam = new AgendaSimple(Macros.AGENDA_SIZE);
 		
 		m_lCache = new ArrayList<CTaggedWord>();
@@ -252,9 +252,9 @@ public final class CDepParser extends DepParserBase {
 		final int st_larity = st_index == -1 ? 0 : item.leftarity(st_index);
 		final int n0_larity = n0_index == -1 ? 0 : item.leftarity(n0_index);
 		
-		final CSetOfTags st_rtagset = st_index == -1 ? empty_setoftags : item.righttagset(st_index);
-		final CSetOfTags st_ltagset = st_index == -1 ? empty_setoftags : item.lefttagset(st_index);
-		final CSetOfTags n0_ltagset = n0_index == -1 ? empty_setoftags : item.lefttagset(n0_index);
+		final CSetOfLabels st_rtagset = st_index == -1 ? empty_setoftags : item.righttagset(st_index);
+		final CSetOfLabels st_ltagset = st_index == -1 ? empty_setoftags : item.lefttagset(st_index);
+		final CSetOfLabels n0_ltagset = n0_index == -1 ? empty_setoftags : item.lefttagset(n0_index);
 		
 		CWeight cweight = (CWeight)m_weights;
 		
@@ -589,7 +589,7 @@ public final class CDepParser extends DepParserBase {
 							arcright(pGenerator, packed_scores);
 						}
 					}
-					if ((!m_bCoNLL && !pGenerator.stackempty())) {
+					if ((!pGenerator.stackempty())) {
 						if (pGenerator.head(pGenerator.stacktop()) != LabeledDependencyTreeNode.DEPENDENCY_LINK_NO_HEAD) {
 							reduce(pGenerator, packed_scores);
 						} else {

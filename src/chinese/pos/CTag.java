@@ -1,22 +1,23 @@
 package chinese.pos;
 
+
 public final class CTag {
-	public final static String PENN_TAG_STRINGS[] = {
-		   "-NONE-",
-		   "-BEGIN-",
-		   "-END-",
-		   "NN", "VV", 
-		   "NR", "AD", 
-		   "P", "CD", "M", "JJ", 
-		   "DEC", "DEG", 
-		   "NT", "CC", "VA", "LC",  
-		   "PN", "DT", "VC", "AS", "VE", 
-		   "OD", 
-		   "ETC", "MSP", "CS", "BA", 
-		   "DEV", "SB", "SP", "LB", 
-		   "FW", "DER", "PU", 
+	public final static String[] PENN_TAG_STRINGS = {
+		"-NONE-",
+		"-BEGIN-",
+		"-END-",
+		"NN", "VV",
+		"NR", "AD",
+		"P", "CD", "M", "JJ",
+		"DEC", "DEG",
+		"NT", "CC", "VA", "LC",
+		"PN", "DT", "VC", "AS", "VE",
+		"OD",
+		"ETC", "MSP", "CS", "BA",
+		"DEV", "SB", "SP", "LB",
+		"FW", "DER", "PU",
 	};
-	
+
 	public final static int PENN_TAG_NONE = 0;
 	public final static int PENN_TAG_BEGIN = 1;
 	public final static int PENN_TAG_END = 2;
@@ -53,19 +54,34 @@ public final class CTag {
 	public final static int PENN_TAG_PU = 33;
 	public final static int PENN_TAG_COUNT = 34;
 	
+	public final static boolean[] PENN_TAG_CLOSED = {
+		false,
+		false,
+		false,
+		false, false,
+		false, false,
+		true, false, false, false,
+		true, true,
+		false, true, false, true,
+		true, true, true, true, true,
+		false,
+		true, true, true, true,
+		true, true, true, true,
+		false, true, true
+	};
+
 	public final static int PENN_TAG_FIRST = 3;
 	public final static int PENN_TAG_COUNT_BITS = 6;
-	
-	public static final char TAG_SEPARATOR = '_';
-	
+
+	public static final int NONE = PENN_TAG_NONE;
 	public static final int SENTENCE_BEGIN = PENN_TAG_BEGIN;
 	public static final int SENTENCE_END = PENN_TAG_END;
 	public static final int COUNT = PENN_TAG_COUNT;
-	public static final int NONE = PENN_TAG_NONE;
+	public static final int MAX_COUNT = PENN_TAG_COUNT;
 	public static final int SIZE = PENN_TAG_COUNT_BITS;
 	public static final int FIRST = PENN_TAG_FIRST;
 	public static final int LAST = PENN_TAG_COUNT - 1;
-	
+
 	protected int m_code; // unsigned
 	
 	public CTag() {
@@ -83,15 +99,24 @@ public final class CTag {
 	public CTag(final String s) {
 		load(s);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return m_code;
 	}
 	
 	@Override
+	public boolean equals(final Object t) {
+		return m_code == ((CTag)t).m_code;
+	}
+	
+	@Override
 	public final String toString() {
 		return PENN_TAG_STRINGS[m_code];
+	}
+
+	public void load(final int i) {
+		m_code = i;
 	}
 	
 	public void load(final String s) {
@@ -103,16 +128,11 @@ public final class CTag {
 		}
 	}
 	
-	@Override
-	public boolean equals(final Object t) {
-		return m_code == ((CTag)t).m_code;
-	}
-	
-	public final static String str(final int t) {
+	public static String str(final int t) {
 		return PENN_TAG_STRINGS[t];
 	}
 	
-	public final static int code(final String s) {
+	public static int code(final String s) {
 		for (int i = 0; i < PENN_TAG_COUNT; ++i) {
 			if (PENN_TAG_STRINGS[i].equals(s)) {
 				return i;

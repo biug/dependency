@@ -1,4 +1,4 @@
-package chinese.parser.implementations.arceager;
+package english.parser.implementations.arceager;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,17 +10,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import chinese.dependency.label.CDependencyLabel;
-import chinese.parser.implementations.map.CTagCSetOfLabelsMap;
-import chinese.parser.implementations.map.CTagCTagIntMap;
-import chinese.parser.implementations.map.CTagIntMap;
-import chinese.parser.implementations.map.CTagMap;
-import chinese.parser.implementations.map.CTagSet2Map;
-import chinese.parser.implementations.map.CTagSet3Map;
-import chinese.parser.implementations.map.CTaggedWordMap;
-import chinese.parser.implementations.map.TwoCTaggedWordsMap;
-import chinese.parser.implementations.map.WordCSetOfLabelsMap;
-import chinese.parser.implementations.map.WordCTagCTagMap;
-import chinese.parser.implementations.map.WordWordCTagMap;
+
 import common.parser.WeightBase;
 import common.parser.implementations.map.CoNLLCPOSMap;
 import common.parser.implementations.map.CoNLLFeatsMap;
@@ -31,102 +21,114 @@ import common.parser.implementations.map.WordIntMap;
 import common.parser.implementations.map.WordMap;
 import common.parser.implementations.map.WordWordIntMap;
 
-public final class CWeight extends WeightBase {
+import english.parser.implementations.map.ETagESetOfLabelsMap;
+import english.parser.implementations.map.ETagETagIntMap;
+import english.parser.implementations.map.ETagIntMap;
+import english.parser.implementations.map.ETagMap;
+import english.parser.implementations.map.ETagSet2Map;
+import english.parser.implementations.map.ETagSet3Map;
+import english.parser.implementations.map.ETaggedWordMap;
+import english.parser.implementations.map.TwoETaggedWordsMap;
+import english.parser.implementations.map.WordESetOfLabelsMap;
+import english.parser.implementations.map.WordETagETagMap;
+import english.parser.implementations.map.WordWordETagMap;
+
+public final class EWeight extends WeightBase {
 	public static final int DEP_TABLE_SIZE = 1 << 17;
 	
 	public WordMap m_mapSTw;
-	public CTagMap m_mapSTt;
-	public CTaggedWordMap m_mapSTwt;
+	public ETagMap m_mapSTt;
+	public ETaggedWordMap m_mapSTwt;
 
 	public WordMap m_mapN0w;
-	public CTagMap m_mapN0t;
-	public CTaggedWordMap m_mapN0wt;
+	public ETagMap m_mapN0t;
+	public ETaggedWordMap m_mapN0wt;
 
 	public WordMap m_mapN1w;
-	public CTagMap m_mapN1t;
-	public CTaggedWordMap m_mapN1wt;
+	public ETagMap m_mapN1t;
+	public ETaggedWordMap m_mapN1wt;
 
 	public WordMap m_mapN2w;
-	public CTagMap m_mapN2t;
-	public CTaggedWordMap m_mapN2wt;
+	public ETagMap m_mapN2t;
+	public ETaggedWordMap m_mapN2wt;
 
 	public WordMap m_mapSTHw;
-	public CTagMap m_mapSTHt;
+	public ETagMap m_mapSTHt;
 	public IntMap m_mapSTi;
 
 	public WordMap m_mapSTHHw;
-	public CTagMap m_mapSTHHt;
+	public ETagMap m_mapSTHHt;
 	public IntMap m_mapSTHi;
 
 	public WordMap m_mapSTLDw;
-	public CTagMap m_mapSTLDt;
+	public ETagMap m_mapSTLDt;
 	public IntMap m_mapSTLDi;
 
 	public WordMap m_mapSTRDw;
-	public CTagMap m_mapSTRDt;
+	public ETagMap m_mapSTRDt;
 	public IntMap m_mapSTRDi;
 
 	public WordMap m_mapN0LDw;
-	public CTagMap m_mapN0LDt;
+	public ETagMap m_mapN0LDt;
 	public IntMap m_mapN0LDi;
 
 	public WordMap m_mapSTL2Dw;
-	public CTagMap m_mapSTL2Dt;
+	public ETagMap m_mapSTL2Dt;
 	public IntMap m_mapSTL2Di;
 
 	public WordMap m_mapSTR2Dw;
-	public CTagMap m_mapSTR2Dt;
+	public ETagMap m_mapSTR2Dt;
 	public IntMap m_mapSTR2Di;
 
 	public WordMap m_mapN0L2Dw;
-	public CTagMap m_mapN0L2Dt;
+	public ETagMap m_mapN0L2Dt;
 	public IntMap m_mapN0L2Di;
 
 	public WordMap m_mapHTw;
-	public CTagMap m_mapHTt;
-	public CTaggedWordMap m_mapHTwt;
+	public ETagMap m_mapHTt;
+	public ETaggedWordMap m_mapHTwt;
 
-	public TwoCTaggedWordsMap m_mapSTwtN0wt;
-	public WordWordCTagMap m_mapSTwtN0w;
-	public WordWordCTagMap m_mapSTwN0wt;
-	public WordCTagCTagMap m_mapSTtN0wt;
-	public WordCTagCTagMap m_mapSTwtN0t;
+	public TwoETaggedWordsMap m_mapSTwtN0wt;
+	public WordWordETagMap m_mapSTwtN0w;
+	public WordWordETagMap m_mapSTwN0wt;
+	public WordETagETagMap m_mapSTtN0wt;
+	public WordETagETagMap m_mapSTwtN0t;
 	public TwoWordsMap m_mapSTwN0w;
 	
-	public CTagSet2Map m_mapSTtN0t;
-	public CTagSet2Map m_mapN0tN1t;
-	public CTagSet3Map m_mapN0tN1tN2t;
-	public CTagSet3Map m_mapSTtN0tN1t;
-	public CTagSet3Map m_mapSTtN0tN0LDt;
-	public CTagSet3Map m_mapN0tN0LDtN0L2Dt;
-	public CTagSet3Map m_mapSTHtSTtN0t;
-	public CTagSet3Map m_mapHTtHT2tN0t;
-	public CTagSet3Map m_mapSTHHtSTHtSTt;
-	public CTagSet3Map m_mapSTtSTLDtN0t;
-	public CTagSet3Map m_mapSTtSTLDtSTL2Dt;
-	public CTagSet3Map m_mapSTtSTRDtN0t;
-	public CTagSet3Map m_mapSTtSTRDtSTR2Dt;
+	public ETagSet2Map m_mapSTtN0t;
+	public ETagSet2Map m_mapN0tN1t;
+	public ETagSet3Map m_mapN0tN1tN2t;
+	public ETagSet3Map m_mapSTtN0tN1t;
+	public ETagSet3Map m_mapSTtN0tN0LDt;
+	public ETagSet3Map m_mapN0tN0LDtN0L2Dt;
+	public ETagSet3Map m_mapSTHtSTtN0t;
+	public ETagSet3Map m_mapHTtHT2tN0t;
+	public ETagSet3Map m_mapSTHHtSTHtSTt;
+	public ETagSet3Map m_mapSTtSTLDtN0t;
+	public ETagSet3Map m_mapSTtSTLDtSTL2Dt;
+	public ETagSet3Map m_mapSTtSTRDtN0t;
+	public ETagSet3Map m_mapSTtSTRDtSTR2Dt;
 
 	public WordIntMap m_mapSTwd;
-	public CTagIntMap m_mapSTtd;
+	public ETagIntMap m_mapSTtd;
 	public WordIntMap m_mapN0wd;
-	public CTagIntMap m_mapN0td;
+	public ETagIntMap m_mapN0td;
 	public WordWordIntMap m_mapSTwN0wd;
-	public CTagCTagIntMap m_mapSTtN0td;
+	public ETagETagIntMap m_mapSTtN0td;
 
 	public WordIntMap m_mapSTwra;
-	public CTagIntMap m_mapSTtra;
+	public ETagIntMap m_mapSTtra;
 	public WordIntMap m_mapSTwla;
-	public CTagIntMap m_mapSTtla;
+	public ETagIntMap m_mapSTtla;
 	public WordIntMap m_mapN0wla;
-	public CTagIntMap m_mapN0tla;
+	public ETagIntMap m_mapN0tla;
 
-	public WordCSetOfLabelsMap m_mapSTwrp;
-	public CTagCSetOfLabelsMap m_mapSTtrp;
-	public WordCSetOfLabelsMap m_mapSTwlp;
-	public CTagCSetOfLabelsMap m_mapSTtlp;
-	public WordCSetOfLabelsMap m_mapN0wlp;
-	public CTagCSetOfLabelsMap m_mapN0tlp;
+	public WordESetOfLabelsMap m_mapSTwrp;
+	public ETagESetOfLabelsMap m_mapSTtrp;
+	public WordESetOfLabelsMap m_mapSTwlp;
+	public ETagESetOfLabelsMap m_mapSTtlp;
+	public WordESetOfLabelsMap m_mapN0wlp;
+	public ETagESetOfLabelsMap m_mapN0tlp;
 
 	public LemmaMap m_mapSTl;
 	public CoNLLCPOSMap m_mapSTc;
@@ -140,101 +142,101 @@ public final class CWeight extends WeightBase {
 	public CoNLLCPOSMap m_mapN1c;
 	public CoNLLFeatsMap m_mapN1f;
 	
-	public CWeight(final String sPath, final boolean bTrain) {
+	public EWeight(final String sPath, final boolean bTrain) {
 		super(sPath, bTrain);
 		m_mapSTw = new WordMap("StackWord", DEP_TABLE_SIZE);
-		m_mapSTt = new CTagMap("StackTag", DEP_TABLE_SIZE);
-		m_mapSTwt = new CTaggedWordMap("StackWordTag", DEP_TABLE_SIZE);
+		m_mapSTt = new ETagMap("StackTag", DEP_TABLE_SIZE);
+		m_mapSTwt = new ETaggedWordMap("StackWordTag", DEP_TABLE_SIZE);
 
 		m_mapN0w = new WordMap("NextWord", DEP_TABLE_SIZE);
-		m_mapN0t = new CTagMap("NextTag", DEP_TABLE_SIZE);
-		m_mapN0wt = new CTaggedWordMap("NextWordTag", DEP_TABLE_SIZE);
+		m_mapN0t = new ETagMap("NextTag", DEP_TABLE_SIZE);
+		m_mapN0wt = new ETaggedWordMap("NextWordTag", DEP_TABLE_SIZE);
 
 		m_mapN1w = new WordMap("Next+1Word", DEP_TABLE_SIZE);
-		m_mapN1t = new CTagMap("Next+1Tag", DEP_TABLE_SIZE);
-		m_mapN1wt = new CTaggedWordMap("Next+1WordTag", DEP_TABLE_SIZE);
+		m_mapN1t = new ETagMap("Next+1Tag", DEP_TABLE_SIZE);
+		m_mapN1wt = new ETaggedWordMap("Next+1WordTag", DEP_TABLE_SIZE);
 
 		m_mapN2w = new WordMap("Next+2Word", DEP_TABLE_SIZE);
-		m_mapN2t = new CTagMap("Next+2Tag", DEP_TABLE_SIZE);
-		m_mapN2wt = new CTaggedWordMap("Next+2WordTag", DEP_TABLE_SIZE);
+		m_mapN2t = new ETagMap("Next+2Tag", DEP_TABLE_SIZE);
+		m_mapN2wt = new ETaggedWordMap("Next+2WordTag", DEP_TABLE_SIZE);
 
 		m_mapSTHw = new WordMap("StackHeadWord", DEP_TABLE_SIZE);
-		m_mapSTHt = new CTagMap("StackHeadTag", DEP_TABLE_SIZE);
+		m_mapSTHt = new ETagMap("StackHeadTag", DEP_TABLE_SIZE);
 		m_mapSTi = new IntMap("StackLabel", DEP_TABLE_SIZE);
 
 		m_mapSTHHw = new WordMap("StackHeadHeadWord", DEP_TABLE_SIZE);
-		m_mapSTHHt = new CTagMap("StackHeadHeadTag", DEP_TABLE_SIZE);
+		m_mapSTHHt = new ETagMap("StackHeadHeadTag", DEP_TABLE_SIZE);
 		m_mapSTHi = new IntMap("StackLabel", DEP_TABLE_SIZE);
 
 		m_mapSTLDw = new WordMap("StackLDWord", DEP_TABLE_SIZE);
-		m_mapSTLDt = new CTagMap("StackLDTag", DEP_TABLE_SIZE);
+		m_mapSTLDt = new ETagMap("StackLDTag", DEP_TABLE_SIZE);
 		m_mapSTLDi = new IntMap("StackLDLabel", DEP_TABLE_SIZE);
 
 		m_mapSTRDw = new WordMap("StackRDWord", DEP_TABLE_SIZE);
-		m_mapSTRDt = new CTagMap("StackRDTag", DEP_TABLE_SIZE);
+		m_mapSTRDt = new ETagMap("StackRDTag", DEP_TABLE_SIZE);
 		m_mapSTRDi = new IntMap("StackRDLabel", DEP_TABLE_SIZE);
 
 		m_mapN0LDw = new WordMap("NextLDWord", DEP_TABLE_SIZE);
-		m_mapN0LDt = new CTagMap("NextLDTag", DEP_TABLE_SIZE);
+		m_mapN0LDt = new ETagMap("NextLDTag", DEP_TABLE_SIZE);
 		m_mapN0LDi = new IntMap("NextLDLabel", DEP_TABLE_SIZE);
 
 		m_mapSTL2Dw = new WordMap("StackL2DWord", DEP_TABLE_SIZE);
-		m_mapSTL2Dt = new CTagMap("StackL2DTag", DEP_TABLE_SIZE);
+		m_mapSTL2Dt = new ETagMap("StackL2DTag", DEP_TABLE_SIZE);
 		m_mapSTL2Di = new IntMap("StackL2DLabel", DEP_TABLE_SIZE);
 
 		m_mapSTR2Dw = new WordMap("StackR2DWord", DEP_TABLE_SIZE);
-		m_mapSTR2Dt = new CTagMap("StackR2DTag", DEP_TABLE_SIZE);
+		m_mapSTR2Dt = new ETagMap("StackR2DTag", DEP_TABLE_SIZE);
 		m_mapSTR2Di = new IntMap("StackR2DLabel", DEP_TABLE_SIZE);
 
 		m_mapN0L2Dw = new WordMap("NextL2DWord", DEP_TABLE_SIZE);
-		m_mapN0L2Dt = new CTagMap("NextL2DTag", DEP_TABLE_SIZE);
+		m_mapN0L2Dt = new ETagMap("NextL2DTag", DEP_TABLE_SIZE);
 		m_mapN0L2Di = new IntMap("NextL2DLabel", DEP_TABLE_SIZE);
 
 		m_mapHTw = new WordMap("HeadStackWord", DEP_TABLE_SIZE);
-		m_mapHTt = new CTagMap("HeadStackTag", DEP_TABLE_SIZE);
-		m_mapHTwt = new CTaggedWordMap("HeadStackWordTag", DEP_TABLE_SIZE);
+		m_mapHTt = new ETagMap("HeadStackTag", DEP_TABLE_SIZE);
+		m_mapHTwt = new ETaggedWordMap("HeadStackWordTag", DEP_TABLE_SIZE);
 
-		m_mapSTwtN0wt = new TwoCTaggedWordsMap("StackWordTagNextWordTag", DEP_TABLE_SIZE);
-		m_mapSTwtN0w = new WordWordCTagMap("StackWordTagNextWord", DEP_TABLE_SIZE);
-		m_mapSTwN0wt = new WordWordCTagMap("StackWordNextWordTag", DEP_TABLE_SIZE);
-		m_mapSTtN0wt = new WordCTagCTagMap("StackTagNextWordTag", DEP_TABLE_SIZE);
-		m_mapSTwtN0t = new WordCTagCTagMap("StackWordTagNextTag", DEP_TABLE_SIZE);
+		m_mapSTwtN0wt = new TwoETaggedWordsMap("StackWordTagNextWordTag", DEP_TABLE_SIZE);
+		m_mapSTwtN0w = new WordWordETagMap("StackWordTagNextWord", DEP_TABLE_SIZE);
+		m_mapSTwN0wt = new WordWordETagMap("StackWordNextWordTag", DEP_TABLE_SIZE);
+		m_mapSTtN0wt = new WordETagETagMap("StackTagNextWordTag", DEP_TABLE_SIZE);
+		m_mapSTwtN0t = new WordETagETagMap("StackWordTagNextTag", DEP_TABLE_SIZE);
 		m_mapSTwN0w = new TwoWordsMap("StackWordNextWord", DEP_TABLE_SIZE);
-		m_mapSTtN0t = new CTagSet2Map("StackTagNextTag", DEP_TABLE_SIZE);
+		m_mapSTtN0t = new ETagSet2Map("StackTagNextTag", DEP_TABLE_SIZE);
 		
-		m_mapN0tN1t = new CTagSet2Map("NextTagNext+1Tag", DEP_TABLE_SIZE);
-		m_mapN0tN1tN2t = new CTagSet3Map("NextTagTrigram", DEP_TABLE_SIZE);
-		m_mapSTtN0tN1t = new CTagSet3Map("StackTagNextTagNext+1Tag", DEP_TABLE_SIZE);
-		m_mapSTtN0tN0LDt = new CTagSet3Map("StackTagNextTagNextLDTag", DEP_TABLE_SIZE);
-		m_mapN0tN0LDtN0L2Dt = new CTagSet3Map("StackTagNextTagNextLDTagNextTagNextL2DTag", DEP_TABLE_SIZE);
-		m_mapSTHtSTtN0t = new CTagSet3Map("StackHeadTagStackTagNextTag", DEP_TABLE_SIZE);
-		m_mapHTtHT2tN0t = new CTagSet3Map("HeadStackTagHeadStack2TagNextTag", DEP_TABLE_SIZE);
-		m_mapSTHHtSTHtSTt = new CTagSet3Map("StackHeadHeadTagStackHeadTagStackTag", DEP_TABLE_SIZE);
-		m_mapSTtSTLDtN0t = new CTagSet3Map("StackTagStackLDTagNextTag", DEP_TABLE_SIZE);
-		m_mapSTtSTLDtSTL2Dt = new CTagSet3Map("StackTagStackLDTagStackL2DTag", DEP_TABLE_SIZE);
-		m_mapSTtSTRDtN0t = new CTagSet3Map("StackTagStackRDTagNextTag", DEP_TABLE_SIZE);
-		m_mapSTtSTRDtSTR2Dt = new CTagSet3Map("StackTagStackRDTagStackR2DTag", DEP_TABLE_SIZE);
+		m_mapN0tN1t = new ETagSet2Map("NextTagNext+1Tag", DEP_TABLE_SIZE);
+		m_mapN0tN1tN2t = new ETagSet3Map("NextTagTrigram", DEP_TABLE_SIZE);
+		m_mapSTtN0tN1t = new ETagSet3Map("StackTagNextTagNext+1Tag", DEP_TABLE_SIZE);
+		m_mapSTtN0tN0LDt = new ETagSet3Map("StackTagNextTagNextLDTag", DEP_TABLE_SIZE);
+		m_mapN0tN0LDtN0L2Dt = new ETagSet3Map("StackTagNextTagNextLDTagNextTagNextL2DTag", DEP_TABLE_SIZE);
+		m_mapSTHtSTtN0t = new ETagSet3Map("StackHeadTagStackTagNextTag", DEP_TABLE_SIZE);
+		m_mapHTtHT2tN0t = new ETagSet3Map("HeadStackTagHeadStack2TagNextTag", DEP_TABLE_SIZE);
+		m_mapSTHHtSTHtSTt = new ETagSet3Map("StackHeadHeadTagStackHeadTagStackTag", DEP_TABLE_SIZE);
+		m_mapSTtSTLDtN0t = new ETagSet3Map("StackTagStackLDTagNextTag", DEP_TABLE_SIZE);
+		m_mapSTtSTLDtSTL2Dt = new ETagSet3Map("StackTagStackLDTagStackL2DTag", DEP_TABLE_SIZE);
+		m_mapSTtSTRDtN0t = new ETagSet3Map("StackTagStackRDTagNextTag", DEP_TABLE_SIZE);
+		m_mapSTtSTRDtSTR2Dt = new ETagSet3Map("StackTagStackRDTagStackR2DTag", DEP_TABLE_SIZE);
 
 		m_mapSTwd = new WordIntMap("StackWordDist", DEP_TABLE_SIZE);
-		m_mapSTtd = new CTagIntMap("StackTagDist", DEP_TABLE_SIZE);
+		m_mapSTtd = new ETagIntMap("StackTagDist", DEP_TABLE_SIZE);
 		m_mapN0wd = new WordIntMap("NextWordDist", DEP_TABLE_SIZE);
-		m_mapN0td = new CTagIntMap("NextTagDist", DEP_TABLE_SIZE);
+		m_mapN0td = new ETagIntMap("NextTagDist", DEP_TABLE_SIZE);
 		m_mapSTwN0wd = new WordWordIntMap("StackWordNextWordDist", DEP_TABLE_SIZE);
-		m_mapSTtN0td = new CTagCTagIntMap("StackTagNextTagDist", DEP_TABLE_SIZE);
+		m_mapSTtN0td = new ETagETagIntMap("StackTagNextTagDist", DEP_TABLE_SIZE);
 
 		m_mapSTwra = new WordIntMap("StackWordRightArity", DEP_TABLE_SIZE);
-		m_mapSTtra = new CTagIntMap("StackTagRightArity", DEP_TABLE_SIZE);
+		m_mapSTtra = new ETagIntMap("StackTagRightArity", DEP_TABLE_SIZE);
 		m_mapSTwla = new WordIntMap("StackWordLeftArity", DEP_TABLE_SIZE);
-		m_mapSTtla = new CTagIntMap("StackTagLeftArity", DEP_TABLE_SIZE);
+		m_mapSTtla = new ETagIntMap("StackTagLeftArity", DEP_TABLE_SIZE);
 		m_mapN0wla = new WordIntMap("NextWordRightArity", DEP_TABLE_SIZE);
-		m_mapN0tla = new CTagIntMap("NextTagRightArity", DEP_TABLE_SIZE);
+		m_mapN0tla = new ETagIntMap("NextTagRightArity", DEP_TABLE_SIZE);
 
-		m_mapSTwrp = new WordCSetOfLabelsMap("StackWordRightSetoftags", DEP_TABLE_SIZE);
-		m_mapSTtrp = new CTagCSetOfLabelsMap("StackTagRightSetoftags", DEP_TABLE_SIZE);
-		m_mapSTwlp = new WordCSetOfLabelsMap("StackWordLeftSetoftags", DEP_TABLE_SIZE);
-		m_mapSTtlp = new CTagCSetOfLabelsMap("StackTagLeftSetoftags", DEP_TABLE_SIZE);
-		m_mapN0wlp = new WordCSetOfLabelsMap("Next0WordLeftSetoftags", DEP_TABLE_SIZE);
-		m_mapN0tlp = new CTagCSetOfLabelsMap("Next0TagLeftSetoftags", DEP_TABLE_SIZE);
+		m_mapSTwrp = new WordESetOfLabelsMap("StackWordRightSetoftags", DEP_TABLE_SIZE);
+		m_mapSTtrp = new ETagESetOfLabelsMap("StackTagRightSetoftags", DEP_TABLE_SIZE);
+		m_mapSTwlp = new WordESetOfLabelsMap("StackWordLeftSetoftags", DEP_TABLE_SIZE);
+		m_mapSTtlp = new ETagESetOfLabelsMap("StackTagLeftSetoftags", DEP_TABLE_SIZE);
+		m_mapN0wlp = new WordESetOfLabelsMap("Next0WordLeftSetoftags", DEP_TABLE_SIZE);
+		m_mapN0tlp = new ETagESetOfLabelsMap("Next0TagLeftSetoftags", DEP_TABLE_SIZE);
 
 		m_mapSTl = new LemmaMap("StackLemma", DEP_TABLE_SIZE);
 		m_mapSTc = new CoNLLCPOSMap("StackCPOS", DEP_TABLE_SIZE);

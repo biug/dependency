@@ -3,17 +3,17 @@ package include.linguistics.chinese;
 import include.Tuple2;
 import include.linguistics.Word;
 
-public final class WordCSetOfLabels extends Tuple2<Word, CSetOfTags> {
+public final class WordCSetOfLabels extends Tuple2<Word, CSetOfLabels> {
 	
 	public WordCSetOfLabels() {
 		super();
 	}
 	
 	public WordCSetOfLabels(final WordCSetOfLabels word_tagset) {
-		super((Tuple2<Word, CSetOfTags>)word_tagset);
+		super((Tuple2<Word, CSetOfLabels>)word_tagset);
 	}
 	
-	public WordCSetOfLabels(final Word word, final CSetOfTags tagset) {
+	public WordCSetOfLabels(final Word word, final CSetOfLabels tagset) {
 		super(word, tagset);
 	}
 
@@ -23,8 +23,8 @@ public final class WordCSetOfLabels extends Tuple2<Word, CSetOfTags> {
 	}
 
 	@Override
-	public CSetOfTags create_object2(final CSetOfTags b) {
-		return new CSetOfTags(b);
+	public CSetOfLabels create_object2(final CSetOfLabels b) {
+		return new CSetOfLabels(b);
 	}
 
 }
