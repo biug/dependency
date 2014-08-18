@@ -14,13 +14,13 @@ public final class WordETagMap extends PackedScoreMap<WordETag> {
 
 	@Override
 	public WordETag loadKeyFromString(final String str) {
-		String[] args = str.split("_");
+		String[] args = str.split("/");
 		return new WordETag(new Word(args[0]), new ETag(args[1]));
 	}
 
 	@Override
 	public String generateStringFromKey(final WordETag key) {
-		return key.first().toString() + "_" + key.second().toString();
+		return key.first().toString() + "/" + key.second().toString();
 	}
 
 	@Override

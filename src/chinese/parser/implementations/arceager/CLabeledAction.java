@@ -1,6 +1,7 @@
-package common.parser.implementations.arceager;
+package chinese.parser.implementations.arceager;
 
-public final class LabeledAction {
+
+public final class CLabeledAction {
 	public final static int NO_ACTION = 0;
 	public final static int SHIFT = 1;
 	public final static int REDUCE = 2;
@@ -8,8 +9,8 @@ public final class LabeledAction {
 	public final static int ARC_RIGHT = 4;
 	public final static int POP_ROOT = 5;
 	public final static int LABEL_AL_FIRST = 6;
-	public final static int LABEL_AR_FIRST = LABEL_AL_FIRST + Macros.DEP_LABEL_COUNT - 1;
-	public final static int MAX = LABEL_AR_FIRST + Macros.DEP_LABEL_COUNT - 1;
+	public final static int LABEL_AR_FIRST = LABEL_AL_FIRST + CMacros.DEP_LABEL_COUNT - 1;
+	public final static int MAX = LABEL_AR_FIRST + CMacros.DEP_LABEL_COUNT - 1;
 	
 	public static int encodeAction(final int action, final int label) {
 		if (action == ARC_LEFT) {

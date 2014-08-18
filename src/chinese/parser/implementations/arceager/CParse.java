@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import common.parser.LabeledDependencyParser;
-import common.parser.implementations.arceager.Macros;
 
 public final class CParse {
 	public void process(final String sInputFile, final String sOutputFile, final String sFeatureFile, final int nBest, final boolean bScores) {
@@ -38,7 +37,7 @@ public final class CParse {
 			}
 			
 			while (input_reader.readTaggedSentence(input_sent, "_")) {
-				if (input_sent.size() > Macros.MAX_SENTENCE_SIZE) {
+				if (input_sent.size() > CMacros.MAX_SENTENCE_SIZE) {
 					for (int index = 0; index < nBest; ++index) {
 						output_sent[index].clear();
 						if (bScores) {

@@ -1,9 +1,7 @@
 package common.parser.implementations.arceager;
 
-import chinese.dependency.label.CDependencyLabel;
+public class Macros {
 
-public final class Macros {
-	public final static int DEP_LABEL_COUNT = CDependencyLabel.MAX_COUNT;
 	public final static int AGENDA_SIZE = 64;
 	public final static int MAX_SENTENCE_SIZE = 256;
 	public final static int MAX_SENTENCE_SIZE_BITS = 8;
@@ -23,4 +21,5 @@ public final class Macros {
 		}
 		return diff;
 	}
+	
 }

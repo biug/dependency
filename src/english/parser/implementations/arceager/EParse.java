@@ -10,9 +10,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import common.parser.LabeledDependencyParser;
-import common.parser.implementations.arceager.Macros;
 
-public final class EParser {
+public final class EParse {
 	public void process(final String sInputFile, final String sOutputFile, final String sFeatureFile, final int nBest, final boolean bScores) {
 		System.out.println("Parsing started");
 		
@@ -37,8 +36,8 @@ public final class EParser {
 				output_sent[index] = new LabeledDependencyParser();
 			}
 			
-			while (input_reader.readTaggedSentence(input_sent, "_")) {
-				if (input_sent.size() > Macros.MAX_SENTENCE_SIZE) {
+			while (input_reader.readTaggedSentence(input_sent, "/")) {
+				if (input_sent.size() > EMacros.MAX_SENTENCE_SIZE) {
 					for (int index = 0; index < nBest; ++index) {
 						output_sent[index].clear();
 						if (bScores) {

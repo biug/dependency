@@ -26,12 +26,8 @@ import include.linguistics.english.WordWordETag;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import chinese.parser.implementations.arceager.CWeight;
-
 import common.parser.DepParserBase;
 import common.parser.LabeledDependencyParser;
-import common.parser.implementations.arceager.LabeledAction;
-import common.parser.implementations.arceager.Macros;
 import common.parser.implementations.arceager.ScoredAction;
 
 import english.dependency.label.EDependencyLabel;
@@ -96,13 +92,13 @@ public final class EDepParser extends DepParserBase {
 	public EDepParser(final String sFeatureDBPath, final boolean bTrain, final boolean bCoNLL) {
 		super(sFeatureDBPath, bTrain, bCoNLL);
 		
-		m_Agenda = new ELabeledAgendaBeam(Macros.AGENDA_SIZE);
-		m_Beam = new AgendaSimple(Macros.AGENDA_SIZE);
+		m_Agenda = new ELabeledAgendaBeam(EMacros.AGENDA_SIZE);
+		m_Beam = new AgendaSimple(EMacros.AGENDA_SIZE);
 		
 		m_lCache = new ArrayList<ETaggedWord>();
 		m_lCacheLabel = new ArrayList<EDependencyLabel>();
 		
-		m_weights = new CWeight(sFeatureDBPath, bTrain);
+		m_weights = new EWeight(sFeatureDBPath, bTrain);
 		m_nTrainingRound = 0;
 		m_nTotalErrors = 0;
 		m_nScoreIndex = bTrain ? Score.eNonAverage : Score.eAverage;
@@ -112,7 +108,7 @@ public final class EDepParser extends DepParserBase {
 		pCandidate = new ELabeledStateItem(m_lCache);
 		correctState = new ELabeledStateItem(m_lCache);
 		
-		packed_scores = new PackedScoreType(LabeledAction.MAX);
+		packed_scores = new PackedScoreType(ELabeledAction.MAX);
 		
 		trainSentence = new TwoStringVector();
 		
@@ -141,13 +137,13 @@ public final class EDepParser extends DepParserBase {
 	public EDepParser(final String sFeatureDBPath, final boolean bTrain) {
 		super(sFeatureDBPath, bTrain, false);
 		
-		m_Agenda = new ELabeledAgendaBeam(Macros.AGENDA_SIZE);
-		m_Beam = new AgendaSimple(Macros.AGENDA_SIZE);
+		m_Agenda = new ELabeledAgendaBeam(EMacros.AGENDA_SIZE);
+		m_Beam = new AgendaSimple(EMacros.AGENDA_SIZE);
 		
 		m_lCache = new ArrayList<ETaggedWord>();
 		m_lCacheLabel = new ArrayList<EDependencyLabel>();
 		
-		m_weights = new CWeight(sFeatureDBPath, bTrain);
+		m_weights = new EWeight(sFeatureDBPath, bTrain);
 		m_nTrainingRound = 0;
 		m_nTotalErrors = 0;
 		m_nScoreIndex = bTrain ? Score.eNonAverage : Score.eAverage;
@@ -157,7 +153,7 @@ public final class EDepParser extends DepParserBase {
 		pCandidate = new ELabeledStateItem(m_lCache);
 		correctState = new ELabeledStateItem(m_lCache);
 		
-		packed_scores = new PackedScoreType(LabeledAction.MAX);
+		packed_scores = new PackedScoreType(ELabeledAction.MAX);
 		
 		trainSentence = new TwoStringVector();
 		
@@ -249,7 +245,7 @@ public final class EDepParser extends DepParserBase {
 		final int n0ld_label = n0ld_index == -1 ? EDependencyLabel.NONE : item.label(n0ld_index);
 		final int n0l2d_label = n0l2d_index == -1 ? EDependencyLabel.NONE : item.label(n0l2d_index);
 		
-		final int st_n0_dist = Macros.encodeLinkDistance(st_index, n0_index);
+		final int st_n0_dist = EMacros.encodeLinkDistance(st_index, n0_index);
 		
 		final int st_rarity = st_index == -1 ? 0 : item.rightarity(st_index);
 		final int st_larity = st_index == -1 ? 0 : item.leftarity(st_index);
@@ -509,7 +505,7 @@ public final class EDepParser extends DepParserBase {
 //	}
 	
 	public void reduce(final ELabeledStateItem item, final PackedScoreType scores) {
-		scoredaction.action = LabeledAction.REDUCE;
+		scoredaction.action = ELabeledAction.REDUCE;
 		scoredaction.score = item.score + scores.at(scoredaction.action);
 		m_Beam.insertItem(scoredaction);
 	}
@@ -517,7 +513,7 @@ public final class EDepParser extends DepParserBase {
 	public void arcleft(final ELabeledStateItem item, final PackedScoreType scores) {
 		for (int label = EDependencyLabel.FIRST; label < EDependencyLabel.COUNT; ++label) {
 			if (m_weights.rules() || ETag.canAssignLabel(m_lCache, item.size(), item.stacktop(), label)) {
-				scoredaction.action = LabeledAction.encodeAction(LabeledAction.ARC_LEFT, label);
+				scoredaction.action = ELabeledAction.encodeAction(ELabeledAction.ARC_LEFT, label);
 				scoredaction.score = item.score + scores.at(scoredaction.action);
 				m_Beam.insertItem(scoredaction);
 			}
@@ -527,7 +523,7 @@ public final class EDepParser extends DepParserBase {
 	public void arcright(final ELabeledStateItem item, final PackedScoreType scores) {
 		for (int label = EDependencyLabel.FIRST; label < EDependencyLabel.COUNT; ++label) {
 			if (m_weights.rules() || ETag.canAssignLabel(m_lCache, item.size(), item.stacktop(), label)) {
-				scoredaction.action = LabeledAction.encodeAction(LabeledAction.ARC_RIGHT, label);
+				scoredaction.action = ELabeledAction.encodeAction(ELabeledAction.ARC_RIGHT, label);
 				scoredaction.score = item.score + scores.at(scoredaction.action);
 				m_Beam.insertItem(scoredaction);
 			}
@@ -535,13 +531,13 @@ public final class EDepParser extends DepParserBase {
 	}
 	
 	public void shift(final ELabeledStateItem item, final PackedScoreType scores) {
-		scoredaction.action = LabeledAction.SHIFT;
+		scoredaction.action = ELabeledAction.SHIFT;
 		scoredaction.score = item.score + scores.at(scoredaction.action);
 		m_Beam.insertItem(scoredaction);
 	}
 	
 	public void poproot(final ELabeledStateItem item, final PackedScoreType scores) {
-		scoredaction.action = LabeledAction.POP_ROOT;
+		scoredaction.action = ELabeledAction.POP_ROOT;
 		scoredaction.score = item.score + scores.at(scoredaction.action);
 		m_Beam.insertItem(scoredaction);
 	}
@@ -578,7 +574,7 @@ public final class EDepParser extends DepParserBase {
 			for (int j = 0, agenda_size = m_Agenda.generatorSize(); j < agenda_size; ++j) {
 				m_Beam.clear();
 				packed_scores.reset();
-				getOrUpdateStackScore(pGenerator, packed_scores, LabeledAction.NO_ACTION);
+				getOrUpdateStackScore(pGenerator, packed_scores, ELabeledAction.NO_ACTION);
 				if (pGenerator.size() == length) {
 					if (pGenerator.stacksize() > 1) {
 						reduce(pGenerator, packed_scores);
@@ -669,8 +665,8 @@ public final class EDepParser extends DepParserBase {
 
 	@Override
 	public void finishtraning() {
-		((CWeight)m_weights).computeAverageFeatureWeights(m_nTrainingRound);
-		((CWeight)m_weights).saveScores();
+		((EWeight)m_weights).computeAverageFeatureWeights(m_nTrainingRound);
+		((EWeight)m_weights).saveScores();
 		System.out.println("Total number of training errors are: " + m_nTotalErrors);
 	}
 
