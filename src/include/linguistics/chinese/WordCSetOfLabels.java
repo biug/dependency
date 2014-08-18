@@ -10,7 +10,7 @@ public final class WordCSetOfLabels extends Tuple2<Word, CSetOfLabels> {
 	}
 	
 	public WordCSetOfLabels(final WordCSetOfLabels word_tagset) {
-		super((Tuple2<Word, CSetOfLabels>)word_tagset);
+		refer(word_tagset.m_object1, word_tagset.m_object2);
 	}
 	
 	public WordCSetOfLabels(final Word word, final CSetOfLabels tagset) {
@@ -24,7 +24,7 @@ public final class WordCSetOfLabels extends Tuple2<Word, CSetOfLabels> {
 
 	@Override
 	public CSetOfLabels create_object2(final CSetOfLabels b) {
-		return new CSetOfLabels(b);
+		return b;
 	}
 
 }

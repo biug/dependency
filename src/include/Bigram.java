@@ -48,8 +48,9 @@ public abstract class Bigram<Unigram> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public final boolean equals(Object o) {
-		return m_unigram1.equals(((Bigram<Unigram>)o).m_unigram1) &&
-				m_unigram2.equals(((Bigram<Unigram>)o).m_unigram2);
+		Bigram<Unigram> bi = (Bigram<Unigram>)o;
+		return m_unigram1.equals(bi.m_unigram1) &&
+				m_unigram2.equals(bi.m_unigram2);
 	}
 	
 	protected final void computehash() {

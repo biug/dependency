@@ -5,6 +5,8 @@ import chinese.pos.CTag;
 
 public final class CTaggedWord {
 	
+	public static final CTag empty_tag = new CTag(CTag.NONE);
+	
 	public Word word;
 	public CTag tag;
 	
@@ -30,7 +32,8 @@ public final class CTaggedWord {
 	
 	@Override
 	public boolean equals(final Object o) {
-		return word.equals(((CTaggedWord)o).word) && tag.equals(((CTaggedWord)o).tag);
+		CTaggedWord tw = (CTaggedWord)o;
+		return word.equals(tw.word) && tag.equals(tw.tag);
 	}
 	
 	@Override
@@ -45,6 +48,6 @@ public final class CTaggedWord {
 	
 	public void load(final Word w) {
 		word = w;
-		tag = new CTag(CTag.NONE);
+		tag = empty_tag;
 	}
 }

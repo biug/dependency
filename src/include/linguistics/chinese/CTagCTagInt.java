@@ -10,7 +10,7 @@ public final class CTagCTagInt extends Tuple3<CTag, CTag, Integer> {
 	}
 	
 	public CTagCTagInt(final CTagCTagInt tag_tag_int) {
-		super((Tuple3<CTag, CTag, Integer>)tag_tag_int);
+		refer(tag_tag_int.m_object1, tag_tag_int.m_object2, tag_tag_int.m_object3);
 	}
 	
 	public CTagCTagInt(final CTag tag1, final CTag tag2, final Integer i) {

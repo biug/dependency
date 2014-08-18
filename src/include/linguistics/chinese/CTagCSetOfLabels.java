@@ -10,7 +10,7 @@ public final class CTagCSetOfLabels extends Tuple2<CTag, CSetOfLabels> {
 	}
 	
 	public CTagCSetOfLabels(final CTagCSetOfLabels tag_tagset) {
-		super((Tuple2<CTag, CSetOfLabels>)tag_tagset);
+		refer(tag_tagset.m_object1, tag_tagset.m_object2);
 	}
 	
 	public CTagCSetOfLabels(final CTag tag, final CSetOfLabels tagset) {
@@ -24,7 +24,7 @@ public final class CTagCSetOfLabels extends Tuple2<CTag, CSetOfLabels> {
 
 	@Override
 	public CSetOfLabels create_object2(final CSetOfLabels b) {
-		return new CSetOfLabels(b);
+		return b;
 	}
 	
 }

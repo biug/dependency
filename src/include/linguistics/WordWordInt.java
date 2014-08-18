@@ -9,7 +9,7 @@ public final class WordWordInt extends Tuple3<Word, Word, Integer> {
 	}
 	
 	public WordWordInt(WordWordInt word_word_int) {
-		super((Tuple3<Word, Word, Integer>)word_word_int);
+		refer(word_word_int.m_object1, word_word_int.m_object2, word_word_int.m_object3);
 	}
 	
 	public WordWordInt(final Word word1, final Word word2, final Integer i) {

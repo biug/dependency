@@ -10,7 +10,7 @@ public final class WordETag extends Tuple2<Word, ETag> {
 	}
 	
 	public WordETag(final WordETag word_tag) {
-		super((Tuple2<Word, ETag>)word_tag);
+		super(word_tag.m_object1, word_tag.m_object2);
 	}
 	
 	public WordETag(final Word word, final ETag tag) {

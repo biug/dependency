@@ -9,7 +9,7 @@ public final class TwoCTaggedWords extends Bigram<CTaggedWord> {
 	}
 	
 	public TwoCTaggedWords(final TwoCTaggedWords twotaggedwords) {
-		super((Bigram<CTaggedWord>)twotaggedwords);
+		refer(twotaggedwords.m_unigram1, twotaggedwords.m_unigram2);
 	}
 	
 	public TwoCTaggedWords(final CTaggedWord w1, final CTaggedWord w2) {
@@ -18,7 +18,7 @@ public final class TwoCTaggedWords extends Bigram<CTaggedWord> {
 
 	@Override
 	protected CTaggedWord create_unigram(final CTaggedWord u) {
-		return new CTaggedWord(u);
+		return u;
 	}
 
 }

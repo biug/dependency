@@ -8,7 +8,7 @@ public final class TwoETaggedWords extends Bigram<ETaggedWord> {
 	}
 	
 	public TwoETaggedWords(final TwoETaggedWords twotaggedwords) {
-		super((Bigram<ETaggedWord>)twotaggedwords);
+		refer(twotaggedwords.m_unigram1, twotaggedwords.m_unigram2);
 	}
 	
 	public TwoETaggedWords(final ETaggedWord w1, final ETaggedWord w2) {
@@ -17,6 +17,6 @@ public final class TwoETaggedWords extends Bigram<ETaggedWord> {
 
 	@Override
 	protected ETaggedWord create_unigram(final ETaggedWord u) {
-		return new ETaggedWord(u);
+		return u;
 	}
 }

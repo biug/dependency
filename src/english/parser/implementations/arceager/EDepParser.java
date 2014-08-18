@@ -251,9 +251,9 @@ public final class EDepParser extends DepParserBase {
 		final int st_larity = st_index == -1 ? 0 : item.leftarity(st_index);
 		final int n0_larity = n0_index == -1 ? 0 : item.leftarity(n0_index);
 		
-		final ESetOfLabels st_rtagset = st_index == -1 ? empty_setoftags : item.righttagset(st_index);
-		final ESetOfLabels st_ltagset = st_index == -1 ? empty_setoftags : item.lefttagset(st_index);
-		final ESetOfLabels n0_ltagset = n0_index == -1 ? empty_setoftags : item.lefttagset(n0_index);
+		final ESetOfLabels st_rtagset = st_index == -1 ? empty_setoftags : new ESetOfLabels(item.righttagset(st_index));
+		final ESetOfLabels st_ltagset = st_index == -1 ? empty_setoftags : new ESetOfLabels(item.lefttagset(st_index));
+		final ESetOfLabels n0_ltagset = n0_index == -1 ? empty_setoftags : new ESetOfLabels(item.lefttagset(n0_index));
 		
 		EWeight eweight = (EWeight)m_weights;
 		

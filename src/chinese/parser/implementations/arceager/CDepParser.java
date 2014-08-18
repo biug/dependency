@@ -251,9 +251,9 @@ public final class CDepParser extends DepParserBase {
 		final int st_larity = st_index == -1 ? 0 : item.leftarity(st_index);
 		final int n0_larity = n0_index == -1 ? 0 : item.leftarity(n0_index);
 		
-		final CSetOfLabels st_rtagset = st_index == -1 ? empty_setoftags : item.righttagset(st_index);
-		final CSetOfLabels st_ltagset = st_index == -1 ? empty_setoftags : item.lefttagset(st_index);
-		final CSetOfLabels n0_ltagset = n0_index == -1 ? empty_setoftags : item.lefttagset(n0_index);
+		final CSetOfLabels st_rtagset = st_index == -1 ? empty_setoftags : new CSetOfLabels(item.righttagset(st_index));
+		final CSetOfLabels st_ltagset = st_index == -1 ? empty_setoftags : new CSetOfLabels(item.lefttagset(st_index));
+		final CSetOfLabels n0_ltagset = n0_index == -1 ? empty_setoftags : new CSetOfLabels(item.lefttagset(n0_index));
 		
 		CWeight cweight = (CWeight)m_weights;
 		
@@ -455,54 +455,54 @@ public final class CDepParser extends DepParserBase {
 		++m_nTotalErrors;
 	}
 	
-	public void reduce(final CLabeledStateItem item, final PackedScoreType scores, final boolean isprint) {
-		scoredaction.action = CLabeledAction.REDUCE;
-		scoredaction.score = item.score + scores.at(scoredaction.action);
-		if (isprint) {
-			System.out.println("reduce " + scoredaction.action + " " + scoredaction.score);
-		}
-		m_Beam.insertItem(scoredaction);
-	}
-	
-	public void arcleft(final CLabeledStateItem item, final PackedScoreType scores, final boolean isprint) {
-		for (int i = CDependencyLabel.FIRST; i < CDependencyLabel.COUNT; ++i) {
-			scoredaction.action = CLabeledAction.encodeAction(CLabeledAction.ARC_LEFT, i);
-			scoredaction.score = item.score + scores.at(scoredaction.action);
-			if (isprint) {
-				System.out.println("arcleft " + i + " " + scoredaction.action + " " + scoredaction.score);
-			}
-			m_Beam.insertItem(scoredaction);
-		}
-	}
-	
-	public void arcright(final CLabeledStateItem item, final PackedScoreType scores, final boolean isprint) {
-		for (int i = CDependencyLabel.FIRST; i < CDependencyLabel.COUNT; ++i) {
-			scoredaction.action = CLabeledAction.encodeAction(CLabeledAction.ARC_RIGHT, i);
-			scoredaction.score = item.score + scores.at(scoredaction.action);
-			if (isprint) {
-				System.out.println("arcright " + i + " " + scoredaction.action + " " + scoredaction.score);
-			}
-			m_Beam.insertItem(scoredaction);
-		}
-	}
-	
-	public void shift(final CLabeledStateItem item, final PackedScoreType scores, final boolean isprint) {
-		scoredaction.action = CLabeledAction.SHIFT;
-		scoredaction.score = item.score + scores.at(scoredaction.action);
-		if (isprint) {
-			System.out.println("shift " + scoredaction.action + " " + scoredaction.score);
-		}
-		m_Beam.insertItem(scoredaction);
-	}
-	
-	public void poproot(final CLabeledStateItem item, final PackedScoreType scores, final boolean isprint) {
-		scoredaction.action = CLabeledAction.POP_ROOT;
-		scoredaction.score = item.score + scores.at(scoredaction.action);
-		if (isprint) {
-			System.out.println("poproot " + scoredaction.action + " " + scoredaction.score);
-		}
-		m_Beam.insertItem(scoredaction);
-	}
+//	public void reduce(final CLabeledStateItem item, final PackedScoreType scores, final boolean isprint) {
+//		scoredaction.action = CLabeledAction.REDUCE;
+//		scoredaction.score = item.score + scores.at(scoredaction.action);
+//		if (isprint) {
+//			System.out.println("reduce " + scoredaction.action + " " + scoredaction.score);
+//		}
+//		m_Beam.insertItem(scoredaction);
+//	}
+//	
+//	public void arcleft(final CLabeledStateItem item, final PackedScoreType scores, final boolean isprint) {
+//		for (int i = CDependencyLabel.FIRST; i < CDependencyLabel.COUNT; ++i) {
+//			scoredaction.action = CLabeledAction.encodeAction(CLabeledAction.ARC_LEFT, i);
+//			scoredaction.score = item.score + scores.at(scoredaction.action);
+//			if (isprint) {
+//				System.out.println("arcleft " + i + " " + scoredaction.action + " " + scoredaction.score);
+//			}
+//			m_Beam.insertItem(scoredaction);
+//		}
+//	}
+//	
+//	public void arcright(final CLabeledStateItem item, final PackedScoreType scores, final boolean isprint) {
+//		for (int i = CDependencyLabel.FIRST; i < CDependencyLabel.COUNT; ++i) {
+//			scoredaction.action = CLabeledAction.encodeAction(CLabeledAction.ARC_RIGHT, i);
+//			scoredaction.score = item.score + scores.at(scoredaction.action);
+//			if (isprint) {
+//				System.out.println("arcright " + i + " " + scoredaction.action + " " + scoredaction.score);
+//			}
+//			m_Beam.insertItem(scoredaction);
+//		}
+//	}
+//	
+//	public void shift(final CLabeledStateItem item, final PackedScoreType scores, final boolean isprint) {
+//		scoredaction.action = CLabeledAction.SHIFT;
+//		scoredaction.score = item.score + scores.at(scoredaction.action);
+//		if (isprint) {
+//			System.out.println("shift " + scoredaction.action + " " + scoredaction.score);
+//		}
+//		m_Beam.insertItem(scoredaction);
+//	}
+//	
+//	public void poproot(final CLabeledStateItem item, final PackedScoreType scores, final boolean isprint) {
+//		scoredaction.action = CLabeledAction.POP_ROOT;
+//		scoredaction.score = item.score + scores.at(scoredaction.action);
+//		if (isprint) {
+//			System.out.println("poproot " + scoredaction.action + " " + scoredaction.score);
+//		}
+//		m_Beam.insertItem(scoredaction);
+//	}
 	
 	public void reduce(final CLabeledStateItem item, final PackedScoreType scores) {
 		scoredaction.action = CLabeledAction.REDUCE;

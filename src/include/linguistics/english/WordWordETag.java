@@ -11,7 +11,7 @@ public final class WordWordETag extends Tuple3<Word, Word, ETag> {
 	}
 	
 	public WordWordETag(final WordWordETag word_word_tag) {
-		super((Tuple3<Word, Word, ETag>)word_word_tag);
+		refer(word_word_tag.m_object1, word_word_tag.m_object2, word_word_tag.m_object3);
 	}
 	
 	public WordWordETag(final Word word1, final Word word2, final ETag tag) {

@@ -11,7 +11,7 @@ public final class ETagETagInt extends Tuple3<ETag, ETag, Integer> {
 	}
 	
 	public ETagETagInt(final ETagETagInt tag_tag_int) {
-		super((Tuple3<ETag, ETag, Integer>)tag_tag_int);
+		refer(tag_tag_int.m_object1, tag_tag_int.m_object2, tag_tag_int.m_object3);
 	}
 	
 	public ETagETagInt(final ETag tag1, final ETag tag2, final Integer i) {

@@ -4,6 +4,8 @@ import include.linguistics.Word;
 import english.pos.ETag;
 
 public final class ETaggedWord {
+	
+	public final static ETag empty_tag = new ETag(ETag.NONE);
 
 	public Word word;
 	public ETag tag;
@@ -30,7 +32,8 @@ public final class ETaggedWord {
 	
 	@Override
 	public boolean equals(final Object o) {
-		return word.equals(((ETaggedWord)o).word) && tag.equals(((ETaggedWord)o).tag);
+		ETaggedWord tw = (ETaggedWord)o;
+		return word.equals(tw.word) && tag.equals(tw.tag);
 	}
 	
 	@Override
@@ -45,6 +48,6 @@ public final class ETaggedWord {
 	
 	public void load(final Word w) {
 		word = w;
-		tag = new ETag(ETag.NONE);
+		tag = empty_tag;
 	}
 }

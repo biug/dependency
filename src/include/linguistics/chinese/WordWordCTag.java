@@ -11,7 +11,7 @@ public final class WordWordCTag extends Tuple3<Word, Word, CTag> {
 	}
 	
 	public WordWordCTag(final WordWordCTag word_word_tag) {
-		super((Tuple3<Word, Word, CTag>)word_word_tag);
+		refer(word_word_tag.m_object1, word_word_tag.m_object2, word_word_tag.m_object3);
 	}
 	
 	public WordWordCTag(final Word word1, final Word word2, final CTag tag) {

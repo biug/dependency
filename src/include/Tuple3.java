@@ -58,9 +58,10 @@ public abstract class Tuple3<A, B, C> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public final boolean equals(final Object o) {
-		return m_object1.equals(((Tuple3<A, B, C>)o).m_object1) &&
-				m_object2.equals(((Tuple3<A, B, C>)o).m_object2) &&
-				m_object3.equals(((Tuple3<A, B, C>)o).m_object3);
+		Tuple3<A, B, C> tuple = (Tuple3<A, B, C>)o;
+		return m_object1.equals(tuple.m_object1) &&
+				m_object2.equals(tuple.m_object2) &&
+				m_object3.equals(tuple.m_object3);
 	}
 	
 	protected final void computehash() {

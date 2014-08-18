@@ -9,7 +9,7 @@ public final class WordESetOfLabels extends Tuple2<Word, ESetOfLabels> {
 	}
 	
 	public WordESetOfLabels(final WordESetOfLabels word_tagset) {
-		super((Tuple2<Word, ESetOfLabels>)word_tagset);
+		refer(word_tagset.m_object1, word_tagset.m_object2);
 	}
 	
 	public WordESetOfLabels(final Word word, final ESetOfLabels tagset) {
@@ -23,6 +23,6 @@ public final class WordESetOfLabels extends Tuple2<Word, ESetOfLabels> {
 
 	@Override
 	public ESetOfLabels create_object2(final ESetOfLabels b) {
-		return new ESetOfLabels(b);
+		return b;
 	}
 }

@@ -9,7 +9,7 @@ public final class TwoWords extends Bigram<Word> {
 	}
 	
 	public TwoWords(final TwoWords twowords) {
-		super((Bigram<Word>)twowords);
+		refer(twowords.m_unigram1, twowords.m_unigram2);
 	}
 	
 	public TwoWords(final Word w1, final Word w2) {

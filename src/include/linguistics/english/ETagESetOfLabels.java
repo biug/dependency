@@ -11,7 +11,7 @@ public final class ETagESetOfLabels extends Tuple2<ETag, ESetOfLabels> {
 	}
 	
 	public ETagESetOfLabels(final ETagESetOfLabels tag_tagset) {
-		super((Tuple2<ETag, ESetOfLabels>)tag_tagset);
+		refer(tag_tagset.m_object1, tag_tagset.m_object2);
 	}
 	
 	public ETagESetOfLabels(final ETag tag, final ESetOfLabels tagset) {
@@ -25,7 +25,7 @@ public final class ETagESetOfLabels extends Tuple2<ETag, ESetOfLabels> {
 
 	@Override
 	public ESetOfLabels create_object2(final ESetOfLabels b) {
-		return new ESetOfLabels(b);
+		return b;
 	}
 	
 }
