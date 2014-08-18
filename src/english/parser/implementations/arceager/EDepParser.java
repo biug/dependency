@@ -512,21 +512,17 @@ public final class EDepParser extends DepParserBase {
 	
 	public void arcleft(final ELabeledStateItem item, final PackedScoreType scores) {
 		for (int label = EDependencyLabel.FIRST; label < EDependencyLabel.COUNT; ++label) {
-			if (m_weights.rules() || ETag.canAssignLabel(m_lCache, item.size(), item.stacktop(), label)) {
-				scoredaction.action = ELabeledAction.encodeAction(ELabeledAction.ARC_LEFT, label);
-				scoredaction.score = item.score + scores.at(scoredaction.action);
-				m_Beam.insertItem(scoredaction);
-			}
+			scoredaction.action = ELabeledAction.encodeAction(ELabeledAction.ARC_LEFT, label);
+			scoredaction.score = item.score + scores.at(scoredaction.action);
+			m_Beam.insertItem(scoredaction);
 		}
 	}
 	
 	public void arcright(final ELabeledStateItem item, final PackedScoreType scores) {
 		for (int label = EDependencyLabel.FIRST; label < EDependencyLabel.COUNT; ++label) {
-			if (m_weights.rules() || ETag.canAssignLabel(m_lCache, item.size(), item.stacktop(), label)) {
-				scoredaction.action = ELabeledAction.encodeAction(ELabeledAction.ARC_RIGHT, label);
-				scoredaction.score = item.score + scores.at(scoredaction.action);
-				m_Beam.insertItem(scoredaction);
-			}
+			scoredaction.action = ELabeledAction.encodeAction(ELabeledAction.ARC_RIGHT, label);
+			scoredaction.score = item.score + scores.at(scoredaction.action);
+			m_Beam.insertItem(scoredaction);
 		}
 	}
 	
