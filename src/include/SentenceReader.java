@@ -39,9 +39,11 @@ public final class SentenceReader {
 			String[] taggedwords = line.split(" ");
 			++m_nLine;
 			vReturn.clear();
+			int index;
 			for (String taggedword : taggedwords) {
 				if (taggedword.isEmpty()) break;
-				vReturn.add(new BiString(taggedword.split(separtor)[0], taggedword.split(separtor)[1]));
+				index = taggedword.lastIndexOf(separtor);
+				vReturn.add(new BiString(taggedword.substring(0, index), taggedword.substring(index + 1)));
 			}
 			return true;
 		} catch (IOException e) {
