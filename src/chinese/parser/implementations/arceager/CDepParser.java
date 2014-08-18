@@ -28,6 +28,7 @@ import java.util.Iterator;
 
 import chinese.dependency.label.CDependencyLabel;
 import chinese.pos.CTag;
+
 import common.parser.DepParserBase;
 import common.parser.LabeledDependencyParser;
 import common.parser.implementations.arceager.ScoredAction;
