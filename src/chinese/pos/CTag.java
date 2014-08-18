@@ -1,6 +1,7 @@
 package chinese.pos;
 
 
+
 public final class CTag {
 	public final static String[] PENN_TAG_STRINGS = {
 		"-NONE-",
@@ -140,5 +141,4 @@ public final class CTag {
 		}
 		return NONE;
 	}
-	
 }
