@@ -11,13 +11,13 @@ public final class ETaggedWordMap extends PackedScoreMap<ETaggedWord> {
 
 	@Override
 	public ETaggedWord loadKeyFromString(final String str) {
-		int middle = str.lastIndexOf("_");
+		int middle = str.lastIndexOf("/");
 		return new ETaggedWord(str.substring(0, middle), str.substring(middle+1));
 	}
 
 	@Override
 	public String generateStringFromKey(final ETaggedWord key) {
-		return key.word.toString() + "_" + key.tag.toString();
+		return key.word.toString() + "/" + key.tag.toString();
 	}
 
 	@Override

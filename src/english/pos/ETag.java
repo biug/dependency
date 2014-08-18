@@ -160,12 +160,12 @@ public final class ETag {
 	}
 	
 	public static int code(final String s) {
-		for (int i = 0; i < PENN_TAG_COUNT; ++i) {
+		for (int i = 1; i < PENN_TAG_COUNT; ++i) {
 			if (PENN_TAG_STRINGS[i].equals(s)) {
 				return i;
 			}
 		}
-		return NONE;
+		return PENN_TAG_NONE;
 	}
 	
 	public static boolean canAssignLabel(final ArrayList<ETaggedWord> sent, final int head, final int dep, final int label) {

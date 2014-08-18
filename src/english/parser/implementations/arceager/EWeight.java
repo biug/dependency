@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-import chinese.dependency.label.CDependencyLabel;
-
 import common.parser.WeightBase;
 import common.parser.implementations.map.CoNLLCPOSMap;
 import common.parser.implementations.map.CoNLLFeatsMap;
@@ -21,6 +19,7 @@ import common.parser.implementations.map.WordIntMap;
 import common.parser.implementations.map.WordMap;
 import common.parser.implementations.map.WordWordIntMap;
 
+import english.dependency.label.EDependencyLabel;
 import english.parser.implementations.map.ETagESetOfLabelsMap;
 import english.parser.implementations.map.ETagETagIntMap;
 import english.parser.implementations.map.ETagIntMap;
@@ -397,8 +396,8 @@ public final class EWeight extends WeightBase {
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
 			bw.write("Dependency labels:");
 			bw.newLine();
-			for (int i = CDependencyLabel.FIRST; i < CDependencyLabel.COUNT; ++i) {
-				bw.write(CDependencyLabel.PENN_DEP_STRINGS[i] + " ");
+			for (int i = EDependencyLabel.FIRST; i < EDependencyLabel.COUNT; ++i) {
+				bw.write(EDependencyLabel.PENN_DEP_STRINGS[i] + " ");
 			}
 			bw.newLine();
 			bw.newLine();
