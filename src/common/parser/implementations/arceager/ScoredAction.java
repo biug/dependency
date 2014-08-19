@@ -26,7 +26,7 @@ public final class ScoredAction {
 	
 	@Override
 	public int hashCode() {
-		return new Long(score & mid).intValue();
+		return (int)(score & mid);
 	}
 	
 	public void copy(final ScoredAction sa) {
