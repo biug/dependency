@@ -1,15 +1,16 @@
 package common.parser.implementations.arceager;
 
 public final class ScoredAction {
+	private static final long mid = (1L << 32) - 1L;
 	public int action;
-	public int score;
+	public long score;
 	
 	public ScoredAction() {
 		action = 0;
 		score = 0;
 	}
 	
-	public ScoredAction(final int a, final int s) {
+	public ScoredAction(final int a, final long s) {
 		action = a;
 		score = s;
 	}
@@ -25,7 +26,7 @@ public final class ScoredAction {
 	
 	@Override
 	public int hashCode() {
-		return score;
+		return new Long(score & mid).intValue();
 	}
 	
 	public void copy(final ScoredAction sa) {

@@ -22,12 +22,12 @@ public final class EParse {
 		try {
 			BufferedWriter os = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(sOutputFile)), "UTF-8"));
 			BufferedWriter os_scores = null;
-			int[] scores = null;
+			long[] scores = null;
 			TwoStringVector input_sent = new TwoStringVector();
 			LabeledDependencyParser[] output_sent = null;
 			
 			if (bScores) {
-				scores = new int[nBest];
+				scores = new long[nBest];
 				os_scores = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(sOutputFile + ".scores")), "UTF-8"));
 			}
 			
@@ -50,7 +50,7 @@ public final class EParse {
 				for (int index = 0; index < nBest; ++index) {
 					output_sent[index].writeSentenceToOutputStream(os);
 					if (bScores) {
-						os_scores.write(scores[index]);
+						os_scores.write(String.valueOf(scores[index]));
 						os_scores.newLine();
 					}
 				}

@@ -25,7 +25,7 @@ public abstract class DepParserBase {
 		m_supertags = supertags;
 	}
 	
-	public abstract void parse(final TwoStringVector sentence, final LabeledDependencyParser[] retval, final int nBest, int[] scores);
+	public abstract void parse(final TwoStringVector sentence, final LabeledDependencyParser[] retval, final int nBest, long[] scores);
 	public abstract void train(final LabeledDependencyParser correct, final int round);
 	
 	public abstract void finishtraning();

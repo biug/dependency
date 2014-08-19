@@ -35,7 +35,7 @@ public class ELabeledStateItem {
 	protected int m_nLastAction;
 	protected ArrayList<ETaggedWord> m_lCache;
 	
-	public int score;
+	public long score;
 	
 	protected int m_lLabels[];
 	

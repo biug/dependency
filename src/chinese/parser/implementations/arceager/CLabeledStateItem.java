@@ -34,7 +34,7 @@ public class CLabeledStateItem {
 	protected int m_nLastAction;
 	protected ArrayList<CTaggedWord> m_lCache;
 	
-	public int score;
+	public long score;
 	
 	protected int m_lLabels[];
 	

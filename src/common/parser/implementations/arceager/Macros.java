@@ -2,7 +2,7 @@ package common.parser.implementations.arceager;
 
 public class Macros {
 
-	public final static int AGENDA_SIZE = 64;
+	public final static int AGENDA_SIZE = 4;
 	public final static int MAX_SENTENCE_SIZE = 256;
 	public final static int MAX_SENTENCE_SIZE_BITS = 8;
 	public final static int ARITY_DIRECTION_LEFT = 0;

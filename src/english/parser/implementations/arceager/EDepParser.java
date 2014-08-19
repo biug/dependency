@@ -54,8 +54,6 @@ public final class EDepParser extends DepParserBase {
 	
 	private TwoStringVector trainSentence;
 	
-	private LabeledDependencyParser emptyParser;
-	
 	private LabeledDependencyParser[] outParser;
 	
 	private TwoETaggedWords st_word_tag_n0_word_tag;
@@ -112,8 +110,6 @@ public final class EDepParser extends DepParserBase {
 		
 		trainSentence = new TwoStringVector();
 		
-		emptyParser = new LabeledDependencyParser();
-		
 		outParser = new LabeledDependencyParser[1];
 		outParser[0] = new LabeledDependencyParser();
 		
@@ -156,8 +152,6 @@ public final class EDepParser extends DepParserBase {
 		packed_scores = new PackedScoreType(ELabeledAction.MAX);
 		
 		trainSentence = new TwoStringVector();
-		
-		emptyParser = new LabeledDependencyParser();
 		
 		outParser = new LabeledDependencyParser[1];
 		outParser[0] = new LabeledDependencyParser();
@@ -538,7 +532,7 @@ public final class EDepParser extends DepParserBase {
 		m_Beam.insertItem(scoredaction);
 	}
 	
-	public void work(final int round, final boolean bTrain, final TwoStringVector sentence, LabeledDependencyParser[] retval, final LabeledDependencyParser correct, final int nBest, int[] scores) {
+	public void work(final int round, final boolean bTrain, final TwoStringVector sentence, LabeledDependencyParser[] retval, final LabeledDependencyParser correct, final int nBest, long[] scores) {
 		final int length = sentence.size();
 		ELabeledStateItem pGenerator;
 		
@@ -637,12 +631,12 @@ public final class EDepParser extends DepParserBase {
 
 	@Override
 	public void parse(final TwoStringVector sentence, LabeledDependencyParser[] retval,
-			final int nBest, int[] scores) {
+			final int nBest, long[] scores) {
 		for (int i = 0; i < nBest; ++i) {
 			retval[i].clear();
 			if (scores != null) scores[i] = 0;
 		}
-		work(0, false, sentence, retval, emptyParser, nBest, scores);
+		work(0, false, sentence, retval, null, nBest, scores);
 	}
 
 	@Override
