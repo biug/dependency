@@ -13,7 +13,7 @@ public final class PackedScore {
 		scores = new HashMap<Integer, Score>();
 	}
 	
-	public int score(final int index, final int n) {
+	public long score(final int index, final int n) {
 		Score s = scores.get(Integer.valueOf(index));
 		if (s != null) {
 			return s.score(n);

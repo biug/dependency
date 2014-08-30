@@ -9,10 +9,11 @@ public final class Score {
 	protected int lastupdate;
 	
 	public int current;
-	public int total;
+	public long total;
 	
 	public Score() {
-		current = total = lastupdate = 0;
+		current = lastupdate = 0;
+		total = 0L;
 	}
 	
 	public Score(final int c, final int t) {
@@ -28,18 +29,19 @@ public final class Score {
 	}
 	
 	public void reset() {
-		current = total = lastupdate = 0;
+		current = lastupdate = 0;
+		total = 0L;
 	}
 	
 	public boolean empty() {
-		return current == 0 && total == 0 && lastupdate == 0;
+		return current == 0 && total == 0L && lastupdate == 0;
 	}
 	
 	public boolean zero() {
-		return current == 0 && total == 0;
+		return current == 0 && total == 0L;
 	}
 	
-	public int at(final int n) {
+	public long at(final int n) {
 		if (n == eNonAverage) {
 			return current;
 		} else if (n == eAverage) {
@@ -53,7 +55,7 @@ public final class Score {
 		return current;
 	}
 	
-	public int score(final int n) {
+	public long score(final int n) {
 		if (n == eNonAverage) {
 			return current;
 		} else {
