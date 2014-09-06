@@ -16,7 +16,7 @@ public final class Score {
 		total = 0L;
 	}
 	
-	public Score(final int c, final int t) {
+	public Score(final int c, final long t) {
 		current = c;
 		total = t;
 		lastupdate = 0;

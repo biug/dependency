@@ -82,7 +82,7 @@ public final class PackedScore {
 		for (String subarg : args) {
 			String[] subargs = subarg.split(" : ");
 			scores.put(Integer.valueOf(subargs[0]),
-					new Score(Integer.parseInt(subargs[1].split(" / ")[0]), Integer.parseInt(subargs[1].split(" / ")[1])));
+					new Score(Integer.parseInt(subargs[1].split(" / ")[0]), Long.parseLong(subargs[1].split(" / ")[1])));
 		}
 	}
 	
