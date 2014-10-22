@@ -1,65 +1,70 @@
 package include.linguistics.english;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import english.dependency.label.EDependencyLabel;
 
 public final class ESetOfLabels {
-	private int h_code;
+	private Set<Integer> s_labset;
 	
 	public void print(final String s) {
 		System.out.print(s + "[ ");
-		for (int label = 0; label < EDependencyLabel.COUNT; ++label) {
-			if (this.contains(label)) System.out.print(EDependencyLabel.str(label) + " ");
+		for (Integer lab : s_labset) {
+			System.out.print(EDependencyLabel.str(lab.intValue()) + " ");
 		}
 		System.out.print("]");
 	}
 	
 	public ESetOfLabels() {
-		h_code = 0;
+		s_labset = new HashSet<Integer>();
 	}
 	
 	public ESetOfLabels(final ESetOfLabels tags) {
-		h_code = tags.h_code;
+		s_labset.clear();
+		s_labset.addAll(tags.s_labset);
 	}
 	
 	public void add(final EDependencyLabel tag) {
-		h_code |= (1 << tag.hashCode());
+		s_labset.add(new Integer(tag.hashCode()));
 	}
 	
 	public void add(final int code) {
-		h_code |= (1 << code);
+		s_labset.add(new Integer(code));
 	}
 	
 	public void remove(final EDependencyLabel tag) {
-		h_code &= ~(1 << tag.hashCode());
+		s_labset.remove(new Integer(tag.hashCode()));
 	}
 	
 	public void remove(final int code) {
-		h_code &= ~(1 << code);
+		s_labset.remove(new Integer(code));
 	}
 	
 	public void clear() {
-		h_code = 0;
+		s_labset.clear();
 	}
 	
 	public boolean contains(final EDependencyLabel tag) {
-		return (h_code & (1 << tag.hashCode())) != 0;
+		return s_labset.contains(new Integer(tag.hashCode()));
 	}
 	
 	public boolean contains(final int code) {
-		return (h_code & (1 << code)) != 0;
+		return s_labset.contains(new Integer(code));
 	}
 	
 	@Override
 	public int hashCode() {
-		return h_code;
+		return s_labset.hashCode();
 	}
 	
 	@Override
 	public boolean equals(final Object o) {
-		return h_code == ((ESetOfLabels)o).h_code;
+		return s_labset.equals(((ESetOfLabels)o).s_labset);
 	}
 	
 	public void set(final ESetOfLabels tagset) {
-		h_code = tagset.h_code;
+		s_labset.clear();
+		s_labset.addAll(tagset.s_labset);
 	}
 }

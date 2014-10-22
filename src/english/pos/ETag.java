@@ -1,101 +1,123 @@
 package english.pos;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 
 public final class ETag {
 	public final static String[] PENN_TAG_STRINGS = {
 		"-NONE-",
-		"-BEGIN-",
-		"-END-",
-		"$", "``", "''",
-		"-LRB-", "-RRB-", ",",
-		".", ":", "#",
-		"CC", "CD", "DT", "EX", "FW",
-		"IN", "JJ", "JJR", "JJS", "LS",
-		"MD", "NN", "NNP", "NNPS", "NNS",
-		"PDT", "POS", "PRP", "PRP$",
-		"RB", "RBR", "RBS", "RP",
-		"SYM", "TO", "UH",
-		"VB", "VBD", "VBG", "VBN", "VBP", "VBZ",
-		"WDT", "WP", "WP$", "WRB"
+		"NN",
+		"JJ",
+		"NP",
+		"RRB",
+		"WRB",
+		"LS",
+		"PRP",
+		"DT",
+		"NNP",
+		"FW",
+		"NNS",
+		"JJS",
+		"JJR",
+		"UH",
+		"MD",
+		"VBD",
+		"WP",
+		"VBG",
+		"SO",
+		"CC",
+		"CD",
+		"PDT",
+		"RBS",
+		"VBN",
+		"RBR",
+		"#",
+		"$",
+		"IN",
+		"VBP",
+		"WDT",
+		"SYM",
+		"SBAR",
+		"NNPS",
+		"WP$",
+		",",
+		"VB",
+		".",
+		"VBZ",
+		"RB",
+		"AS",
+		"PRP$",
+		"EX",
+		"POS",
+		":",
+		"TO",
+		";",
+		"LRB",
+		"RP"
 	};
+	
+	public final static Map<String, Integer> PENN_TAG_MAP = new HashMap<String, Integer>();
+	static {
+		PENN_TAG_MAP.put("-NONE-", new Integer(0));
+		PENN_TAG_MAP.put("NN", new Integer(1));
+		PENN_TAG_MAP.put("JJ", new Integer(2));
+		PENN_TAG_MAP.put("NP", new Integer(3));
+		PENN_TAG_MAP.put("RRB", new Integer(4));
+		PENN_TAG_MAP.put("WRB", new Integer(5));
+		PENN_TAG_MAP.put("LS", new Integer(6));
+		PENN_TAG_MAP.put("PRP", new Integer(7));
+		PENN_TAG_MAP.put("DT", new Integer(8));
+		PENN_TAG_MAP.put("NNP", new Integer(9));
+		PENN_TAG_MAP.put("FW", new Integer(10));
+		PENN_TAG_MAP.put("NNS", new Integer(11));
+		PENN_TAG_MAP.put("JJS", new Integer(12));
+		PENN_TAG_MAP.put("JJR", new Integer(13));
+		PENN_TAG_MAP.put("UH", new Integer(14));
+		PENN_TAG_MAP.put("MD", new Integer(15));
+		PENN_TAG_MAP.put("VBD", new Integer(16));
+		PENN_TAG_MAP.put("WP", new Integer(17));
+		PENN_TAG_MAP.put("VBG", new Integer(18));
+		PENN_TAG_MAP.put("SO", new Integer(19));
+		PENN_TAG_MAP.put("CC", new Integer(20));
+		PENN_TAG_MAP.put("CD", new Integer(21));
+		PENN_TAG_MAP.put("PDT", new Integer(22));
+		PENN_TAG_MAP.put("RBS", new Integer(23));
+		PENN_TAG_MAP.put("VBN", new Integer(24));
+		PENN_TAG_MAP.put("RBR", new Integer(25));
+		PENN_TAG_MAP.put("#", new Integer(26));
+		PENN_TAG_MAP.put("$", new Integer(27));
+		PENN_TAG_MAP.put("IN", new Integer(28));
+		PENN_TAG_MAP.put("VBP", new Integer(29));
+		PENN_TAG_MAP.put("WDT", new Integer(30));
+		PENN_TAG_MAP.put("SYM", new Integer(31));
+		PENN_TAG_MAP.put("SBAR", new Integer(32));
+		PENN_TAG_MAP.put("NNPS", new Integer(33));
+		PENN_TAG_MAP.put("WP$", new Integer(34));
+		PENN_TAG_MAP.put(",", new Integer(35));
+		PENN_TAG_MAP.put("VB", new Integer(36));
+		PENN_TAG_MAP.put(".", new Integer(37));
+		PENN_TAG_MAP.put("VBZ", new Integer(38));
+		PENN_TAG_MAP.put("RB", new Integer(39));
+		PENN_TAG_MAP.put("AS", new Integer(40));
+		PENN_TAG_MAP.put("PRP$", new Integer(41));
+		PENN_TAG_MAP.put("EX", new Integer(42));
+		PENN_TAG_MAP.put("POS", new Integer(43));
+		PENN_TAG_MAP.put(":", new Integer(44));
+		PENN_TAG_MAP.put("TO", new Integer(45));
+		PENN_TAG_MAP.put(";", new Integer(46));
+		PENN_TAG_MAP.put("LRB", new Integer(47));
+		PENN_TAG_MAP.put("RP", new Integer(48));
+	}
 
 	public final static int PENN_TAG_NONE = 0;
-	public final static int PENN_TAG_BEGIN = 1;
-	public final static int PENN_TAG_END = 2;
-	public final static int PENN_TAG_DOLLAR = 3;
-	public final static int PENN_TAG_L_QUOTE = 4;
-	public final static int PENN_TAG_R_QUOTE = 5;
-	public final static int PENN_TAG_L_BRACKET = 6;
-	public final static int PENN_TAG_R_BRACKET = 7;
-	public final static int PENN_TAG_COMMA = 8;
-	public final static int PENN_TAG_PERIOD = 9;
-	public final static int PENN_TAG_COLUM = 10;
-	public final static int PENN_TAG_SHART = 11;
-	public final static int PENN_TAG_CC = 12;
-	public final static int PENN_TAG_CD = 13;
-	public final static int PENN_TAG_DT = 14;
-	public final static int PENN_TAG_EX = 15;
-	public final static int PENN_TAG_FW = 16;
-	public final static int PENN_TAG_IN = 17;
-	public final static int PENN_TAG_ADJECTIVE = 18;
-	public final static int PENN_TAG_ADJECTIVE_COMPARATIVE = 19;
-	public final static int PENN_TAG_ADJECTIVE_SUPERLATIVE = 20;
-	public final static int PENN_TAG_LS = 21;
-	public final static int PENN_TAG_MD = 22;
-	public final static int PENN_TAG_NOUN = 23;
-	public final static int PENN_TAG_NOUN_PROPER = 24;
-	public final static int PENN_TAG_NOUN_PROPER_PLURAL = 25;
-	public final static int PENN_TAG_NOUN_PLURAL = 26;
-	public final static int PENN_TAG_PDT = 27;
-	public final static int PENN_TAG_POS = 28;
-	public final static int PENN_TAG_PRP = 29;
-	public final static int PENN_TAG_PRP_DOLLAR = 30;
-	public final static int PENN_TAG_ADVERB = 31;
-	public final static int PENN_TAG_ADVERB_COMPARATIVE = 32;
-	public final static int PENN_TAG_ADVERB_SUPERLATIVE = 33;
-	public final static int PENN_TAG_RP = 34;
-	public final static int PENN_TAG_SYM = 35;
-	public final static int PENN_TAG_TO = 36;
-	public final static int PENN_TAG_UH = 37;
-	public final static int PENN_TAG_VERB = 38;
-	public final static int PENN_TAG_VERB_PAST = 39;
-	public final static int PENN_TAG_VERB_PROG = 40;
-	public final static int PENN_TAG_VERB_PAST_PARTICIPATE = 41;
-	public final static int PENN_TAG_VERB_PRES = 42;
-	public final static int PENN_TAG_VERB_THIRD_SINGLE = 43;
-	public final static int PENN_TAG_WDT = 44;
-	public final static int PENN_TAG_WP = 45;
-	public final static int PENN_TAG_WP_DOLLAR = 46;
-	public final static int PENN_TAG_WRB = 47;
-	public final static int PENN_TAG_COUNT = 48;
+	public final static int PENN_TAG_COUNT = 49;
 	
-	public final static boolean[] PENN_TAG_CLOSED = {
-		false,
-		true,
-		true,
-		true, true, true,
-		true, true, true,
-		true, true, true,
-		true, false, true, true, false,
-		true, false, false, false, false,
-		true, false, false, false, false,
-		true, true, true, true,
-		false, false, false, false,
-		false, true, false,
-		false, false, false, false, false, false,
-		true, true, true, true
-	};
-	
-	public final static int PENN_TAG_FIRST = 3;
+	public final static int PENN_TAG_FIRST = 1;
 	public final static int PENN_TAG_COUNT_BITS = 6;
 	
-	
-	public final long PENN_TAG_MUST_SEE = (((long)1 << PENN_TAG_SYM) | ((long)1 << PENN_TAG_FW) | ((long)1 << PENN_TAG_CD) | ((long)1 << PENN_TAG_LS) | ((long)1 << PENN_TAG_NOUN_PROPER) | ((long)1 << PENN_TAG_NOUN_PROPER_PLURAL));
-
 	public static final int NONE = PENN_TAG_NONE;
-	public static final int SENTENCE_BEGIN = PENN_TAG_BEGIN;
-	public static final int SENTENCE_END = PENN_TAG_END;
 	public static final int COUNT = PENN_TAG_COUNT;
 	public static final int MAX_COUNT = PENN_TAG_COUNT;
 	public static final int SIZE = PENN_TAG_COUNT_BITS;
@@ -140,13 +162,8 @@ public final class ETag {
 	}
 	
 	public void load(String s) {
-		m_code = PENN_TAG_NONE;
-		for (int i = 0; i < PENN_TAG_COUNT; ++i) {
-			if (PENN_TAG_STRINGS[i].equals(s)) {
-				m_code = i;
-				return;
-			}
-		}		
+		Integer i = PENN_TAG_MAP.get(s);
+		m_code = i == null ? PENN_TAG_NONE : i.intValue();	
 	}
 	
 	public static String str(final int t) {
@@ -154,11 +171,7 @@ public final class ETag {
 	}
 	
 	public static int code(final String s) {
-		for (int i = 1; i < PENN_TAG_COUNT; ++i) {
-			if (PENN_TAG_STRINGS[i].equals(s)) {
-				return i;
-			}
-		}
-		return PENN_TAG_NONE;
+		Integer i = PENN_TAG_MAP.get(s);
+		return i == null ? PENN_TAG_NONE : i.intValue();
 	}
 }
