@@ -12,14 +12,12 @@ import include.linguistics.Word;
 import include.linguistics.WordInt;
 import include.linguistics.WordWordInt;
 import include.linguistics.english.ESetOfLabels;
-import include.linguistics.english.ETagESetOfLabels;
 import include.linguistics.english.ETagETagInt;
 import include.linguistics.english.ETagInt;
 import include.linguistics.english.ETagSet2;
 import include.linguistics.english.ETagSet3;
 import include.linguistics.english.ETaggedWord;
 import include.linguistics.english.TwoETaggedWords;
-import include.linguistics.english.WordESetOfLabels;
 import include.linguistics.english.WordETagETag;
 import include.linguistics.english.WordWordETag;
 
@@ -65,8 +63,6 @@ public final class EDepParser extends DepParserBase {
 	private WordWordETag word_word_tag;
 	private WordWordInt word_word_int;
 	private ETagETagInt tag_tag_int;
-	private WordESetOfLabels word_tagset;
-	private ETagESetOfLabels tag_tagset;
 	private ETagSet2 set_of_2_tags;
 	private ETagSet3 set_of_3_tags;
 	
@@ -122,8 +118,6 @@ public final class EDepParser extends DepParserBase {
 		word_word_tag = new WordWordETag();
 		word_word_int = new WordWordInt();
 		tag_tag_int = new ETagETagInt();
-		word_tagset = new WordESetOfLabels();
-		tag_tagset = new ETagESetOfLabels();
 		set_of_2_tags = new ETagSet2();
 		set_of_3_tags = new ETagSet3();
 		
@@ -168,8 +162,6 @@ public final class EDepParser extends DepParserBase {
 		word_word_tag = new WordWordETag();
 		word_word_int = new WordWordInt();
 		tag_tag_int = new ETagETagInt();
-		word_tagset = new WordESetOfLabels();
-		tag_tagset = new ETagESetOfLabels();
 		set_of_2_tags = new ETagSet2();
 		set_of_3_tags = new ETagSet3();
 		
@@ -230,24 +222,11 @@ public final class EDepParser extends DepParserBase {
 		final ETag n1_tag = n1_word_tag.tag;
 		final ETag n2_tag = n2_word_tag.tag;
 		
-		final int st_label = st_index == -1 ? EDependencyLabel.NONE : item.label(st_index);
-		final int sth_label = sth_index == -1 ? EDependencyLabel.NONE : item.label(sth_index);
-		final int stld_label = stld_index == -1 ? EDependencyLabel.NONE : item.label(stld_index);
-		final int strd_label = strd_index == -1 ? EDependencyLabel.NONE : item.label(strd_index);
-		final int stl2d_label = stl2d_index == -1 ? EDependencyLabel.NONE : item.label(stl2d_index);
-		final int str2d_label = str2d_index == -1 ? EDependencyLabel.NONE : item.label(strd_index); //PROBLEM!
-		final int n0ld_label = n0ld_index == -1 ? EDependencyLabel.NONE : item.label(n0ld_index);
-		final int n0l2d_label = n0l2d_index == -1 ? EDependencyLabel.NONE : item.label(n0l2d_index);
-		
 		final int st_n0_dist = EMacros.encodeLinkDistance(st_index, n0_index);
 		
 		final int st_rarity = st_index == -1 ? 0 : item.rightarity(st_index);
 		final int st_larity = st_index == -1 ? 0 : item.leftarity(st_index);
 		final int n0_larity = n0_index == -1 ? 0 : item.leftarity(n0_index);
-		
-		final ESetOfLabels st_rtagset = st_index == -1 ? empty_setoftags : new ESetOfLabels(item.righttagset(st_index));
-		final ESetOfLabels st_ltagset = st_index == -1 ? empty_setoftags : new ESetOfLabels(item.lefttagset(st_index));
-		final ESetOfLabels n0_ltagset = n0_index == -1 ? empty_setoftags : new ESetOfLabels(item.lefttagset(n0_index));
 		
 		EWeight eweight = (EWeight)m_weights;
 		
@@ -278,49 +257,41 @@ public final class EDepParser extends DepParserBase {
 		if (sth_index != -1) {
 			eweight.m_mapSTHw.getOrUpdateScore(retval, sth_word, action, m_nScoreIndex, amount, round);
 			eweight.m_mapSTHt.getOrUpdateScore(retval, sth_tag, action, m_nScoreIndex, amount, round);
-			eweight.m_mapSTi.getOrUpdateScore(retval, Integer.valueOf(st_label), action, m_nScoreIndex, amount, round);
 		}
 
 		if (sthh_index != -1) {
 			eweight.m_mapSTHHw.getOrUpdateScore(retval, sthh_word, action, m_nScoreIndex, amount, round);
 			eweight.m_mapSTHHt.getOrUpdateScore(retval, sthh_tag, action, m_nScoreIndex, amount, round);
-			eweight.m_mapSTHi.getOrUpdateScore(retval, Integer.valueOf(sth_label), action, m_nScoreIndex, amount, round);
 		}
 
 		if (stld_index != -1) {
 			eweight.m_mapSTLDw.getOrUpdateScore(retval, stld_word, action, m_nScoreIndex, amount, round);
 			eweight.m_mapSTLDt.getOrUpdateScore(retval, stld_tag, action, m_nScoreIndex, amount, round);
-			eweight.m_mapSTLDi.getOrUpdateScore(retval, Integer.valueOf(stld_label), action, m_nScoreIndex, amount, round);
 		}
 
 		if (strd_index != -1) {
 			eweight.m_mapSTRDw.getOrUpdateScore(retval, strd_word, action, m_nScoreIndex, amount, round);
 			eweight.m_mapSTRDt.getOrUpdateScore(retval, strd_tag, action, m_nScoreIndex, amount, round);
-			eweight.m_mapSTRDi.getOrUpdateScore(retval, Integer.valueOf(strd_label), action, m_nScoreIndex, amount, round);
 		}
 
 		if (n0ld_index != -1) {
 			eweight.m_mapN0LDw.getOrUpdateScore(retval, n0ld_word, action, m_nScoreIndex, amount, round);
 			eweight.m_mapN0LDt.getOrUpdateScore(retval, n0ld_tag, action, m_nScoreIndex, amount, round);
-			eweight.m_mapN0LDi.getOrUpdateScore(retval, Integer.valueOf(n0ld_label), action, m_nScoreIndex, amount, round);
 		}
 
 		if (stl2d_index != -1) {
 			eweight.m_mapSTL2Dw.getOrUpdateScore(retval, stl2d_word, action, m_nScoreIndex, amount, round);
 			eweight.m_mapSTL2Dt.getOrUpdateScore(retval, stl2d_tag, action, m_nScoreIndex, amount, round);
-			eweight.m_mapSTL2Di.getOrUpdateScore(retval, Integer.valueOf(stl2d_label), action, m_nScoreIndex, amount, round);
 		}
 
 		if (str2d_index != -1) {
 			eweight.m_mapSTR2Dw.getOrUpdateScore(retval, str2d_word, action, m_nScoreIndex, amount, round);
 			eweight.m_mapSTR2Dt.getOrUpdateScore(retval, str2d_tag, action, m_nScoreIndex, amount, round);
-			eweight.m_mapSTR2Di.getOrUpdateScore(retval, Integer.valueOf(str2d_label), action, m_nScoreIndex, amount, round);
 		}
 
 		if (n0l2d_index != -1) {
 			eweight.m_mapN0L2Dw.getOrUpdateScore(retval, n0l2d_word, action, m_nScoreIndex, amount, round);
 			eweight.m_mapN0L2Dt.getOrUpdateScore(retval, n0l2d_tag, action, m_nScoreIndex, amount, round);
-			eweight.m_mapN0L2Di.getOrUpdateScore(retval, Integer.valueOf(n0l2d_label), action, m_nScoreIndex, amount, round);
 		}
 
 		if (st_index != -1) {
@@ -401,23 +372,23 @@ public final class EDepParser extends DepParserBase {
 			eweight.m_mapN0tla.getOrUpdateScore(retval, tag_int, action, m_nScoreIndex, amount, round);
 		}
 
-		if (st_index != -1){
-			word_tagset.refer(st_word, st_rtagset);
-			eweight.m_mapSTwrp.getOrUpdateScore(retval, word_tagset, action, m_nScoreIndex, amount, round);
-			tag_tagset.refer(st_tag, st_rtagset);
-			eweight.m_mapSTtrp.getOrUpdateScore(retval, tag_tagset, action, m_nScoreIndex, amount, round);
-			word_tagset.refer(st_word, st_ltagset);
-			eweight.m_mapSTwlp.getOrUpdateScore(retval, word_tagset, action, m_nScoreIndex, amount, round);
-			tag_tagset.refer(st_tag, st_ltagset);
-			eweight.m_mapSTtlp.getOrUpdateScore(retval, tag_tagset, action, m_nScoreIndex, amount, round);
-		}
-
-		if (n0_index != -1){
-			word_tagset.refer(n0_word, n0_ltagset);
-			eweight.m_mapN0wlp.getOrUpdateScore(retval, word_tagset, action, m_nScoreIndex, amount, round);
-			tag_tagset.refer(n0_tag, n0_ltagset);
-			eweight.m_mapN0tlp.getOrUpdateScore(retval, tag_tagset, action, m_nScoreIndex, amount, round);
-		}
+//		if (st_index != -1){
+//			word_tagset.refer(st_word, st_rtagset);
+//			eweight.m_mapSTwrp.getOrUpdateScore(retval, word_tagset, action, m_nScoreIndex, amount, round);
+//			tag_tagset.refer(st_tag, st_rtagset);
+//			eweight.m_mapSTtrp.getOrUpdateScore(retval, tag_tagset, action, m_nScoreIndex, amount, round);
+//			word_tagset.refer(st_word, st_ltagset);
+//			eweight.m_mapSTwlp.getOrUpdateScore(retval, word_tagset, action, m_nScoreIndex, amount, round);
+//			tag_tagset.refer(st_tag, st_ltagset);
+//			eweight.m_mapSTtlp.getOrUpdateScore(retval, tag_tagset, action, m_nScoreIndex, amount, round);
+//		}
+//
+//		if (n0_index != -1){
+//			word_tagset.refer(n0_word, n0_ltagset);
+//			eweight.m_mapN0wlp.getOrUpdateScore(retval, word_tagset, action, m_nScoreIndex, amount, round);
+//			tag_tagset.refer(n0_tag, n0_ltagset);
+//			eweight.m_mapN0tlp.getOrUpdateScore(retval, tag_tagset, action, m_nScoreIndex, amount, round);
+//		}
 	}
 
 	public void getOrUpdateStackScore(final ELabeledStateItem item, PackedScoreType retval, final int action) {
@@ -505,19 +476,15 @@ public final class EDepParser extends DepParserBase {
 	}
 	
 	public void arcleft(final ELabeledStateItem item, final PackedScoreType scores) {
-		for (int label = EDependencyLabel.FIRST; label < EDependencyLabel.COUNT; ++label) {
-			scoredaction.action = ELabeledAction.encodeAction(ELabeledAction.ARC_LEFT, label);
-			scoredaction.score = item.score + scores.at(scoredaction.action);
-			m_Beam.insertItem(scoredaction);
-		}
+		scoredaction.action = ELabeledAction.ARC_LEFT;
+		scoredaction.score = item.score + scores.at(scoredaction.action);
+		m_Beam.insertItem(scoredaction);
 	}
 	
 	public void arcright(final ELabeledStateItem item, final PackedScoreType scores) {
-		for (int label = EDependencyLabel.FIRST; label < EDependencyLabel.COUNT; ++label) {
-			scoredaction.action = ELabeledAction.encodeAction(ELabeledAction.ARC_RIGHT, label);
-			scoredaction.score = item.score + scores.at(scoredaction.action);
-			m_Beam.insertItem(scoredaction);
-		}
+		scoredaction.action = ELabeledAction.ARC_RIGHT;
+		scoredaction.score = item.score + scores.at(scoredaction.action);
+		m_Beam.insertItem(scoredaction);
 	}
 	
 	public void shift(final ELabeledStateItem item, final PackedScoreType scores) {

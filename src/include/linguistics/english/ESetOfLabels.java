@@ -21,7 +21,7 @@ public final class ESetOfLabels {
 	}
 	
 	public ESetOfLabels(final ESetOfLabels tags) {
-		s_labset.clear();
+		s_labset = new HashSet<Integer>();
 		s_labset.addAll(tags.s_labset);
 	}
 	

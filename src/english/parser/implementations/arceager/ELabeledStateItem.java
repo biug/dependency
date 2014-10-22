@@ -2,7 +2,6 @@ package english.parser.implementations.arceager;
 
 import include.linguistics.LabeledDependencyTreeNode;
 import include.linguistics.TwoStringVector;
-import include.linguistics.english.ESetOfLabels;
 import include.linguistics.english.ETaggedWord;
 
 import java.util.ArrayList;
@@ -28,16 +27,12 @@ public class ELabeledStateItem {
 	protected int[] m_lDepNumL;
 	protected int[] m_lDepNumR;
 	
-	protected ESetOfLabels m_lDepTagL[];
-	protected ESetOfLabels m_lDepTagR[];
 	protected int m_lSibling[];
 	
 	protected int m_nLastAction;
 	protected ArrayList<ETaggedWord> m_lCache;
 	
 	public long score;
-	
-	protected int m_lLabels[];
 	
 	public void printstate(int len) {
 		System.out.println(m_Stack);
@@ -48,10 +43,7 @@ public class ELabeledStateItem {
 		System.out.print(m_lDepsR[0]); for (int i = 1; i <= m_nNextWord; ++i) System.out.print(" " + m_lDepsR[i]); System.out.println();
 		System.out.print(m_lDepNumL[0]); for (int i = 1; i <= m_nNextWord; ++i) System.out.print(" " + m_lDepNumL[i]); System.out.println();
 		System.out.print(m_lDepNumR[0]); for (int i = 1; i <= m_nNextWord; ++i) System.out.print(" " + m_lDepNumR[i]); System.out.println();
-		m_lDepTagL[0].print(""); for (int i = 1; i <= m_nNextWord; ++i) m_lDepTagL[i].print(" "); System.out.println();
-		m_lDepTagR[0].print(""); for (int i = 1; i <= m_nNextWord; ++i) m_lDepTagR[i].print(" "); System.out.println();
 		System.out.print(m_lSibling[0]); for (int i = 1; i <= m_nNextWord; ++i) System.out.print(" " + m_lSibling[i]); System.out.println();
-		System.out.print(m_lLabels[0]); for (int i = 1; i <= m_nNextWord; ++i) System.out.print(" " + m_lLabels[i]); System.out.println();
 		System.out.println(m_nLastAction);
 		System.out.println("score = " + score);
 	}
@@ -66,15 +58,8 @@ public class ELabeledStateItem {
 		m_lDepsR = new int[EMacros.MAX_SENTENCE_SIZE];
 		m_lDepNumL = new int[EMacros.MAX_SENTENCE_SIZE];
 		m_lDepNumR = new int[EMacros.MAX_SENTENCE_SIZE];
-		m_lDepTagL = new ESetOfLabels[EMacros.MAX_SENTENCE_SIZE];
-		m_lDepTagR = new ESetOfLabels[EMacros.MAX_SENTENCE_SIZE];
-		for (int i = 0; i < EMacros.MAX_SENTENCE_SIZE; ++i) {
-			m_lDepTagL[i] = new ESetOfLabels();
-			m_lDepTagR[i] = new ESetOfLabels();
-		}
 		m_lSibling = new int[EMacros.MAX_SENTENCE_SIZE];
 		m_lCache = null;
-		m_lLabels = new int[EMacros.MAX_SENTENCE_SIZE];
 		clear();
 	}
 	
@@ -88,15 +73,8 @@ public class ELabeledStateItem {
 		m_lDepsR = new int[EMacros.MAX_SENTENCE_SIZE];
 		m_lDepNumL = new int[EMacros.MAX_SENTENCE_SIZE];
 		m_lDepNumR = new int[EMacros.MAX_SENTENCE_SIZE];
-		m_lDepTagL = new ESetOfLabels[EMacros.MAX_SENTENCE_SIZE];
-		m_lDepTagR = new ESetOfLabels[EMacros.MAX_SENTENCE_SIZE];
-		for (int i = 0; i < EMacros.MAX_SENTENCE_SIZE; ++i) {
-			m_lDepTagL[i] = new ESetOfLabels();
-			m_lDepTagR[i] = new ESetOfLabels();
-		}
 		m_lSibling = new int[EMacros.MAX_SENTENCE_SIZE];
 		m_lCache = cache;
-		m_lLabels = new int[EMacros.MAX_SENTENCE_SIZE];
 		clear();
 	}
 	
@@ -116,11 +94,6 @@ public class ELabeledStateItem {
 		}
 		for (int i = 0; i < m_nNextWord; ++i) {
 			if (m_lHeads[i] != item.m_lHeads[i]) {
-				return false;
-			}
-		}
-		for (int i = 0; i < m_nNextWord; ++i) {
-			if (m_lLabels[i] != item.m_lLabels[i]) {
 				return false;
 			}
 		}
@@ -170,7 +143,7 @@ public class ELabeledStateItem {
 	}
 	
 	public final boolean afterreduce() {
-		return ELabeledAction.getUnlabeledAction(m_nLastAction) == ELabeledAction.REDUCE;
+		return m_nLastAction == ELabeledAction.REDUCE;
 	}
 	
 	public final int head(final int index) {
@@ -201,18 +174,6 @@ public class ELabeledStateItem {
 		return m_lDepNumR[index];
 	}
 	
-	public final ESetOfLabels lefttagset(final int index) {
-		return m_lDepTagL[index];
-	}
-	
-	public final ESetOfLabels righttagset(final int index) {
-		return m_lDepTagR[index];
-	}
-	
-	public final int label(final int index) {
-		return m_lLabels[index];
-	}
-	
 	public void clear() {
 		m_nNextWord = 0;
 		stack_back = -1;
@@ -224,30 +185,26 @@ public class ELabeledStateItem {
 		ClearNext();
 	}
 	
-	public void ArcLeft(int lab) {
+	public void ArcLeft() {
 		int left = m_Stack.get(stack_back).intValue();
 		m_Stack.remove(stack_back--);
 		m_HeadStack.remove(headstack_back--);
 		m_lHeads[left] = m_nNextWord;
-		m_lLabels[left] = lab;
-		m_lDepTagL[m_nNextWord].add(lab);
 		m_lSibling[left] = m_lDepsL[m_nNextWord];
 		m_lDepsL[m_nNextWord] = left;
 		++m_lDepNumL[m_nNextWord];
-		m_nLastAction = ELabeledAction.encodeAction(ELabeledAction.ARC_LEFT, lab);
+		m_nLastAction = ELabeledAction.ARC_LEFT;
 	}
 	
-	public void ArcRight(int lab) {
+	public void ArcRight() {
 		int left = m_Stack.get(stack_back++).intValue();
 		m_Stack.add(Integer.valueOf(m_nNextWord));
 		m_lHeads[m_nNextWord] = left;
-		m_lLabels[m_nNextWord] = lab;
-		m_lDepTagR[left].add(lab);
 		m_lSibling[m_nNextWord] = m_lDepsR[left];
 		m_lDepsR[left] = m_nNextWord++;
 		++m_lDepNumR[left];
 		ClearNext();
-		m_nLastAction = ELabeledAction.encodeAction(ELabeledAction.ARC_RIGHT, lab);
+		m_nLastAction = ELabeledAction.ARC_RIGHT;
 	}
 
 	public void Shift() {
@@ -265,7 +222,6 @@ public class ELabeledStateItem {
 	}
 	
 	public void PopRoot() {
-		m_lLabels[m_Stack.get(stack_back).intValue()] = EDependencyLabel.ROOT;
 		m_nLastAction = ELabeledAction.encodeAction(ELabeledAction.POP_ROOT);
 		m_Stack.remove(stack_back--);
 	}
@@ -276,14 +232,11 @@ public class ELabeledStateItem {
 		m_lDepsR[m_nNextWord] = LabeledDependencyTreeNode.DEPENDENCY_LINK_NO_HEAD;
 		m_lDepNumL[m_nNextWord] = 0;
 		m_lDepNumR[m_nNextWord] = 0;
-		m_lDepTagL[m_nNextWord].clear();
-		m_lDepTagR[m_nNextWord].clear();
 		m_lSibling[m_nNextWord] = LabeledDependencyTreeNode.DEPENDENCY_LINK_NO_HEAD;
-		m_lLabels[m_nNextWord] = EDependencyLabel.NONE;
 	}
 	
 	public void Move(final int ac) {
-		switch (ELabeledAction.getUnlabeledAction(ac)) {
+		switch (ac) {
 		case ELabeledAction.NO_ACTION:
 			return;
 		case ELabeledAction.SHIFT:
@@ -293,10 +246,10 @@ public class ELabeledStateItem {
 			Reduce();
 			return;
 		case ELabeledAction.ARC_LEFT:
-			ArcLeft(ELabeledAction.getLabel(ac));
+			ArcLeft();
 			return;
 		case ELabeledAction.ARC_RIGHT:
-			ArcRight(ELabeledAction.getLabel(ac));
+			ArcRight();
 			return;
 		case ELabeledAction.POP_ROOT:
 			PopRoot();
@@ -322,7 +275,7 @@ public class ELabeledStateItem {
 			}
 			if (tree.get(top).head == m_nNextWord) {
 				if (top == m_Stack.get(stack_back).intValue()) {
-					ArcLeft(m_lCacheLabel.get(top).hashCode());
+					ArcLeft();
 					return false;
 				} else {
 					Reduce();
@@ -337,7 +290,7 @@ public class ELabeledStateItem {
 		} else {
 			top = m_Stack.get(stack_back).intValue();
 			if (tree.get(m_nNextWord).head == top) {
-				ArcRight(m_lCacheLabel.get(m_nNextWord).hashCode());
+				ArcRight();
 				return true;
 			} else {
 				Reduce();
@@ -355,11 +308,11 @@ public class ELabeledStateItem {
 		if (m_nNextWord == item.m_nNextWord) {
 			top = m_Stack.get(stack_back).intValue();
 			if (item.m_lHeads[top] == m_nNextWord) {
-				return ELabeledAction.encodeAction(ELabeledAction.ARC_LEFT, item.m_lLabels[top]);
+				return ELabeledAction.ARC_LEFT;
 			} else if (item.m_lHeads[top] != LabeledDependencyTreeNode.DEPENDENCY_LINK_NO_HEAD) {
-				return ELabeledAction.encodeAction(ELabeledAction.REDUCE);
+				return ELabeledAction.REDUCE;
 			} else {
-				return ELabeledAction.encodeAction(ELabeledAction.POP_ROOT);
+				return ELabeledAction.POP_ROOT;
 			}
 		}
 		if (stack_back >= 0) {
@@ -369,7 +322,7 @@ public class ELabeledStateItem {
 			}
 			if (item.head(top) == m_nNextWord) {
 				if (top == m_Stack.get(stack_back).intValue()) {
-					return ELabeledAction.encodeAction(ELabeledAction.ARC_LEFT, item.m_lLabels[top]);
+					return ELabeledAction.ARC_LEFT;
 				} else {
 					return ELabeledAction.encodeAction(ELabeledAction.REDUCE);
 				}
@@ -381,7 +334,7 @@ public class ELabeledStateItem {
 		} else {
 			top = m_Stack.get(stack_back).intValue();
 			if (item.head(m_nNextWord) == top) {
-				return ELabeledAction.encodeAction(ELabeledAction.ARC_RIGHT, item.m_lLabels[m_nNextWord]);
+				return ELabeledAction.ARC_RIGHT;
 			} else {
 				return ELabeledAction.encodeAction(ELabeledAction.REDUCE);
 			}
@@ -391,7 +344,7 @@ public class ELabeledStateItem {
 	public void GenerateTree(final TwoStringVector input, LabeledDependencyParser output) {
 		output.clear();
 		for (int i = 0, input_size = this.size(); i < input_size; ++i) {
-			output.add(new LabeledDependencyTreeNode(input.get(i).first(), input.get(i).second(), m_lHeads[i], EDependencyLabel.str(m_lLabels[i])));
+			output.add(new LabeledDependencyTreeNode(input.get(i).first(), input.get(i).second(), m_lHeads[i], "_"));
 		}
 	}
 	
@@ -413,10 +366,5 @@ public class ELabeledStateItem {
 		System.arraycopy(item.m_lDepNumL, 0, m_lDepNumL, 0, length);
 		System.arraycopy(item.m_lDepNumR, 0, m_lDepNumR, 0, length);
 		System.arraycopy(item.m_lSibling, 0, m_lSibling, 0, length);
-		System.arraycopy(item.m_lLabels, 0, m_lLabels, 0, length);
-		for (int i = 0; i < length; ++i) {
-			m_lDepTagL[i].set(item.m_lDepTagL[i]);
-			m_lDepTagR[i].set(item.m_lDepTagR[i]);
-		}
 	}
 }
